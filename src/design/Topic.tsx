@@ -29,9 +29,11 @@ export function TopicChip({ label, selected, onToggle, icon }: TopicChipProps) {
         onToggle();
       }}
     >
-      <span className={styles.chipIcon} aria-hidden="true">
-        {selected ? <Check size={15} weight="bold" /> : icon ? <TopicIcon name={icon} size={16} weight="regular" /> : null}
-      </span>
+      {(selected || icon) && (
+        <span className={styles.chipIcon} aria-hidden="true">
+          {selected ? <Check size={15} weight="bold" /> : <TopicIcon name={icon!} size={16} weight="regular" />}
+        </span>
+      )}
       {label}
     </motion.button>
   );

@@ -110,17 +110,20 @@ export async function renderShareCard(input: ShareCardInput): Promise<Blob> {
   y += 92;
 
   // Verse — sized to fit the space available
-  const top = y;
-  const bottomLimit = H - 330;
-  let size = 64;
+  const areaTop = y;
+  const bottomLimit = H - 300;
+  let size = 84;
   let rows: string[] = [];
   let lh = 0;
   for (; size >= 34; size -= 2) {
     ctx.font = `400 ${size}px ${SERIF}`;
-    lh = size * 1.42;
+    lh = size * 1.38;
     rows = wrap(ctx, `“${input.verse}”`, maxWidth);
-    if (top + rows.length * lh <= bottomLimit) break;
+    if (areaTop + rows.length * lh + 80 <= bottomLimit) break;
   }
+  // Centre the verse and its reference in the space between the line and the signature.
+  const blockHeight = rows.length * lh + 80;
+  const top = areaTop + Math.max(0, (bottomLimit - areaTop - blockHeight) / 2);
   ctx.fillStyle = p.text;
   ctx.font = `400 ${size}px ${SERIF}`;
   rows.forEach((row, i) => ctx.fillText(row, left, top + i * lh));

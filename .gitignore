@@ -10,3 +10,4 @@ test-results
 .env
 .env.local
 /scripture-src
+/screenshots

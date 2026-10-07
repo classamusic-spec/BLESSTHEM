@@ -117,7 +117,7 @@ export function Composer({ open, onClose, seed, editing, onSaved }: ComposerProp
     >
       {!seed?.blessingId && !editing && (
         <div className={styles.kind}>
-          <Segmented
+          <Segmented<JournalKind>
             label="Kind of entry"
             layoutId="composer-kind"
             value={kind}

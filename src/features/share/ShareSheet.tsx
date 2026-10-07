@@ -77,7 +77,7 @@ export function ShareSheet({ open, onClose, composed }: { open: boolean; onClose
       </div>
 
       <div className={styles.styleRow}>
-        <Segmented
+        <Segmented<CardStyle>
           label="Card style"
           layoutId="share-style"
           value={style}

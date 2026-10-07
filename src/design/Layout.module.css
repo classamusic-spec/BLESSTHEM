@@ -233,8 +233,11 @@
 /* ── Ambient light ────────────────────────── */
 .ambient {
   position: absolute;
-  inset: 0 0 auto;
-  height: 520px;
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  height: 560px;
   overflow: hidden;
   pointer-events: none;
   z-index: -1;

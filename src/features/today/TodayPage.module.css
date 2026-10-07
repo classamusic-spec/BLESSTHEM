@@ -1,7 +1,3 @@
-.page {
-  overflow-x: clip;
-}
-
 .hero {
   padding: var(--space-4) 0 var(--space-5);
 }

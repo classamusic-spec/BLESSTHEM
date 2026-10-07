@@ -11,6 +11,7 @@ import { onServiceWorkerMessage } from '@/services/sw-register';
 import { applyDaypart, applySettings } from '@/services/theme';
 import { useNotificationScheduler } from '@/features/notifications/useNotificationScheduler';
 import { loadTranslation } from '@/content/scripture';
+import { PaywallProvider } from '@/features/premium/PaywallProvider';
 
 const Onboarding = lazy(() => import('@/features/onboarding/Onboarding'));
 const PeoplePage = lazy(() => import('@/features/people/PeoplePage'));
@@ -99,6 +100,7 @@ export function App() {
     <MotionConfig reducedMotion={reduce ? 'always' : 'user'}>
       <ToastProvider>
         <BrowserRouter>
+          <PaywallProvider>
           <a href="#main" className="skip-link">
             Skip to content
           </a>
@@ -138,6 +140,7 @@ export function App() {
               <Route path="*" element={<RootRedirect />} />
             </Routes>
           </Suspense>
+          </PaywallProvider>
         </BrowserRouter>
       </ToastProvider>
     </MotionConfig>

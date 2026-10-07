@@ -1,0 +1,112 @@
+.list {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.person {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-4) var(--space-4) var(--space-4);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+  color: var(--color-text);
+  text-decoration: none;
+  box-shadow:
+    0 0 0 1px var(--color-border) inset,
+    var(--shadow-sm);
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out);
+}
+@media (hover: hover) {
+  .person:hover {
+    box-shadow:
+      0 0 0 1px var(--color-border-strong) inset,
+      var(--shadow-md);
+    transform: translateY(-1px);
+  }
+}
+.person:active {
+  transform: scale(0.985);
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  gap: 2px;
+}
+
+.name {
+  font-family: var(--font-serif);
+  font-size: var(--text-title-3);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.meta {
+  font-size: var(--text-caption);
+  color: var(--color-text-tertiary);
+}
+
+.topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 6px;
+}
+.topic,
+.more {
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-sage);
+  color: var(--color-brand-text);
+  font-size: 11.5px;
+  font-weight: 620;
+}
+.more {
+  background: var(--color-surface-sunken);
+  color: var(--color-text-secondary);
+}
+
+.count {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+.count strong {
+  font-family: var(--font-serif);
+  font-size: var(--text-title-2);
+  font-weight: 450;
+  line-height: 1;
+}
+.count small {
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+}
+
+.chev {
+  color: var(--color-text-tertiary);
+  flex: none;
+}
+
+.limit {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+  padding: var(--space-5);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface-gold);
+  font-size: var(--text-callout);
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
+.limit strong {
+  color: var(--color-text);
+}

@@ -16,3 +16,10 @@ createRoot(document.getElementById('root')!).render(
 );
 
 registerServiceWorker();
+
+// Development-only hook for end-to-end tests and screenshots.
+if (import.meta.env.DEV) {
+  void Promise.all([import('./data/store'), import('./content/blessings')]).then(([store, content]) => {
+    (window as unknown as { __bt: unknown }).__bt = { store: store.useStore, entries: content.ENTRIES };
+  });
+}

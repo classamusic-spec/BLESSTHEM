@@ -1,0 +1,19 @@
+.card {
+  margin-top: var(--space-6);
+}
+
+.note {
+  margin-top: var(--space-4);
+  font-size: var(--text-caption);
+  color: var(--color-text-tertiary);
+  line-height: 1.5;
+  text-align: center;
+}
+
+.inline {
+  min-height: 32px;
+  color: var(--color-brand-text);
+  font-weight: 650;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

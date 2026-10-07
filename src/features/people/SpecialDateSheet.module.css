@@ -1,0 +1,46 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--space-2);
+}
+
+.occasion {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 48px;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  font-size: var(--text-caption);
+  font-weight: 600;
+  text-align: left;
+  box-shadow: 0 0 0 1px var(--color-border) inset;
+  transition: box-shadow var(--dur-base) var(--ease-out), background-color var(--dur-base) var(--ease-out);
+}
+.occasion svg {
+  flex: none;
+  color: var(--color-gold-text);
+}
+.on {
+  background: color-mix(in srgb, var(--color-brand-soft) 55%, var(--color-surface));
+  box-shadow: 0 0 0 2px var(--color-brand) inset;
+}
+
+.fields {
+  display: grid;
+  gap: var(--space-5);
+  margin-top: var(--space-6);
+}
+
+.toggleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  min-height: 48px;
+}
+.toggleLabel {
+  font-size: var(--text-callout);
+  font-weight: 620;
+}

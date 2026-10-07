@@ -1,0 +1,77 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}
+
+.fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+.legend {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0;
+  margin-bottom: var(--space-3);
+  font-size: var(--text-callout);
+  font-weight: 620;
+}
+
+.optional {
+  font-size: var(--text-caption);
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+}
+
+.group + .group {
+  margin-top: var(--space-3);
+}
+
+.groupLabel {
+  margin-bottom: var(--space-2);
+  font-size: var(--text-caption);
+  color: var(--color-text-tertiary);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.option {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  font-size: var(--text-callout);
+  font-weight: 580;
+  box-shadow:
+    0 0 0 1px var(--color-border-strong) inset,
+    var(--shadow-xs);
+  transition: background-color var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out);
+}
+.option[aria-pressed='true'] {
+  background: var(--color-brand);
+  color: var(--color-on-brand);
+  box-shadow: none;
+}
+
+.age {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 52px;
+  border-radius: var(--radius-md);
+  line-height: 1.2;
+}
+.age span {
+  font-size: 11.5px;
+  opacity: 0.72;
+}

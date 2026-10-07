@@ -1,0 +1,68 @@
+.view {
+  margin-top: var(--space-6);
+}
+
+.stack {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.personTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.count {
+  font-size: var(--text-caption);
+  color: var(--color-text-tertiary);
+}
+
+.muted {
+  color: var(--color-text-tertiary);
+  font-size: var(--text-callout);
+}
+
+.remember {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-title-3);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-2);
+}
+
+.blessing {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  grid-template-rows: auto auto;
+  column-gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-sage);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.blessingIcon {
+  grid-row: span 2;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-brand);
+  color: var(--color-on-brand);
+}
+
+.blessingText {
+  font-size: var(--text-callout);
+}
+.blessingText strong {
+  font-weight: 650;
+}
+
+.blessingMeta {
+  font-size: var(--text-caption);
+  color: var(--color-text-tertiary);
+}

@@ -39,7 +39,7 @@ export const TRANSLATIONS: Array<{ id: TranslationId; name: string; abbreviation
   { id: 'web', name: 'World English Bible', abbreviation: 'WEB', note: 'Classic and literal. Uses the name “Yahweh.”' },
 ];
 
-const loaded: Partial<Record<TranslationId, TranslationFile>> = { bsb: bsbData as TranslationFile };
+const loaded: Partial<Record<TranslationId, TranslationFile>> = { bsb: bsbData as unknown as TranslationFile };
 const pending: Partial<Record<TranslationId, Promise<TranslationFile>>> = {};
 
 export function isTranslationLoaded(id: TranslationId): boolean {
@@ -51,7 +51,7 @@ export function loadTranslation(id: TranslationId): Promise<TranslationFile> {
   if (ready) return Promise.resolve(ready);
   if (!pending[id]) {
     pending[id] = (id === 'web' ? import('./web.json') : import('./bsb.json')).then((mod) => {
-      const file = mod.default as TranslationFile;
+      const file = mod.default as unknown as TranslationFile;
       loaded[id] = file;
       return file;
     });

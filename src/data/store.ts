@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import type { OccasionId, TopicId } from '@/content/types';
 import { ENTRY_BY_ID } from '@/content/blessings';
+import { JOURNEY_BY_ID } from '@/content/journeys';
 import { chooseDaily } from '@/engine/personalize';
 import { track } from '@/services/analytics';
 import { dayKey, type DayKey } from '@/lib/dates';
@@ -297,6 +298,12 @@ export const useStore = create<AppStore>()(
         if (!target || target.prayedAt) return { first: false };
         set({ blessings: s.blessings.map((b) => (b.id === blessingId ? { ...b, prayedAt: now() } : b)) });
         track({ name: 'blessing_completed', props: { topic: target.topicId, source: target.source, first } });
+        // A journey day is complete when its blessing is prayed, wherever that happens.
+        if (target.journeyId !== undefined && target.journeyDay !== undefined) {
+          const progress = s.journeys.find((j) => j.journeyId === target.journeyId && j.personId === target.personId && !j.finishedAt);
+          const journey = JOURNEY_BY_ID[target.journeyId];
+          if (progress && journey) get().completeJourneyDay(progress.id, target.journeyDay, journey.days.length);
+        }
         return { first };
       },
 

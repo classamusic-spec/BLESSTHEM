@@ -132,7 +132,7 @@ export function Sheet({ open, onClose, title, description, children, size = 'aut
             <div className={styles.grab} onPointerDown={(e) => !wide && drag.start(e)}>
               {!wide && <span className={styles.handle} aria-hidden="true" />}
               {(title || !hideClose) && (
-                <div className={cx(styles.header, !title && styles.headerBare)}>
+                <div className={cx(styles.header, (!title || titleHidden) && styles.headerBare)}>
                   {title && (
                     <h2 id={titleId} className={cx(styles.title, titleHidden && 'visually-hidden')}>
                       {title}
