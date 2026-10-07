@@ -1,0 +1,122 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 var(--space-4) 0 var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: var(--text-callout);
+  font-weight: 560;
+  box-shadow:
+    0 0 0 1px var(--color-border-strong) inset,
+    var(--shadow-xs);
+  transition:
+    background-color var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out),
+    color var(--dur-base) var(--ease-out);
+}
+.chip:active {
+  transform: scale(0.97);
+}
+@media (hover: hover) {
+  .chip:hover:not(.chipOn) {
+    box-shadow:
+      0 0 0 1px var(--color-text-tertiary) inset,
+      var(--shadow-sm);
+  }
+}
+
+.chipIcon {
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  color: var(--color-text-tertiary);
+}
+
+.chipOn {
+  background: var(--color-brand);
+  color: var(--color-on-brand);
+  box-shadow: 0 6px 14px -8px rgb(46 70 54 / 0.6);
+}
+.chipOn .chipIcon {
+  color: currentColor;
+}
+
+/* ── Topic cards ─────────────────────────── */
+.card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 64px;
+  padding: var(--space-3) var(--space-4) var(--space-3) var(--space-3);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  color: var(--color-text);
+  text-decoration: none;
+  box-shadow:
+    0 0 0 1px var(--color-border) inset,
+    var(--shadow-xs);
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out);
+}
+@media (hover: hover) {
+  .card:hover {
+    box-shadow:
+      0 0 0 1px var(--color-border-strong) inset,
+      var(--shadow-md);
+    transform: translateY(-1px);
+  }
+}
+.card:active {
+  transform: scale(0.98);
+}
+
+.cardIcon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex: none;
+  border-radius: 14px;
+  background: var(--color-surface-sage);
+  color: var(--color-brand-text);
+}
+.tone-sand .cardIcon {
+  background: var(--color-surface-gold);
+  color: var(--color-gold-text);
+}
+.tone-blue .cardIcon {
+  background: var(--color-surface-blue);
+  color: var(--color-blue-text);
+}
+
+.cardText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.cardTitle {
+  font-weight: 620;
+  font-size: var(--text-callout);
+  line-height: 1.3;
+}
+
+.cardMeta {
+  font-size: var(--text-caption);
+  color: var(--color-text-tertiary);
+  line-height: 1.35;
+}
+
+.lock {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  color: var(--color-gold-text);
+  opacity: 0.85;
+}

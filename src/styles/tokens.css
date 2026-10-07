@@ -1,0 +1,253 @@
+/*
+ * Bless Them — design tokens
+ * "Warm sacred minimalism": soft natural light, linen, quiet green, a whisper of gold.
+ *
+ * Every colour in the product comes from these semantic tokens. Contrast (WCAG):
+ *   text            13.7–16.3 : 1  (AAA on every surface, light + dark)
+ *   text-secondary   7.4–10.9 : 1  (AAA)
+ *   text-tertiary    5.0– 7.1 : 1  (AA; metadata only)
+ *   on-brand          7.0 / 9.4 : 1 (AAA)
+ * Values verified by scripts in docs/DESIGN_SYSTEM.md.
+ */
+
+:root {
+  color-scheme: light;
+
+  /* ── Colour · surfaces ─────────────────────────────── */
+  --color-bg: #faf7f1;               /* warm ivory */
+  --color-bg-raised: #fffdf9;
+  --color-surface: #fffdf9;          /* cards */
+  --color-surface-sunken: #f1ece3;   /* soft stone wells, inputs */
+  --color-surface-sand: #f4ebdd;     /* blessing + prayer */
+  --color-surface-sage: #e9eee4;
+  --color-surface-blue: #e7edf1;     /* conversation */
+  --color-surface-gold: #f6eedc;
+  --color-border: #e8e0d4;
+  --color-border-strong: #d6ccbd;
+  --color-overlay: rgb(38 31 24 / 0.34);
+
+  /* ── Colour · text ─────────────────────────────────── */
+  --color-text: #23201c;             /* deep charcoal */
+  --color-text-secondary: #514a42;
+  --color-text-tertiary: #6b6359;
+
+  /* ── Colour · brand + accents ──────────────────────── */
+  --color-brand: #3e5b47;            /* deep peaceful sage */
+  --color-brand-hover: #36513f;
+  --color-brand-pressed: #2e4636;
+  --color-on-brand: #faf7f1;
+  --color-brand-text: #3e5b47;
+  --color-brand-soft: #dde6d8;
+  --color-brand-tint: #6e8f76;       /* decorative leaf */
+  --color-gold: #c99a46;             /* decorative only */
+  --color-gold-text: #7f5f22;
+  --color-gold-soft: #f1e3c2;
+  --color-blue: #7591a6;             /* decorative only */
+  --color-blue-text: #40607a;
+  --color-rose: #dca597;
+  --color-focus: #2f6690;
+  --color-danger: #9a3a2c;
+  --color-danger-soft: #f6e2dc;
+  --glow-rgb: 214 172 92;            /* warm gold light */
+
+  /* ── Elevation (warm, soft) ────────────────────────── */
+  --shadow-xs: 0 1px 2px rgb(59 43 25 / 0.06);
+  --shadow-sm: 0 1px 2px rgb(59 43 25 / 0.05), 0 4px 12px -4px rgb(59 43 25 / 0.08);
+  --shadow-md: 0 2px 4px rgb(59 43 25 / 0.04), 0 14px 32px -12px rgb(59 43 25 / 0.16);
+  --shadow-lg: 0 4px 12px rgb(59 43 25 / 0.05), 0 30px 60px -20px rgb(59 43 25 / 0.26);
+  --shadow-inset: inset 0 1px 0 rgb(255 255 255 / 0.7);
+
+  /* ── Typography ────────────────────────────────────── */
+  --font-serif: 'Newsreader Variable', Newsreader, 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --font-sans: 'Figtree Variable', Figtree, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --ts: 1; /* in-app text size, multiplies every type token */
+
+  --text-hero: calc(2.75rem * var(--ts));        /* 44 — onboarding statements */
+  --text-display: calc(2.25rem * var(--ts));     /* 36 — greeting */
+  --text-title-1: calc(1.875rem * var(--ts));    /* 30 */
+  --text-title-2: calc(1.5rem * var(--ts));      /* 24 */
+  --text-title-3: calc(1.1875rem * var(--ts));   /* 19 */
+  --text-scripture: calc(1.4375rem * var(--ts)); /* 23 */
+  --text-blessing: calc(1.3125rem * var(--ts));  /* 21 */
+  --text-reading: calc(1.125rem * var(--ts));    /* 18 — serif body */
+  --text-body: calc(1rem * var(--ts));           /* 16 */
+  --text-callout: calc(0.9375rem * var(--ts));   /* 15 */
+  --text-caption: calc(0.8125rem * var(--ts));   /* 13 */
+  --text-overline: calc(0.75rem * var(--ts));    /* 12 */
+
+  --leading-tight: 1.15;
+  --leading-snug: 1.3;
+  --leading-normal: 1.5;
+  --leading-reading: 1.62;
+
+  /* ── Space · 4/8 grid ──────────────────────────────── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-14: 56px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --gutter: clamp(16px, 5.4vw, 28px);
+
+  /* ── Shape ─────────────────────────────────────────── */
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-xl: 28px;
+  --radius-2xl: 36px;
+  --radius-pill: 999px;
+
+  /* ── Motion ────────────────────────────────────────── */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-soft-spring: cubic-bezier(0.34, 1.32, 0.64, 1);
+  --dur-fast: 180ms;
+  --dur-base: 240ms;
+  --dur-slow: 300ms;
+  --dur-gentle: 600ms;
+
+  /* ── Layout ────────────────────────────────────────── */
+  --touch-min: 44px;
+  --nav-height: 68px;
+  --content-max: 600px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+  /* ── Ambient window light (time of day; see Ambient.tsx) ── */
+  --ambient-a: rgb(244 214 160 / 0.55);
+  --ambient-b: rgb(232 198 176 / 0.35);
+  --ambient-c: rgb(205 222 206 / 0.4);
+}
+
+/* ── Dark: deep warm charcoal, warm off-white, subdued botanicals ── */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --color-bg: #161412;
+  --color-bg-raised: #201d1a;
+  --color-surface: #201d1a;
+  --color-surface-sunken: #110f0d;
+  --color-surface-sand: #2a2420;
+  --color-surface-sage: #1d2620;
+  --color-surface-blue: #1b2329;
+  --color-surface-gold: #2b2519;
+  --color-border: #2f2a25;
+  --color-border-strong: #433b34;
+  --color-overlay: rgb(5 4 3 / 0.62);
+  --color-text: #f2ece3;
+  --color-text-secondary: #cbc2b6;
+  --color-text-tertiary: #a59c90;
+  --color-brand: #afc8ae;
+  --color-brand-hover: #bed4bd;
+  --color-brand-pressed: #9fb99e;
+  --color-on-brand: #13201a;
+  --color-brand-text: #afc8ae;
+  --color-brand-soft: #26332a;
+  --color-brand-tint: #7f9f86;
+  --color-gold: #d4ae6a;
+  --color-gold-text: #d9be86;
+  --color-gold-soft: #3a3020;
+  --color-blue: #8fa8bb;
+  --color-blue-text: #a9c0d2;
+  --color-rose: #c99183;
+  --color-focus: #8fc1e3;
+  --color-danger: #f0a898;
+  --color-danger-soft: #3a2320;
+  --glow-rgb: 220 182 108;
+  --shadow-xs: 0 1px 2px rgb(0 0 0 / 0.3);
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.3), 0 4px 12px -4px rgb(0 0 0 / 0.35);
+  --shadow-md: 0 2px 4px rgb(0 0 0 / 0.25), 0 14px 32px -12px rgb(0 0 0 / 0.55);
+  --shadow-lg: 0 4px 12px rgb(0 0 0 / 0.3), 0 30px 60px -20px rgb(0 0 0 / 0.7);
+  --shadow-inset: inset 0 1px 0 rgb(255 255 255 / 0.04);
+  --ambient-a: rgb(196 150 84 / 0.18);
+  --ambient-b: rgb(150 110 120 / 0.12);
+  --ambient-c: rgb(90 120 100 / 0.14);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --color-bg: #161412;
+    --color-bg-raised: #201d1a;
+    --color-surface: #201d1a;
+    --color-surface-sunken: #110f0d;
+    --color-surface-sand: #2a2420;
+    --color-surface-sage: #1d2620;
+    --color-surface-blue: #1b2329;
+    --color-surface-gold: #2b2519;
+    --color-border: #2f2a25;
+    --color-border-strong: #433b34;
+    --color-overlay: rgb(5 4 3 / 0.62);
+    --color-text: #f2ece3;
+    --color-text-secondary: #cbc2b6;
+    --color-text-tertiary: #a59c90;
+    --color-brand: #afc8ae;
+    --color-brand-hover: #bed4bd;
+    --color-brand-pressed: #9fb99e;
+    --color-on-brand: #13201a;
+    --color-brand-text: #afc8ae;
+    --color-brand-soft: #26332a;
+    --color-brand-tint: #7f9f86;
+    --color-gold: #d4ae6a;
+    --color-gold-text: #d9be86;
+    --color-gold-soft: #3a3020;
+    --color-blue: #8fa8bb;
+    --color-blue-text: #a9c0d2;
+    --color-rose: #c99183;
+    --color-focus: #8fc1e3;
+    --color-danger: #f0a898;
+    --color-danger-soft: #3a2320;
+    --glow-rgb: 220 182 108;
+    --shadow-xs: 0 1px 2px rgb(0 0 0 / 0.3);
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.3), 0 4px 12px -4px rgb(0 0 0 / 0.35);
+    --shadow-md: 0 2px 4px rgb(0 0 0 / 0.25), 0 14px 32px -12px rgb(0 0 0 / 0.55);
+    --shadow-lg: 0 4px 12px rgb(0 0 0 / 0.3), 0 30px 60px -20px rgb(0 0 0 / 0.7);
+    --shadow-inset: inset 0 1px 0 rgb(255 255 255 / 0.04);
+    --ambient-a: rgb(196 150 84 / 0.18);
+    --ambient-b: rgb(150 110 120 / 0.12);
+    --ambient-c: rgb(90 120 100 / 0.14);
+  }
+}
+
+/* Time-of-day light, set on <html data-daypart>. Light theme only; dark keeps it hushed. */
+:root[data-daypart='morning'] {
+  --ambient-a: rgb(246 212 150 / 0.6);
+  --ambient-b: rgb(240 196 170 / 0.38);
+  --ambient-c: rgb(210 226 208 / 0.42);
+}
+:root[data-daypart='day'] {
+  --ambient-a: rgb(240 222 180 / 0.45);
+  --ambient-b: rgb(214 228 214 / 0.45);
+  --ambient-c: rgb(214 226 236 / 0.4);
+}
+:root[data-daypart='evening'] {
+  --ambient-a: rgb(238 190 146 / 0.5);
+  --ambient-b: rgb(222 176 180 / 0.36);
+  --ambient-c: rgb(196 204 224 / 0.36);
+}
+:root[data-daypart='night'] {
+  --ambient-a: rgb(200 196 226 / 0.36);
+  --ambient-b: rgb(186 206 222 / 0.32);
+  --ambient-c: rgb(232 214 180 / 0.3);
+}
+
+/* Dark mode keeps its own hushed ambient light at any time of day. */
+:root[data-theme='dark'][data-daypart] {
+  --ambient-a: rgb(196 150 84 / 0.18);
+  --ambient-b: rgb(150 110 120 / 0.12);
+  --ambient-c: rgb(90 120 100 / 0.14);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light'])[data-daypart] {
+    --ambient-a: rgb(196 150 84 / 0.18);
+    --ambient-b: rgb(150 110 120 / 0.12);
+    --ambient-c: rgb(90 120 100 / 0.14);
+  }
+}

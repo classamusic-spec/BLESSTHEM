@@ -1,0 +1,71 @@
+.scripture {
+  font-family: var(--font-serif);
+  color: var(--color-text);
+  hanging-punctuation: first;
+  text-wrap: pretty;
+}
+
+.card {
+  font-size: var(--text-scripture);
+  line-height: 1.52;
+  font-weight: 400;
+  letter-spacing: -0.003em;
+}
+.context {
+  font-size: var(--text-reading);
+  line-height: var(--leading-reading);
+}
+.moment {
+  font-size: calc(1.875rem * var(--ts));
+  line-height: 1.45;
+  font-weight: 380;
+  letter-spacing: -0.01em;
+}
+
+.heading {
+  margin-bottom: 0.7em;
+  font-family: var(--font-sans);
+  font-size: var(--text-overline);
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+}
+
+.line {
+  margin: 0;
+}
+
+.prose .line + .line {
+  margin-top: 0.6em;
+}
+
+.poetry .line[data-indent='2'] {
+  padding-left: 1.4em;
+}
+.poetry .line[data-indent='3'] {
+  padding-left: 2.6em;
+}
+.poetry .line {
+  padding-left: 0;
+  text-indent: 0;
+}
+.stanza {
+  margin-top: 0.7em !important;
+}
+
+.num {
+  margin-right: 0.28em;
+  font-family: var(--font-sans);
+  font-size: 0.58em;
+  font-weight: 650;
+  color: var(--color-gold-text);
+  vertical-align: 0.5em;
+  line-height: 0;
+}
+
+.highlight {
+  background: linear-gradient(to top, rgb(var(--glow-rgb) / 0.32) 0.38em, transparent 0.38em);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}

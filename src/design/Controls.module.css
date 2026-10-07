@@ -1,0 +1,258 @@
+/* ── Fields ─────────────────────────────── */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  font-size: var(--text-callout);
+  font-weight: 620;
+  color: var(--color-text);
+}
+
+.optional {
+  font-weight: 500;
+  font-size: var(--text-caption);
+  color: var(--color-text-tertiary);
+}
+
+.input {
+  width: 100%;
+  min-height: 54px;
+  padding: 14px 16px;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: max(16px, var(--text-body)); /* ≥16px prevents iOS zoom */
+  line-height: 1.45;
+  box-shadow:
+    0 0 0 1px var(--color-border-strong) inset,
+    var(--shadow-xs);
+  transition: box-shadow var(--dur-base) var(--ease-out);
+  appearance: none;
+}
+.input::placeholder {
+  color: var(--color-text-tertiary);
+  opacity: 0.85;
+}
+.input:focus-visible,
+.input:focus {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--color-focus) inset,
+    0 0 0 4px rgb(47 102 144 / 0.12);
+}
+.invalid {
+  box-shadow: 0 0 0 2px var(--color-danger) inset;
+}
+
+.textarea {
+  min-height: 132px;
+  resize: vertical;
+}
+
+.serifInput {
+  font-family: var(--font-serif);
+  font-size: max(17px, var(--text-reading));
+  line-height: 1.6;
+}
+
+.hint {
+  font-size: var(--text-caption);
+  color: var(--color-text-tertiary);
+  line-height: 1.45;
+}
+
+.error {
+  font-size: var(--text-caption);
+  font-weight: 560;
+  color: var(--color-danger);
+}
+
+/* ── Switch ─────────────────────────────── */
+.switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  width: 52px;
+  height: 32px;
+  padding: 3px;
+  border-radius: var(--radius-pill);
+  background: var(--color-border-strong);
+  transition: background-color var(--dur-base) var(--ease-out);
+}
+.switch::after {
+  /* larger hit area */
+  content: '';
+  position: absolute;
+  inset: -6px;
+}
+.switchOn {
+  justify-content: flex-end;
+  background: var(--color-brand);
+}
+.knob {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.18), 0 0 0 0.5px rgb(0 0 0 / 0.04);
+}
+
+/* ── Segmented ──────────────────────────── */
+.segmented {
+  display: flex;
+  gap: 2px;
+  padding: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-sunken);
+  box-shadow: 0 0 0 1px var(--color-border) inset;
+}
+.segment {
+  position: relative;
+  flex: 1;
+  min-height: 40px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-caption);
+  font-weight: 620;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  transition: color var(--dur-base) var(--ease-out);
+}
+.segmentOn {
+  color: var(--color-text);
+}
+.segmentPill {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+.segmentLabel {
+  position: relative;
+}
+
+/* ── Choice cards ───────────────────────── */
+.choice {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  width: 100%;
+  min-height: 68px;
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  text-align: left;
+  box-shadow:
+    0 0 0 1px var(--color-border) inset,
+    var(--shadow-xs);
+  transition:
+    box-shadow var(--dur-base) var(--ease-out),
+    background-color var(--dur-base) var(--ease-out);
+}
+@media (hover: hover) {
+  .choice:hover:not(.choiceOn) {
+    box-shadow:
+      0 0 0 1px var(--color-border-strong) inset,
+      var(--shadow-sm);
+  }
+}
+.choiceOn {
+  background: color-mix(in srgb, var(--color-brand-soft) 55%, var(--color-surface));
+  box-shadow:
+    0 0 0 2px var(--color-brand) inset,
+    var(--shadow-sm);
+}
+
+.choiceIcon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: 14px;
+  background: var(--color-surface-sand);
+  color: var(--color-gold-text);
+  font-size: 22px;
+}
+.choiceOn .choiceIcon {
+  background: var(--color-surface);
+  color: var(--color-brand-text);
+}
+
+.choiceText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+.choiceTitle {
+  font-size: var(--text-body);
+  font-weight: 620;
+  color: var(--color-text);
+}
+.choiceDesc {
+  font-size: var(--text-caption);
+  color: var(--color-text-tertiary);
+}
+
+.choiceCheck {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  flex: none;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1.5px var(--color-border-strong) inset;
+  color: var(--color-on-brand);
+}
+.choiceOn .choiceCheck {
+  background: var(--color-brand);
+  box-shadow: none;
+}
+.choiceCheck > span {
+  display: grid;
+  place-items: center;
+}
+
+/* ── Progress ───────────────────────────── */
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.dot {
+  display: block;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--color-border-strong);
+}
+.dotOn {
+  background: var(--color-brand);
+}
+
+.ring {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+}
+.ring svg {
+  position: absolute;
+  inset: 0;
+}
+.ringLabel {
+  position: relative;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+}

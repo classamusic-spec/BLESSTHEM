@@ -1,0 +1,66 @@
+.avatar {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  border-radius: 50%;
+  background: var(--hue-bg);
+  color: var(--hue-fg);
+  box-shadow:
+    inset 0 0 0 1px rgb(0 0 0 / 0.04),
+    inset 0 1px 0 rgb(255 255 255 / 0.5);
+  user-select: none;
+}
+
+.initials {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  transform: translateY(0.02em);
+  font-variation-settings: 'opsz' 36;
+}
+
+.badge {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-brand);
+  color: var(--color-on-brand);
+  box-shadow: 0 0 0 2.5px var(--color-bg);
+}
+
+.sage { --hue-bg: #dce6d6; --hue-fg: #34503d; }
+.sky { --hue-bg: #dbe6ee; --hue-fg: #31516a; }
+.sand { --hue-bg: #f0e3cc; --hue-fg: #694d20; }
+.rose { --hue-bg: #f3ddd7; --hue-fg: #773e32; }
+.lavender { --hue-bg: #e5e0ef; --hue-fg: #4d436e; }
+.clay { --hue-bg: #ecdacd; --hue-fg: #6c452f; }
+.moss { --hue-bg: #e1e6cd; --hue-fg: #485424; }
+.gold { --hue-bg: #f2e5c2; --hue-fg: #685017; }
+
+:global(:root[data-theme='dark']) .avatar {
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.05);
+}
+:global(:root[data-theme='dark']) .sage { --hue-bg: #26332a; --hue-fg: #bfd3bc; }
+:global(:root[data-theme='dark']) .sky { --hue-bg: #22303b; --hue-fg: #b9cddd; }
+:global(:root[data-theme='dark']) .sand { --hue-bg: #352d20; --hue-fg: #e2cc9f; }
+:global(:root[data-theme='dark']) .rose { --hue-bg: #3a2723; --hue-fg: #e8bcb0; }
+:global(:root[data-theme='dark']) .lavender { --hue-bg: #2c2836; --hue-fg: #cdc4e4; }
+:global(:root[data-theme='dark']) .clay { --hue-bg: #362a22; --hue-fg: #e2c2ad; }
+:global(:root[data-theme='dark']) .moss { --hue-bg: #2b301f; --hue-fg: #cfd6a8; }
+:global(:root[data-theme='dark']) .gold { --hue-bg: #352e1b; --hue-fg: #e6cf91; }
+
+@media (prefers-color-scheme: dark) {
+  :global(:root:not([data-theme='light'])) .sage { --hue-bg: #26332a; --hue-fg: #bfd3bc; }
+  :global(:root:not([data-theme='light'])) .sky { --hue-bg: #22303b; --hue-fg: #b9cddd; }
+  :global(:root:not([data-theme='light'])) .sand { --hue-bg: #352d20; --hue-fg: #e2cc9f; }
+  :global(:root:not([data-theme='light'])) .rose { --hue-bg: #3a2723; --hue-fg: #e8bcb0; }
+  :global(:root:not([data-theme='light'])) .lavender { --hue-bg: #2c2836; --hue-fg: #cdc4e4; }
+  :global(:root:not([data-theme='light'])) .clay { --hue-bg: #362a22; --hue-fg: #e2c2ad; }
+  :global(:root:not([data-theme='light'])) .moss { --hue-bg: #2b301f; --hue-fg: #cfd6a8; }
+  :global(:root:not([data-theme='light'])) .gold { --hue-bg: #352e1b; --hue-fg: #e6cf91; }
+}

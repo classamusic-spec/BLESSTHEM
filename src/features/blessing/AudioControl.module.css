@@ -1,0 +1,78 @@
+.audio {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  overflow: hidden;
+  transition: background-color var(--dur-base) var(--ease-out);
+}
+.active {
+  background: var(--color-surface-sunken);
+}
+
+.main {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-caption);
+  font-weight: 650;
+  color: var(--color-brand-text);
+}
+.main:hover {
+  background: rgb(var(--glow-rgb) / 0.1);
+}
+
+.plus {
+  display: grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-gold-soft);
+  color: var(--color-gold-text);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.extra {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-right: var(--space-1);
+  white-space: nowrap;
+}
+
+.track {
+  position: relative;
+  width: 64px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--color-border-strong);
+  overflow: hidden;
+}
+.fill {
+  position: absolute;
+  inset: 0;
+  background: var(--color-brand);
+  transform-origin: left;
+  transition: transform 300ms linear;
+}
+
+.rate,
+.stop {
+  display: grid;
+  place-items: center;
+  min-width: 36px;
+  min-height: 36px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+}
+.rate:hover,
+.stop:hover {
+  background: var(--color-surface);
+}

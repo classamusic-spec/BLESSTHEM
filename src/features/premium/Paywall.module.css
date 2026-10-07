@@ -1,0 +1,208 @@
+.paywall {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-top: var(--space-2);
+}
+
+.eyebrow {
+  margin-top: var(--space-3);
+  color: var(--color-gold-text);
+}
+
+.title {
+  margin-top: var(--space-3);
+  font-family: var(--font-serif);
+  font-size: var(--text-title-1);
+  font-weight: 420;
+  line-height: var(--leading-tight);
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.lede {
+  margin-top: var(--space-3);
+  color: var(--color-text-secondary);
+  font-size: var(--text-callout);
+  line-height: var(--leading-normal);
+}
+
+.benefits {
+  display: grid;
+  gap: var(--space-4);
+  margin: var(--space-8) 0 var(--space-8);
+}
+
+.benefit {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-size: var(--text-callout);
+  line-height: 1.45;
+}
+.benefit strong {
+  display: block;
+  font-weight: 650;
+}
+.benefitBody {
+  display: block;
+  color: var(--color-text-secondary);
+}
+
+.benefitIcon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  flex: none;
+  border-radius: 12px;
+  background: var(--color-surface-sage);
+  color: var(--color-brand-text);
+}
+
+.plans {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.plan {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 72px;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  text-align: left;
+  box-shadow:
+    0 0 0 1px var(--color-border-strong) inset,
+    var(--shadow-xs);
+  transition: box-shadow var(--dur-base) var(--ease-out), background-color var(--dur-base) var(--ease-out);
+}
+.planOn {
+  background: color-mix(in srgb, var(--color-brand-soft) 50%, var(--color-surface));
+  box-shadow:
+    0 0 0 2px var(--color-brand) inset,
+    var(--shadow-sm);
+}
+
+.radio {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  flex: none;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1.5px var(--color-border-strong) inset;
+  color: var(--color-on-brand);
+}
+.planOn .radio {
+  background: var(--color-brand);
+  box-shadow: none;
+}
+
+.planText {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 2px;
+}
+.planName {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: 680;
+}
+.planDetail {
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+}
+.planPrice {
+  font-size: var(--text-callout);
+  font-weight: 650;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--color-gold-soft);
+  color: var(--color-gold-text);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+.terms {
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  text-align: center;
+  text-wrap: pretty;
+}
+
+.error {
+  font-size: var(--text-caption);
+  font-weight: 560;
+  color: var(--color-danger);
+  text-align: center;
+}
+
+.links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-caption);
+  color: var(--color-text-tertiary);
+}
+.links a,
+.links button {
+  min-height: 44px;
+  padding: 0 var(--space-1);
+  color: var(--color-text-secondary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.preview {
+  text-align: center;
+  font-size: var(--text-caption);
+  color: var(--color-text-tertiary);
+}
+
+.done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  text-align: center;
+  padding: var(--space-10) 0 var(--space-8);
+}
+.doneTitle {
+  font-family: var(--font-serif);
+  font-size: var(--text-title-1);
+  font-weight: 420;
+  letter-spacing: -0.015em;
+}
+.doneBody {
+  max-width: 34ch;
+  color: var(--color-text-secondary);
+  line-height: var(--leading-normal);
+  margin-bottom: var(--space-2);
+}

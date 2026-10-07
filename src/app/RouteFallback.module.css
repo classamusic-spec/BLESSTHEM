@@ -1,0 +1,22 @@
+.fallback {
+  display: grid;
+  place-items: center;
+  min-height: 70dvh;
+}
+.mark {
+  opacity: 0;
+  animation:
+    appear 400ms var(--ease-out) 300ms forwards,
+    breathe 2.4s var(--ease-in-out) 700ms infinite;
+}
+@keyframes appear {
+  to {
+    opacity: 0.85;
+  }
+}
+@keyframes breathe {
+  50% {
+    transform: scale(1.06);
+    opacity: 1;
+  }
+}

@@ -1,0 +1,178 @@
+.card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: var(--space-7) var(--space-6) var(--space-6);
+  border-radius: var(--radius-2xl);
+  background: var(--color-surface);
+  box-shadow:
+    0 0 0 1px var(--color-border) inset,
+    var(--shadow-md);
+}
+
+@media (min-width: 480px) {
+  .card {
+    padding: var(--space-10) var(--space-8) var(--space-8);
+  }
+}
+
+/* A soft wash of window light across the top of the card */
+.light {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 260px;
+  z-index: -1;
+  background:
+    radial-gradient(70% 90% at 92% -10%, rgb(var(--glow-rgb) / 0.2), transparent 70%),
+    radial-gradient(60% 70% at -10% 0%, rgb(170 200 175 / 0.14), transparent 70%);
+  pointer-events: none;
+}
+
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+.eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 6px;
+  padding-top: 11px;
+  font-size: var(--text-overline);
+  font-weight: 680;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+.theme {
+  color: var(--color-gold-text);
+}
+.dot {
+  opacity: 0.6;
+}
+
+.tools {
+  display: flex;
+  gap: 0;
+  margin: 0 -10px 0 0;
+}
+
+/* ── Scripture ─────────────────────────── */
+.scripture {
+  position: relative;
+}
+
+.reference {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+  font-size: var(--text-callout);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--color-brand-text);
+}
+.translation {
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.1em;
+  color: var(--color-text-tertiary);
+}
+
+.verse {
+  margin: 0;
+  position: relative;
+}
+.verse::before {
+  content: '“';
+  position: absolute;
+  left: -0.12em;
+  top: -0.48em;
+  font-family: var(--font-serif);
+  font-size: 4.6rem;
+  line-height: 1;
+  color: rgb(var(--glow-rgb) / 0.32);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.scriptureActions,
+.panelActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+  margin: var(--space-4) 0 0 calc(var(--space-3) * -1);
+}
+
+.ornament {
+  margin: var(--space-8) 0 var(--space-7);
+}
+
+/* ── Sections ──────────────────────────── */
+.section + .section {
+  margin-top: var(--space-8);
+}
+
+.label {
+  margin-bottom: var(--space-3);
+  font-family: var(--font-sans);
+  font-size: var(--text-overline);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-brand-text);
+}
+
+.reflection,
+.prayer,
+.talk {
+  font-family: var(--font-serif);
+  font-size: var(--text-reading);
+  line-height: var(--leading-reading);
+  color: var(--color-text);
+  text-wrap: pretty;
+}
+
+.blessingPanel {
+  margin-left: calc(var(--space-2) * -1);
+  margin-right: calc(var(--space-2) * -1);
+  padding: var(--space-6) var(--space-5) var(--space-4);
+  border-radius: var(--radius-xl);
+  background:
+    radial-gradient(120% 80% at 100% 0%, rgb(var(--glow-rgb) / 0.14), transparent 60%),
+    var(--color-surface-sand);
+}
+.blessingPanel .label {
+  color: var(--color-gold-text);
+}
+
+.blessing {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-blessing);
+  line-height: 1.58;
+  font-weight: 400;
+  letter-spacing: -0.003em;
+  color: var(--color-text);
+  text-wrap: pretty;
+}
+
+.talkPanel {
+  margin-left: calc(var(--space-2) * -1);
+  margin-right: calc(var(--space-2) * -1);
+  padding: var(--space-5);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface-blue);
+}
+.talkPanel .label {
+  color: var(--color-blue-text);
+}
+
+.footer {
+  margin-top: var(--space-10);
+}

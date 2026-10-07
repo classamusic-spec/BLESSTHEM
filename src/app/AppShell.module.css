@@ -1,0 +1,18 @@
+.shell {
+  min-height: 100dvh;
+}
+
+.content {
+  position: relative;
+  min-height: 100dvh;
+}
+
+@media (min-width: 900px) {
+  .shell {
+    display: grid;
+    grid-template-columns: 264px 1fr;
+  }
+  .content {
+    grid-column: 2;
+  }
+}

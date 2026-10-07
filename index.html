@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Bless Them — Speak Scripture over the people you love</title>
+    <meta name="description" content="Personalized Scripture blessings and prayers for the people God has placed in your life. A calm, two-minute daily ritual for families." />
+    <meta name="theme-color" content="#FAF7F1" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#161412" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Bless Them" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta property="og:title" content="Bless Them" />
+    <meta property="og:description" content="Speak Scripture over the people you love." />
+    <meta property="og:image" content="/og-image.png" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/icons/icon-192.png" sizes="192x192" type="image/png" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <script>
+      // Apply the saved theme and text size before first paint (no flash).
+      (function () {
+        try {
+          var raw = localStorage.getItem('blessthem:v1');
+          var s = raw ? JSON.parse(raw).state.settings : null;
+          var root = document.documentElement;
+          if (s && (s.theme === 'light' || s.theme === 'dark')) root.dataset.theme = s.theme;
+          if (s && s.textScale) root.style.setProperty('--ts', String(s.textScale));
+        } catch (e) {}
+      })();
+    </script>
+    <style>
+      /* Splash — painted before any script runs. */
+      html, #splash { background: #FAF7F1; }
+      @media (prefers-color-scheme: dark) { html:not([data-theme='light']), html:not([data-theme='light']) #splash { background: #161412; } }
+      html[data-theme='dark'], html[data-theme='dark'] #splash { background: #161412; }
+      #splash {
+        position: fixed; inset: 0; z-index: 100; display: grid; place-items: center;
+        transition: opacity 420ms cubic-bezier(.22,1,.36,1), visibility 0s linear 420ms;
+      }
+      #splash.is-done { opacity: 0; visibility: hidden; }
+      #splash svg { width: 64px; height: 64px; opacity: 0; animation: splash-in 700ms cubic-bezier(.22,1,.36,1) 80ms forwards; }
+      @keyframes splash-in { from { opacity: 0; transform: translateY(6px) scale(.96); } to { opacity: 1; transform: none; } }
+      @media (prefers-reduced-motion: reduce) { #splash svg { animation: none; opacity: 1; } }
+    </style>
+  </head>
+  <body>
+    <div id="splash" aria-hidden="true">
+      <svg viewBox="0 0 64 64" role="presentation">
+        <circle cx="32" cy="33" r="6.4" fill="#C99A46" />
+        <path d="M30.8 56.6C16.2 55 7 43.4 9.4 26.6c.6-4.2 1.9-8.4 3.8-12.4 10 7.4 16.6 21 17.6 42.4Z" fill="#3E5B47" />
+        <path d="M33.2 56.6C47.8 55 57 43.4 54.6 26.6c-.6-4.2-1.9-8.4-3.8-12.4-10 7.4-16.6 21-17.6 42.4Z" fill="#6E8F76" />
+      </svg>
+    </div>
+    <div id="root"></div>
+    <noscript>Bless Them needs JavaScript to prepare your blessings.</noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
