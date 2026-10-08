@@ -1,0 +1,10 @@
+node_modules
+dist
+scripture-src
+scenery-src
+screenshots
+test-results
+playwright-report
+coverage
+dev-dist
+.vite
