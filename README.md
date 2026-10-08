@@ -7,7 +7,7 @@
 <p align="center"><em>Speak Scripture over the people you love.</em></p>
 
 <p align="center">
-  <img src="docs/screenshots/first-blessing.webp" width="240" alt="A personalized blessing for Noah, with Joshua 1:9 and a blessing written in his name">
+  <img src="docs/screenshots/first-blessing.webp" width="240" alt="A personalized blessing for Noah, with Psalm 27:14 and a blessing written in his name">
   &nbsp;
   <img src="docs/screenshots/today.webp" width="240" alt="The Today screen: choosing who to bless, an upcoming birthday, and today’s blessing for Noah">
   &nbsp;
@@ -44,7 +44,7 @@ Bless Them is not a Bible reader, a streak machine or an AI oracle. It never inv
     <td align="center"><img src="docs/screenshots/welcome.webp" width="200" alt="Welcome screen with Pip"><br><sub>Welcome</sub></td>
     <td align="center"><img src="docs/screenshots/onboarding-topics.webp" width="200" alt="Choosing what to pray about"><br><sub>A blessing before an account</sub></td>
     <td align="center"><img src="docs/screenshots/reading-view-night.webp" width="200" alt="The blessing moment at night"><br><sub>The blessing moment</sub></td>
-    <td align="center"><img src="docs/screenshots/share-card.webp" width="200" alt="A share card"><br><sub>Share cards</sub></td>
+    <td align="center"><img src="docs/screenshots/share-card.webp" width="200" alt="A share card with the name switched off: Today I’m praying courage over my son"><br><sub>Share cards</sub></td>
   </tr>
   <tr>
     <td align="center"><img src="docs/screenshots/library.webp" width="200" alt="The topic library"><br><sub>Library</sub></td>
@@ -57,6 +57,11 @@ Bless Them is not a Bible reader, a streak machine or an AI oracle. It never inv
     <td align="center"><img src="docs/screenshots/paywall.webp" width="200" alt="The Bless Them+ paywall"><br><sub>An honest paywall</sub></td>
     <td align="center"><img src="docs/screenshots/safety.webp" width="200" alt="Crisis support shown before Scripture"><br><sub>Help comes first</sub></td>
     <td align="center"><img src="docs/screenshots/today-dark.webp" width="200" alt="Today in dark mode"><br><sub>Dark mode</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="docs/screenshots/journeys.webp" width="200" alt="Prayer journeys, from 7 Days of Courage to 7 Days of Peace Before Bed"><br><sub>Prayer journeys</sub></td>
+    <td align="center"><img src="docs/screenshots/pip-asleep.webp" width="200" alt="After a late-night prayer, Pip falls asleep beside Covered in prayer today"><br><sub>Pip, after a night prayer</sub></td>
+    <td align="center" colspan="2"><img src="docs/screenshots/desktop.webp" width="420" alt="Today on a desktop browser, with the sidebar navigation"><br><sub>Desktop</sub></td>
   </tr>
 </table>
 
