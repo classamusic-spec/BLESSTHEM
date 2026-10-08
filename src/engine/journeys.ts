@@ -1,5 +1,5 @@
 import { entriesForTopic } from '@/content/blessings';
-import { TOPIC_BY_ID } from '@/content/taxonomy';
+import { TOPICS, TOPIC_BY_ID } from '@/content/taxonomy';
 import type { Journey } from '@/content/journeys';
 import type { CuratedEntry } from '@/content/types';
 import type { JourneyProgress, Person } from '@/data/models';
@@ -35,7 +35,15 @@ export function journeyPlan(journey: Journey, person: Person): PlannedDay[] {
       }
     }
     if (!pool.length) {
-      // Last resort: allow a passage already used, but never the same entry twice in a row.
+      // Then anything suitable in the same part of the library (e.g. “Their Heart”).
+      const category = TOPIC_BY_ID[day.topic]?.category;
+      for (const t of TOPICS.filter((x) => x.category === category && x.id !== day.topic)) {
+        pool = candidates(t.id);
+        if (pool.length) break;
+      }
+    }
+    if (!pool.length) {
+      // Last resort: allow a passage already used earlier in the journey.
       pool = entriesForTopic(day.topic).filter((e) => entrySuits(e, person));
     }
     const entry = pool.length ? pool[Math.floor(rand() * pool.length)] : null;

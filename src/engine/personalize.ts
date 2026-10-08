@@ -39,6 +39,9 @@ export interface ChooseOptions {
   avoid?: string[];
 }
 
+/** entry id → passage reference, so the same passage under two topics counts as a repeat. */
+const ENTRY_BY_REF_ID = new Map(ENTRIES.map((e) => [e.id, e.ref]));
+
 const DEFAULT_TOPICS: Record<string, TopicId[]> = {
   little: ['faith', 'protection', 'sleep', 'kindness', 'gratitude'],
   child: ['faith', 'courage', 'kindness', 'wisdom', 'friendship'],
@@ -143,38 +146,41 @@ export function chooseDaily(opts: ChooseOptions): DailyChoice | null {
     return entry ? { entry, topicId: entry.topic, reason: 'A blessing for today' } : null;
   }
 
-  // 3 ─ Pick a topic, then a passage within it (falling back across topics if a topic is exhausted).
-  const tried = new Set<TopicId>();
-  while (tried.size < topicOrder.length) {
-    const remaining = topicOrder.filter(([t]) => !tried.has(t)).map(([item, weight]) => ({ item, weight }));
-    const topicId = weightedPick(remaining, rand)!;
-    tried.add(topicId);
-    const entry = pickEntry(entriesForTopic(topicId).filter((e) => entrySuits(e, person)), mine, date, rand, opts.avoid);
-    if (entry) {
-      const focusHit = person.focusTopics.includes(topicId) || opts.topic === topicId;
-      return {
-        entry,
-        topicId,
-        reason: focusHit ? `Because you’re praying about ${TOPIC_BY_ID[topicId].title.toLowerCase()}` : 'A blessing for today',
-      };
+  // 3 ─ Pick a topic, then a passage within it. First pass never repeats a passage from
+  //     the past week; only if every topic is exhausted do we allow an older favourite back.
+  for (const strict of [true, false]) {
+    const tried = new Set<TopicId>();
+    while (tried.size < topicOrder.length) {
+      const remaining = topicOrder.filter(([t]) => !tried.has(t)).map(([item, weight]) => ({ item, weight }));
+      const topicId = weightedPick(remaining, rand)!;
+      tried.add(topicId);
+      const entry = pickEntry(entriesForTopic(topicId).filter((e) => entrySuits(e, person)), mine, date, rand, opts.avoid, strict);
+      if (entry) {
+        const focusHit = person.focusTopics.includes(topicId) || opts.topic === topicId;
+        return {
+          entry,
+          topicId,
+          reason: focusHit ? `Because you’re praying about ${TOPIC_BY_ID[topicId].title.toLowerCase()}` : 'A blessing for today',
+        };
+      }
     }
   }
   return null;
 }
 
 /** Chooses an entry, preferring ones not used for this person in the last month. */
-function pickEntry(pool: CuratedEntry[], history: Blessing[], date: DayKey, rand: () => number, avoid: string[] = []): CuratedEntry | undefined {
+function pickEntry(pool: CuratedEntry[], history: Blessing[], date: DayKey, rand: () => number, avoid: string[] = [], strict = false): CuratedEntry | undefined {
   if (!pool.length) return undefined;
   const lastUsed = new Map<string, DayKey>();
   for (const b of history) {
     const prev = lastUsed.get(b.entryId);
     if (!prev || b.date > prev) lastUsed.set(b.entryId, b.date);
   }
-  const recentRefs = new Set(
-    history.filter((b) => daysBetween(b.date, date) <= 21).map((b) => ENTRIES.find((e) => e.id === b.entryId)?.ref),
-  );
+  const recentRefs = new Set(history.filter((b) => daysBetween(b.date, date) <= 21).map((b) => ENTRY_BY_REF_ID.get(b.entryId)));
+  const weekRefs = new Set(history.filter((b) => daysBetween(b.date, date) <= 7).map((b) => ENTRY_BY_REF_ID.get(b.entryId)));
   const candidates = pool
     .filter((e) => !avoid.includes(e.id))
+    .filter((e) => !strict || !weekRefs.has(e.ref))
     .map((e) => {
       const used = lastUsed.get(e.id);
       const ago = used ? daysBetween(used, date) : 999;

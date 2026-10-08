@@ -12,7 +12,7 @@ import { ChoiceCard, ProgressDots, TextArea, TextField } from '@/design/Controls
 import { Ambient } from '@/design/Layout';
 import { ease, fadeUp, stagger } from '@/design/motion';
 import { TopicChip } from '@/design/Topic';
-import { chooseDaily, topicSuits } from '@/engine/personalize';
+import { chooseDaily, defaultTopicsFor, topicSuits } from '@/engine/personalize';
 import { classifyTopics } from '@/engine/search';
 import { checkSafety, type SafetyResult } from '@/engine/safety';
 import { headingName } from '@/engine/compose';
@@ -128,7 +128,9 @@ export default function Onboarding() {
   const preview = useMemo(() => {
     if (!person) return null;
     const fromConcern = person.concern ? classifyTopics(person.concern).map((t) => t.topic).find((t) => topicSuits(t, person)) : undefined;
-    const topic = fromConcern ?? draft.topics.find((t) => topicSuits(t, person));
+    // The first impression should reflect exactly what they chose (or, if they let us
+    // choose, the most fitting default for this relationship and age).
+    const topic = fromConcern ?? draft.topics.find((t) => topicSuits(t, person)) ?? defaultTopicsFor(person)[0];
     return chooseDaily({ person, date: dayKey(), history: [], topic });
   }, [person, draft.topics]);
 

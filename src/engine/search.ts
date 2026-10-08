@@ -132,8 +132,11 @@ export interface TopicScore {
 }
 
 /** Maps free text to topics. Used by search and to weight a parent’s optional note. */
+/** “Prayer for my son who…”, “scripture about…” — the framing, not the need. */
+const FRAMING = /\b(a |an |some )?(prayers?|scriptures?|bible verses?|verses?|blessings?|passages?)\s+(for|about|over|on|when|before|after|to help|to)\b/g;
+
 export function classifyTopics(text: string): TopicScore[] {
-  const q = ` ${normalize(text)} `;
+  const q = ` ${normalize(text).replace(FRAMING, ' ')} `;
   const scores = new Map<TopicId, TopicScore>();
   const bump = (topic: TopicId, w: number, term: string) => {
     const cur = scores.get(topic) ?? { topic, score: 0, matched: [] };

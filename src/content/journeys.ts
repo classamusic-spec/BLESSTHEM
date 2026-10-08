@@ -103,7 +103,7 @@ export const JOURNEYS: Journey[] = [
     description: 'Two weeks of blessings for belonging, kindness, forgiveness and wise friendships.',
     icon: 'UsersThree',
     tone: 'rose',
-    ages: ['preschool', 'elementary', 'tween', 'teen', 'young-adult'],
+    ages: ['elementary', 'tween', 'teen', 'young-adult'],
     days: [
       d('A faithful friend', 'friendship'),
       d('Kind words', 'kindness'),
@@ -128,6 +128,7 @@ export const JOURNEYS: Journey[] = [
     description: 'Three weeks of blessings for wise hearts, clear minds and steady character.',
     icon: 'Compass',
     tone: 'sand',
+    ages: ['elementary', 'tween', 'teen', 'young-adult', 'adult'],
     days: [
       d('Ask for wisdom', 'wisdom'),
       d('A teachable heart', 'learning'),

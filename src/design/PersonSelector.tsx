@@ -44,6 +44,7 @@ export function PersonSelector({ people, selectedId, prayedIds, onSelect, onAdd,
               type="button"
               role="radio"
               aria-checked={selected}
+              aria-label={prayedIds?.has(p.id) ? `${p.name}, prayed for today` : p.name}
               tabIndex={selected || (!selectedId && i === 0) ? 0 : -1}
               className={cx(styles.person, selected && styles.selected)}
               onClick={() => {
@@ -58,9 +59,8 @@ export function PersonSelector({ people, selectedId, prayedIds, onSelect, onAdd,
                   <PersonAvatar person={p} size={56} prayed={prayedIds?.has(p.id)} />
                 </motion.span>
               </span>
-              <span className={styles.name}>
+              <span className={styles.name} aria-hidden="true">
                 {p.name}
-                {prayedIds?.has(p.id) && <span className="visually-hidden">, prayed for today</span>}
               </span>
             </button>
           );
