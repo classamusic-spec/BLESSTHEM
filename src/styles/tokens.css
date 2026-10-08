@@ -2,12 +2,13 @@
  * Bless Them — design tokens
  * "Warm sacred minimalism": soft natural light, linen, quiet green, a whisper of gold.
  *
- * Every colour in the product comes from these semantic tokens. Contrast (WCAG):
- *   text            13.7–16.3 : 1  (AAA on every surface, light + dark)
+ * Every colour in the product comes from these semantic tokens. Contrast (WCAG),
+ * across every surface in light and dark:
+ *   text            12.9–16.3 : 1  (AAA)
  *   text-secondary   7.4–10.9 : 1  (AAA)
  *   text-tertiary    5.0– 7.1 : 1  (AA; metadata only)
- *   on-brand          7.0 / 9.4 : 1 (AAA)
- * Values verified by scripts in docs/DESIGN_SYSTEM.md.
+ *   on-brand         7.0–10.7 : 1  (AAA)
+ * `npm run contrast` (scripts/contrast.mjs) re-checks every pairing and fails below target.
  */
 
 :root {
