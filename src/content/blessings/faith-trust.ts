@@ -240,7 +240,7 @@ export const entries: CuratedEntry[] = [
       adult: 'What are you waiting on right now? I would love to carry it to God with you.',
     },
     ages: ['teen', 'young-adult', 'adult'],
-    occasions: ['illness', 'surgery'],
+    occasions: ['illness'],
     keywords: ['waiting', 'results', 'college', 'acceptance', 'job search', 'diagnosis', 'uncertain', 'impatient', 'future'],
     notes:
       '‘My times’ means the seasons and circumstances of life, not a fixed date of death or a promise of a particular outcome. David prays this amid real suffering; don’t present trust as a shortcut past lament.',

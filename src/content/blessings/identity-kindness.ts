@@ -129,7 +129,7 @@ export const entries: CuratedEntry[] = [
     id: 'confidence-psa-3-3',
     topic: 'confidence',
     ref: 'PSA 3:3',
-    contextRef: 'PSA 3:1-8',
+    contextRef: 'PSA 3:1-6',
     contextNote:
       'David wrote this psalm while fleeing a rebellion led by his own son, Absalom. Many were saying God would not rescue him. In that low moment he calls God his shield and the One who lifts his head. By principle, his trust can become ours whenever we feel small.',
     reflection:

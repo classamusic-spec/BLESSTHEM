@@ -180,7 +180,7 @@ export const entries: CuratedEntry[] = [
     ref: 'COL 3:23-24',
     contextRef: 'COL 3:22-4:1',
     contextNote:
-      'Paul is speaking to enslaved people in Roman households, who had little say over their work and could not normally inherit anything. He gives their labor dignity, since it is done for the Lord, who promises them an inheritance, and then reminds their masters that they answer to God too. This is not an endorsement of slavery; it applies by principle to all honest work.',
+      'Paul is speaking to enslaved people in Roman households, whose work was seldom their own choice and seldom rewarded. He gives their labor dignity: it is done for the Lord, who promises them an inheritance no master could give or take away. Then he reminds the masters that they answer to God too. This is not an endorsement of slavery; it applies by principle to all honest work.',
     reflection:
       'Paul spoke these words to people whose work was rarely noticed or thanked. He told them it mattered because the Lord saw it and was the one they truly served. That changes every job, from stacking shelves to leading a meeting. We work well not to earn God’s love, but because we already belong to him.',
     blessing:
