@@ -546,13 +546,17 @@ function AboutSection() {
         <h3>Typography & icons</h3>
         <p>Newsreader and Figtree (SIL Open Font License). Icons by Phosphor (MIT).</p>
         <h3>Photography</h3>
-        <p>Every photograph is a real place, chosen by hand: public-domain work by park rangers and foresters, and photographers who share their work freely. Thank you to each of them.</p>
+        <p>Every photograph is a real place, chosen by hand: public-domain work by park rangers and foresters, and photographers who share their work freely. Each is gently graded and resized for the app. Thank you to each of them.</p>
         <ul role="list" className={styles.credits}>
           {PHOTO_CREDITS.map((c) => (
             <li key={c.id}>
               <span className={styles.creditPlace}>{c.description}</span>
               <span className={styles.small}>
                 <a href={c.page} target="_blank" rel="noreferrer">
+                  “{c.title.trim()}”
+                </a>
+                {' by '}
+                <a href={c.creatorUrl} target="_blank" rel="noreferrer">
                   {c.creator}
                 </a>
                 {' · '}

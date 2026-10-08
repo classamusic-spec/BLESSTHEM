@@ -9,6 +9,7 @@ This document records the decisions behind the build: what ships today, what the
 - [Code layout and dependency rules](#code-layout-and-dependency-rules)
 - [Scripture](#scripture)
 - [Curated content](#curated-content)
+- [Scenery](#scenery)
 - [The personalization engine](#the-personalization-engine)
 - [AI boundaries](#ai-boundaries)
 - [Data, state and offline](#data-state-and-offline)
@@ -65,7 +66,7 @@ content  →  engine  →  data  →  services  →  features / design / app
 
 | Layer | Path | Rules |
 | --- | --- | --- |
-| Content | `src/content/` | Plain data and lookups: taxonomy, journeys, curated entries, Scripture. No React, and readable by the Node build scripts. |
+| Content | `src/content/` | Plain data and lookups: taxonomy, journeys, curated entries, Scripture and the scenery manifest. No React, and readable by the Node build scripts. |
 | Engine | `src/engine/` | Pure functions: compose, personalize, search, safety, rhythm, journeys. Deterministic, no I/O, unit-tested. |
 | Data | `src/data/` | The model (`models.ts`) and the Zustand store (`store.ts`). This is the only place state changes. |
 | Services | `src/services/` | Platform seams: auth, purchases, analytics, notifications, haptics, speech, photos, theme, share, service worker. |
@@ -115,6 +116,25 @@ Content lives in `src/content/blessings/*.ts`. Each file exports `entries: Curat
 - `notes`: reviewer guardrails. Kept in source and **stripped from production bundles** by the `trimBundle` plugin in `vite.config.ts`.
 
 Today the library holds **198 entries across 51 topics in 7 categories**, plus 9 journeys, 6 seasonal collections and 18 special-moment occasions. `scripts/lint-content.mjs` enforces the schema, verified references, word budgets, template tokens, and theological and tonal guardrails. The guardrails cover divine-revelation claims, promised outcomes, prosperity framing, church clichés and gamified language. [CONTENT_GUIDE.md](CONTENT_GUIDE.md) is the editorial standard.
+
+## Scenery
+
+Every screen sits on a real photograph: nineteen hand-picked landscapes, each public domain, CC0 or CC BY, with its source, licence and credit recorded in [`src/content/scenery/sources.json`](../src/content/scenery/sources.json) and shown in *Settings › About › Photography*. None is generated.
+
+**Pipeline.** `npm run scenery` ([`scripts/build-scenery.mjs`](../scripts/build-scenery.mjs)) runs at authoring time, not in the app build:
+
+1. It downloads each original once into `/scenery-src` (git-ignored).
+2. It applies one shared grade (warm, cool or night) so the set feels like one collection.
+3. It encodes AVIF (quality 46) with a WebP fallback (quality 68, a whisper of softening on dense foliage) at 640, 1200 and 1800 px for the four daypart heroes, and 480, 800 and 1200 px for the rest, into `public/scenery/`.
+4. It generates [`scenes.ts`](../src/content/scenery/scenes.ts): a typed `SceneId` union and, per scene, its widths, aspect, focal point, average colour, a 24-pixel blurred WebP placeholder (about 240 bytes) and the darkest and brightest tenth of its tones.
+
+It only re-encodes what is missing or older than `sources.json`; `--force` re-encodes everything. The output is committed, so builds need no network and no image tooling.
+
+**In the app.** `SceneImage` renders a `<picture>` (AVIF source, WebP `img` with `srcset` and `sizes`), shows the inline placeholder at once, and fades the photograph in over it. Only above-the-fold scenes load eagerly with high fetch priority. `DAYPART_SCENE` maps the hour to the backdrop and the Today hero; journeys, collections and topic categories each name a scene; `sceneForPerson` picks a person's from a stable hash of their id.
+
+**Contrast.** The manifest's tonal extremes let `npm run contrast` check every text token on glass over the darkest and brightest part of each photograph. Words set straight onto photographs are measured as rendered by `e2e/scenery.spec.ts` (see [QA.md](QA.md#words-on-photographs)).
+
+**Caching.** Photographs are not precached. The service worker caches them on first view (`CacheFirst`, `scenery-v1`, up to 90 files for a year, purged on quota pressure), so the install stays small. Offline, an unseen photograph shows its placeholder, which ships in the JavaScript.
 
 ## The personalization engine
 
@@ -174,6 +194,7 @@ Topics, occasions, journeys, collections and Scripture are content, not user dat
 **Offline.**
 
 - The service worker precaches the app shell, fonts, icons and both Scripture files.
+- Photographs are cached the first time they are seen. Until then, each shows its blurred placeholder.
 - Navigation falls back to the cached `index.html`.
 - Today's blessings are stored records, so the full ritual works with no connection.
 - A calm banner notes when the device is offline. Nothing else changes.
@@ -267,7 +288,8 @@ The patterns are deliberately conservative to avoid false alarms. "Hopeless" or 
 
 The targets come from the brief: instant launch, no layout shift, 60fps, cached blessings, and skeletons instead of spinners.
 
-- **Precache.** After the first visit everything loads from the service worker, so launches are instant and work offline. The precache holds 74 files, about 2.7 MB uncompressed. Most of that is fonts, icons and both Scripture files, kept for offline use.
+- **Precache.** After the first visit everything loads from the service worker, so launches are instant and work offline. The precache holds 76 files, about 2.7 MB uncompressed. Most of that is fonts, icons and both Scripture files, kept for offline use.
+- **Photographs.** AVIF where supported (all 19 at every width total 2.4 MB, or 4.3 MB as WebP). The browser picks the smallest width that covers the slot at its pixel density. A header on a phone is the 800 or 1200 px AVIF, about 30 KB and 60 KB on average. The ones out of view load lazily, and each is cached on first view.
 - **First visit.** The download is about 415 KB of gzipped JavaScript plus 15 KB of CSS, split by how often each part changes:
 
   | Chunk | gzip |
@@ -276,13 +298,14 @@ The targets come from the brief: instant launch, no layout shift, 60fps, cached 
   | React and the router | ~81 KB |
   | Verified BSB Scripture | ~75 KB |
   | Icons | ~47 KB |
-  | Motion | ~40 KB |
-  | App code | ~46 KB |
+  | Motion | ~43 KB |
+  | App code, including the scenery manifest | ~54 KB |
 
   A content update therefore re-downloads only the content chunk. WEB Scripture (~74 KB) loads only if chosen.
 - **Trims.** Reviewer notes and two unused icon weights (thin and light) are removed from the bundle at build time.
 - **Lazy routes.** Every route except Today is lazy-loaded, and Today renders from stored state with no network.
-- **Animation.** Motion animates `transform` and `opacity`, which stay on the compositor. Interface transitions run 180–300 ms; only ambient and celebratory moments move more slowly.
+- **Animation.** Motion animates `transform` and `opacity`, which stay on the compositor. Interface transitions run 180–300 ms; only the scenes' slow drift and celebratory moments move more slowly.
+- **Glass.** `backdrop-filter` is limited to floating surfaces (the tab bar, sheets, the Today tray, the blessing card, photo-card captions, the condensed title bar and controls on photographs). Cards in long lists use a plain translucent fill over the already-blurred backdrop, so scrolling never re-blurs a whole page.
 - **Fonts.** The variable fonts are self-hosted and precached, with system serif and sans fallbacks. The splash in `index.html` paints before React mounts and fades out once the app is ready.
 - **Next steps:**
   - Split content by category and load the rest of the library after first paint.
@@ -314,8 +337,8 @@ The targets come from the brief: instant launch, no layout shift, 60fps, cached 
 | Content lint | `npm run lint:content` | Schema, references, budgets, tokens, theological and tonal guardrails |
 | Type check | `npm run typecheck` | Strict TypeScript across the app, service worker, config and e2e |
 | Unit tests | `npm test` | Content invariants, Scripture lookups, the engine (composition, personalization, search, safety, rhythm), and store actions |
-| Contrast | `npm run contrast` | Every text and surface token pairing meets WCAG targets in both themes |
-| End-to-end | `npm run e2e` | Flows A–G from the brief on an iPhone 13 viewport, plus an axe audit of key screens |
+| Contrast | `npm run contrast` | Every text and surface token pairing meets WCAG targets in both themes, including glass over every photograph |
+| End-to-end | `npm run e2e` | Flows A–G from the brief on an iPhone 13 viewport, an axe audit of key screens, and the contrast of words set on photographs, measured as rendered in both themes |
 | Database | `npm run test:schema` | Household isolation under RLS, free-plan limits, server-only entitlements, private photos, and the analytics content guard, on a real Postgres |
 
 Suggested CI runs `npm ci && npm run check && npm run lint:content && npm run e2e && npm run build` on every pull request, plus `npm run test:schema` against a Postgres service container.

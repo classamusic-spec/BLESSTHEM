@@ -6,7 +6,8 @@ Tender but strong. Faithful but modern. Beautiful but restrained. Christian with
 
 - [Principles](#principles)
 - [Color](#color)
-- [Light through the day](#light-through-the-day)
+- [Scenery](#scenery)
+- [Glass](#glass)
 - [Typography](#typography)
 - [Space, shape and elevation](#space-shape-and-elevation)
 - [Motion](#motion)
@@ -23,7 +24,7 @@ Tender but strong. Faithful but modern. Beautiful but restrained. Christian with
 1. **One quiet minute.** Every screen serves the ritual: Person, then Need, then Scripture, then Blessing, then Prayer, then Done. If something does not help a parent bless someone, it waits a tap away.
 2. **Scripture is the hero.** It gets the largest serif, the most space and the calmest surface. Nothing decorative ever sits on top of the words.
 3. **One primary action per screen.** Secondary actions are ghost buttons or icons, never a second loud button.
-4. **Light, not decoration.** Depth comes from warm ambient light, soft shadow and paper texture, not from borders, gradients or badges.
+4. **Real places, not decoration.** Depth comes from real photographs of quiet places, frosted glass and soft shadow, not from illustration, borders or badges. Words always sit on calm tone, never on busy detail.
 5. **Calm by default.** Motion is slow enough to feel and quick enough to never wait on. Nothing flashes, bounces or nags.
 6. **Every state is designed.** Empty, loading, offline, error and locked states each have their own words, and Pip where it helps.
 
@@ -41,8 +42,8 @@ Every color comes from semantic tokens in [`src/styles/tokens.css`](../src/style
 | Talk about it | `--color-surface-blue` | `#e7edf1` | `#1b2329` |
 | Special moments | `--color-surface-gold` | `#f6eedc` | `#2b2519` |
 | Text | `--color-text` | `#23201c` | `#f2ece3` |
-| Supporting text | `--color-text-secondary` | `#514a42` | `#cbc2b6` |
-| Metadata | `--color-text-tertiary` | `#6b6359` | `#a59c90` |
+| Supporting text | `--color-text-secondary` | `#4a443c` | `#cbc2b6` |
+| Metadata | `--color-text-tertiary` | `#655d53` | `#a59c90` |
 | Brand (primary actions) | `--color-brand` | `#3e5b47` deep sage | `#afc8ae` |
 | Decorative gold | `--color-gold` | `#c99a46` | `#d4ae6a` |
 | Focus ring | `--color-focus` | `#2f6690` | `#8fc1e3` |
@@ -55,29 +56,86 @@ Every color comes from semantic tokens in [`src/styles/tokens.css`](../src/style
 - **Blue** marks conversation (*Talk about it*), and **rose** is reserved for love and the heart pose.
 - Danger red appears only on destructive confirmations, never as an alarm.
 
-**Contrast.** `npm run contrast` checks every text token against every surface it can sit on, in both themes, and fails the build below target:
+**Contrast.** `npm run contrast` checks every text token against every surface it can sit on, in both themes, and fails the build below target. That includes glass over the darkest and brightest part of every photograph:
 
 | Pairing | Light | Dark | Target |
 | --- | --- | --- | --- |
 | Text on any surface | 13.7–16.0 | 12.9–16.3 | AAA, 7:1 |
-| Supporting text | 7.4–8.6 | 8.6–10.9 | AAA, 7:1 |
-| Metadata | 5.0–5.8 | 5.6–7.1 | AA, 4.5:1 |
+| Supporting text | 8.1–9.5 | 8.6–10.9 | AAA, 7:1 |
+| Metadata | 5.5–6.4 | 5.6–7.1 | AA, 4.5:1 |
 | Brand text (links, selection) | 6.4–7.4 | 8.5–10.7 | AA, 4.5:1 |
 | Label on primary button | 7.0–9.6 | 7.9–10.7 | AAA, 7:1 |
 | Focus ring | 5.7–6.0 | 8.7–9.5 | 3:1 (non-text) |
+| Text on glass, over scenery | 12.2–15.7 | 11.7–14.4 | AAA, 7:1 |
+| Supporting text on glass, over scenery | 7.2–9.3 | 7.8–9.6 | AAA, 7:1 |
 
-## Light through the day
+Words set straight onto a photograph are measured as rendered instead (see [Scenery](#scenery)).
 
-`<html data-daypart>` is set from the clock and refreshed every five minutes. The ambient "window light" behind each page shifts with it:
+## Scenery
 
-| Daypart | Hours | Light |
+Every screen sits in a real place. Nineteen landscape photographs, public domain, CC0 or CC BY, were chosen by hand for quiet: wide skies, still water, meadows, first light. Nothing is generated. Each is credited in *Settings › About › Photography* ([`sources.json`](../src/content/scenery/sources.json)).
+
+**One family.** `npm run scenery` gives every photograph the same gentle grade (lifted blacks, eased saturation, a warm wash; a cooler one at night) so the set reads as one collection. It writes AVIF with a WebP fallback at three widths, and generates a typed manifest ([`scenes.ts`](../src/content/scenery/scenes.ts)) holding each scene's focal point, average colour, the darkest and brightest tenth of its tones (for the contrast audit) and a 24-pixel blurred placeholder.
+
+**The sky follows the clock.** The app's own backdrop is the current daypart's scene, blurred to a wash of colour under a linen veil, with a faint grain:
+
+| Daypart | Hours | Scene |
 | --- | --- | --- |
-| Morning | 5:00–12:00 | Warm gold and peach, like sun through a kitchen window |
-| Day | 12:00–17:00 | Clear and even, with a hint of sage and sky |
-| Evening | 17:00–21:00 | Amber and rose |
-| Night | 21:00–5:00 | Hushed lavender and moonlit blue |
+| Morning | 5:00–12:00 | First light over a meadow |
+| Day | 12:00–17:00 | A wildflower meadow under open sky |
+| Evening | 17:00–21:00 | Golden grass below the mountains |
+| Night | 21:00–5:00 | A crescent moon over still water |
 
-Dark mode keeps one low, warm glow at every hour. A subtle grain texture gives every surface the feel of paper.
+**Where photographs appear:**
+
+- **Today.** The daypart's scene behind the greeting, drifting slowly (48 s) and sliding a little slower than the page on scroll.
+- **Headers.** Library, People, Journal, each journey, collection and topic (by category) open on their own photograph.
+- **Person pages.** Each person has a place of their own behind their portrait, like a contact poster. It follows from their id, so it never changes.
+- **Photo cards.** Journeys and the season's collection in the Library: a photograph with a glass caption resting on it.
+- **The reading view.** Today's scene, blurred and dimmed, behind the words.
+- **Welcome, Bless Them+ and share cards.** The daypart's scene behind the welcome; a postcard with Pip on the Plus page; four photographic share-card styles (Dawn, Meadow, Golden, Moonlit) beside Linen and Sage.
+
+**Words on photographs.** A photograph never sits behind words at full strength:
+
+- The photograph stays solid behind titles and dissolves into the page only below them, on an eased fade.
+- A progressive blur under titles and the greeting smooths bright detail, and a warm scrim deepens the tone behind them.
+- Small text goes on glass or below the photograph. The only small text set on a photograph is an eyebrow, the date and the welcome wordmark.
+
+`e2e/scenery.spec.ts` measures these as rendered. It hides each element's text, captures what lies behind it, and checks the text colour against the brightest 2% of those pixels, ignoring text shadows. A sweep of every scene at every hour, in both themes and at 390 and 1280 px, set the targets and picked the hardest cases for the test ([QA.md](QA.md#words-on-photographs)):
+
+| Words | Worst measured, light / dark | Target |
+| --- | --- | --- |
+| Header titles, the greeting (large) | 5.15 / 6.68 | 4.5:1 (AAA, large text) |
+| Header subtitles, names on the tray | 7.03 / 8.41 | 7:1 (AAA) |
+| Scripture and blessing in the reading view | 7.50 / 7.51 | 7:1 (held to body text) |
+| Eyebrows, the date, reading hints | 4.87 / 5.02 | 4.5:1 (AA, as metadata) |
+
+**Performance.** Photographs load lazily, except the one above the fold. They are never precached: the service worker caches them as they are seen (up to 90, kept for a year), so the install stays small. Offline, a photograph not yet seen shows its blurred placeholder, which ships inside the app.
+
+## Glass
+
+Surfaces are frosted glass over the scenery: warm, translucent and lit from above.
+
+| Token | Use |
+| --- | --- |
+| `--surface-glass` | Cards and rows over the backdrop (80% fill) |
+| `--surface-glass-strong` | Reading surfaces: the blessing card, sheets, the Today tray, photo-card captions (90%) |
+| `--surface-glass-thin` | Small controls floating on photographs (62%) |
+| `--glass-fill-chrome` | The tab bar and the bar a title condenses into on scroll (74%) |
+| `--glass-filter` | `blur(24px) saturate(170%)` |
+| `--glass-sheen`, `--glass-rim`, `--glass-edge` | Light from above, a bright inner edge and a hairline outline |
+
+Each material is a sheen gradient over a tinted fill. Dark mode redefines the fill (warm charcoal) and the light (dimmer).
+
+**Real blur is used sparingly.** `backdrop-filter` is reserved for things that float over a photograph or over content: the tab bar, sheets, the Today tray, the blessing card, photo-card captions and controls on photographs. Cards in long lists use the same tinted fill over the already-blurred backdrop, so scrolling stays smooth.
+
+**Signature pieces:**
+
+- **The tab bar** is a floating glass capsule, lifted off the home indicator. A brighter lens glides to the selected tab on `spring.soft`.
+- **Condensing titles.** When a page's title scrolls away, a slim frosted bar fades in with the title in serif, the back button and the page's actions, as in iOS.
+- **The reading view** tints its own glass dark at every hour (`data-glass` re-derives the materials for a local tint).
+
+**Reduce Transparency.** *Settings › Text, motion & haptics › Reduce transparency*, or the system setting, makes every material solid and the backdrop opaque.
 
 ## Typography
 
@@ -105,14 +163,14 @@ Both fonts are self-hosted through `@fontsource-variable` and precached for offl
 
 **Leading:** `1.15` for display, `1.3` for titles, `1.5` for the interface, and `1.62` for reading.
 
-**Scaling.** Every size multiplies by `--ts`. That is the in-app text size setting (Settings › Appearance), and it can follow iOS Dynamic Type through `-apple-system-body`. Sizes run from 90% to 140%.
+**Scaling.** Every size multiplies by `--ts`. That is the in-app text size setting (Settings › Text, motion & haptics), and it can follow iOS Dynamic Type through `-apple-system-body`. Sizes run from 90% to 140%.
 
 **Scripture keeps its shape.** Poetry keeps its line breaks and indents, psalm superscriptions are set as quiet headings, and quotation marks are balanced when an excerpt begins mid-speech.
 
 ## Space, shape and elevation
 
 - **Grid:** spacing follows a 4/8 grid, `--space-1` (4 px) to `--space-20` (80 px). Page gutters are fluid, `clamp(16px, 5.4vw, 28px)`, and reading content tops out at 600 px.
-- **Touch targets:** at least 44 × 44 (`--touch-min`). The bottom navigation bar is 68 px plus the safe area. Content clears it and the home indicator.
+- **Touch targets:** at least 44 × 44 (`--touch-min`). The tab bar is a 64 px capsule floating 12 px above the safe area (`--nav-height`). Content clears it and the home indicator.
 - **Radii:** 8, 12, 16, 22, 28 and 36, plus pills. The blessing card and sheets use 36, panels inside a card 28, and buttons and chips pills.
 - **Shadows:** warm brown and very soft, never grey. They come in five steps, from `--shadow-xs` to `--shadow-lg`, plus an inset highlight. In dark mode, shadows deepen and surfaces lift with lighter fills instead.
 
@@ -125,7 +183,7 @@ Motion should feel almost invisible. It confirms, guides and settles, and it nev
 | `--dur-fast` | 180 ms | Press states, toggles, chips |
 | `--dur-base` | 240 ms | Fades, small reveals |
 | `--dur-slow` | 300 ms | Page transitions, sheets |
-| `--dur-gentle` | 600 ms | Ambient light, the prayed glow |
+| `--dur-gentle` | 600 ms | Scene crossfades, the prayed glow |
 | `--ease-out` | `cubic-bezier(0.22, 1, 0.36, 1)` | Default |
 | `spring.ui` | stiffness 420, damping 34 | Selection ring, segmented controls, switches |
 | `spring.soft` | stiffness 260, damping 30 | Cards and sheets |
@@ -137,8 +195,11 @@ Motion should feel almost invisible. It confirms, guides and settles, and it nev
 - **"I prayed this."** A soft double haptic. The button resolves into the *Covered in prayer today* card: a check draws itself, warm light blooms behind it, a few motes of light rise, and Pip appears, happy at first and then holding a small heart. Late at night, Pip settles down to sleep instead.
 - **The blessing moment.** A full-screen reading view shows one part at a time in large type (Scripture, then the blessing, then the prayer), for reading aloud at a bedside. It dims at night. Swipe, tap or use the arrow keys to move on.
 - **Pages.** They enter with an 8 px rise and a fade, and leave with a 4 px lift. Lists stagger by 60 ms.
+- **Scenes.** Photographs fade in over their blurred placeholder (700 ms), breathe slowly (a 2–9% scale over 36–48 s) and crossfade when the daypart changes. The Today scene slides a little slower than the page on scroll.
+- **The tab bar.** Its lens glides between tabs on `spring.soft`.
+- **Titles.** A large title hands over to the slim glass bar as it scrolls away: the bar fades in and its title rises 6 px.
 
-**Reduced motion.** The system setting, or *Settings › Appearance › Reduce motion*, turns off every transform, the rising light after a prayer, and Pip's idle animation. Opacity fades remain so state changes stay perceivable.
+**Reduced motion.** The system setting, or *Settings › Text, motion & haptics › Reduce motion*, turns off every transform, the scenes' drift and parallax, the rising light after a prayer, and Pip's idle animation. Opacity fades remain so state changes stay perceivable.
 
 ## Haptics
 
@@ -173,7 +234,7 @@ All components live in [`src/design/`](../src/design). Each one handles its defa
 | `IconButton` | 44 px target. A required `label` becomes its accessible name. |
 | `TextField`, `TextArea` | Label, hint and error message are tied to the input with `aria-describedby`. `TextArea serif` is used for journal writing. |
 | `Switch` | `role="switch"`. The knob glides on `spring.ui`. |
-| `Segmented` | A radiogroup with a gliding thumb, used for journal views and share-card styles. |
+| `Segmented` | A radiogroup with a gliding glass lens, used for journal views. |
 | `ChoiceCard` | Large tappable options in onboarding, with a check on selection. |
 | `TopicChip`, `TopicCard` | Duotone topic icon and a selected state. Plus topics show a small lock. |
 | `PersonAvatar` | Serif monogram on one of eight soft hues, with a small check once the person is prayed for. A family shows a duotone group icon. |
@@ -183,8 +244,12 @@ All components live in [`src/design/`](../src/design). Each one handles its defa
 | `Toast` | Polite live region with one short sentence and an optional action. |
 | `EmptyState`, `ErrorState` | Pip, a serif title, one sentence and one action. Errors never show raw messages. |
 | `OfflineBanner`, `Skeleton`, `BlessingSkeleton` | Calm offline notice, and skeletons shaped like the content they stand in for. There are no spinners. |
-| `Card`, `Section`, `PageHeader`, `SettingsGroup`, `SettingsRow` | Layout primitives. Card tones are `plain`, `sand`, `sage`, `blue` and `gold`. |
-| `Ambient`, `Ornament` | The time-of-day window light, and a small leaf divider between card sections. |
+| `Card`, `Section`, `SettingsGroup`, `SettingsRow` | Layout primitives on glass. Card tones are `plain`, `sand`, `sage`, `blue` and `gold`, each a tinted glass. |
+| `PageHeader` | Title, eyebrow, subtitle, back and actions. With `scene`, the title sits on its photograph. On scroll it condenses into a slim glass bar (`condensedTitle` and `condenseAfter` adjust what it shows and when). |
+| `SceneImage` | A photograph that arrives gracefully: AVIF or WebP at the right width, its blurred placeholder first, then a fade. Always decorative. |
+| `SceneBackdrop` | The app's sky: the daypart's scene as a blurred wash under a veil and grain, crossfading when the hour turns. |
+| `PhotoCard` | A photograph with a glass caption (kicker, title, body and an accessory such as a progress ring). |
+| `Ornament` | A small leaf divider between card sections. |
 | `ProgressDots`, `ProgressRing` | Onboarding steps and journey progress. |
 
 ## Pip the sparrow
@@ -260,4 +325,6 @@ Guidelines:
 - **Screen readers:** semantic landmarks and headings. Scripture is a `blockquote` with its reference. Person selection is a radiogroup with "prayed for today" in each name, and live regions announce saves and toasts.
 - **Text size:** in-app scaling from 90% to 140%, plus iOS Dynamic Type. Scripture, blessings and prayers wrap and never truncate.
 - **Motion:** honors `prefers-reduced-motion` and an in-app switch.
+- **Transparency:** honors `prefers-reduced-transparency` and an in-app switch; every material turns solid.
+- **Photographs:** always decorative (`aria-hidden`, empty `alt`). Words on them are measured as rendered by `e2e/scenery.spec.ts`.
 - **Audit:** every end-to-end run includes an axe scan of Welcome, the first blessing in onboarding, Today, Library, Journal, People, Settings and search results. There are zero serious or critical violations.

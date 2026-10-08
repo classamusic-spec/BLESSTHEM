@@ -68,7 +68,8 @@ Bless Them is not a Bible reader, a streak machine or an AI oracle. It never inv
 **What is in the app**
 
 - **Meaning before an account.** Onboarding asks who you are praying for and what they need, then delivers a real, personal blessing. Only after that does it offer to save your family with Apple, Google or an email link. Guests can keep going and never lose anything.
-- **Today.** One blessing per person per day. Choices are deterministic for each person and date, suit their age and relationship, follow their focus topics and today’s concern, and do not repeat a passage within a week. The window light warms in the morning and hushes at night.
+- **Real places, frosted glass.** Every screen sits in a quiet landscape, under warm frosted glass. There are nineteen hand-picked photographs, all public domain, CC0 or CC BY and credited in the app. Today follows the clock, from first light over a meadow to a crescent moon at night. Each journey, collection, topic and person has a place of their own.
+- **Today.** One blessing per person per day. Choices are deterministic for each person and date, suit their age and relationship, follow their focus topics and today’s concern, and do not repeat a passage within a week.
 - **Pip the sparrow.** A small companion drawn from Matthew 10:29. Pip greets you, rests in empty states, celebrates when someone is covered in prayer, and dozes off after a late-night prayer. Pip never speaks for God and never nags.
 - **The blessing card.** Scripture, *Hold onto this*, *Speak this over {name}*, a prayer, and *Talk about it*. Read-aloud and the passage’s wider context are one tap away. The translation, BSB or WEB, is a setting.
 - **The library.** About 50 topics in seven parts of life: *Their Faith*, *Their Heart*, *Their Mind*, *Their Relationships*, *Hard Seasons*, *Their Future* and *Everyday Life*. Seasonal collections and guided journeys sit alongside them, from *7 Days of Courage* to *Blessing Your Marriage*. Search accepts plain language, such as “my son is nervous about tryouts”.
@@ -104,7 +105,7 @@ npm run preview      # http://localhost:4173, offline support enabled
 | `npm run build` | Scripture check, then typecheck, then production build with the service worker |
 | `npm run preview` | Serves the production build |
 | `npm test` | Unit tests (Vitest): content, Scripture, engine, store |
-| `npm run e2e` | Playwright flows A–G on an iPhone 13 viewport, plus an axe accessibility audit |
+| `npm run e2e` | Playwright flows A–G on an iPhone 13 viewport, an axe accessibility audit, and the contrast of words on photographs, measured as rendered |
 | `npm run test:schema` | Row-level security and plan-limit tests for `supabase/schema.sql`. Needs `DATABASE_URL` for a Postgres server. |
 | `npm run check` | Typecheck, contrast audit and unit tests |
 | `npm run contrast` | WCAG contrast audit of every color token pairing, in light and dark |
@@ -112,6 +113,7 @@ npm run preview      # http://localhost:4173, offline support enabled
 | `npm run scripture` | Rebuilds the verified Scripture subset, or verifies the committed one when sources are absent |
 | `npm run verse -- "PSA 23:1-3"` | Prints a verified passage from either translation |
 | `npm run icons` | Regenerates the app icons from the brand mark |
+| `npm run scenery` | Grades and encodes the photographs (AVIF and WebP), and regenerates their typed manifest. Downloads originals once. |
 
 ## How it is built
 
@@ -121,7 +123,8 @@ A web-first, installable **PWA**:
 - **State:** Zustand, persisted on the device. Journal photos go to IndexedDB.
 - **Motion:** spring-based animation with Motion.
 - **Type:** Newsreader for Scripture and Figtree for interface text.
-- **Offline:** a Workbox service worker precaches the app shell, fonts and every verified passage.
+- **Scenery:** credited photographs graded as one set and served as AVIF with a WebP fallback at the right width, with a tiny blurred placeholder inline. Surfaces are frosted glass that turns solid with Reduce Transparency.
+- **Offline:** a Workbox service worker precaches the app shell, fonts and every verified passage, and caches each photograph the first time it is seen.
 
 The core is pure TypeScript, so the same code can later ship as native iOS and Android apps through Capacitor.
 
@@ -148,8 +151,9 @@ Every word of Scripture in the app comes from a public-domain translation and is
 
 ## Accessibility
 
-- Body and supporting text meet WCAG **AAA** contrast on every surface in both themes, and metadata meets AA. `npm run contrast` enforces this.
-- Supports iOS Dynamic Type and an in-app text size control. Tap targets are at least 44 points, and the app works with screen readers. Reduced motion is honored from the system setting or from in-app settings.
+- Body and supporting text meet WCAG **AAA** contrast on every surface in both themes, including glass over every photograph, and metadata meets AA. `npm run contrast` enforces this.
+- Words set on photographs are measured as rendered, against the brightest part of the photograph behind them: titles and the greeting at least 4.5:1 (AAA for large text), reading and supporting text 7:1. The end-to-end suite re-checks the hardest cases.
+- Supports iOS Dynamic Type and an in-app text size control. Tap targets are at least 44 points, and the app works with screen readers. Reduced motion and Reduce Transparency are honored from the system setting or from in-app settings.
 - Every Playwright run includes an axe audit of the main screens with zero serious or critical violations.
 
 ## Project structure
@@ -158,7 +162,8 @@ Every word of Scripture in the app comes from a public-domain translation and is
 src/
   app/            App shell, navigation bar, route fallback
   brand/          Logo mark
-  content/        Taxonomy, journeys, curated blessings, verified Scripture
+  content/        Taxonomy, journeys, curated blessings, verified Scripture,
+                  scenery sources and the generated photo manifest
   data/           Data model and the persisted store
   design/         Design system components (Button, Sheet, Toast, selectors…)
   engine/         Personalization, composition, search, safety, rhythm, journeys
@@ -171,8 +176,9 @@ src/
                   speech, photos, theme, share, service worker registration
   styles/         Design tokens and base styles
   sw.ts           Service worker
-scripts/          Scripture pipeline, content linter, contrast audit, icons
-e2e/              Playwright flows A–G and the accessibility audit
+public/scenery/   Graded photographs, AVIF and WebP at three widths each
+scripts/          Scripture and scenery pipelines, content linter, contrast audit, icons
+e2e/              Playwright flows A–G, the accessibility audit, words on photographs
 docs/             Architecture, design system, content guide, QA
 supabase/         Production database schema with row-level security
 ```
@@ -180,7 +186,7 @@ supabase/         Production database schema with row-level security
 ## Documentation
 
 - [Architecture](docs/ARCHITECTURE.md) covers platform decisions, data and sync, auth, billing, notifications, content boundaries, analytics and performance.
-- [Design system](docs/DESIGN_SYSTEM.md) covers tokens, type, color and contrast, motion, components, Pip and the app icon.
+- [Design system](docs/DESIGN_SYSTEM.md) covers tokens, scenery and glass, type, color and contrast, motion, components, Pip and the app icon.
 - [Content guide](docs/CONTENT_GUIDE.md) covers voice, theology guardrails, templates and how to add a blessing.
 - [QA](docs/QA.md) covers the design QA checklist, flow results and known limitations.
 
@@ -189,6 +195,7 @@ supabase/         Production database schema with row-level security
 - **Scripture:** the Berean Standard Bible and the World English Bible are both in the public domain. “World English Bible” is a trademark of eBible.org.
 - **Fonts:** [Newsreader](https://github.com/productiontype/Newsreader) and [Figtree](https://github.com/erikdkennedy/figtree), under the SIL Open Font License.
 - **Icons:** [Phosphor](https://phosphoricons.com), under the MIT license.
+- **Photography:** nineteen landscapes from Flickr by the US National Park Service, the US Forest Service, the US Fish and Wildlife Service and independent photographers. Twelve carry the Public Domain Mark, six are CC0, and one (“Oak Hill Snow Play 2019”, Kaibab National Forest) is [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/). Every photograph is credited in *Settings › About › Photography*, with sources in [`src/content/scenery/sources.json`](src/content/scenery/sources.json). The photographs are graded and resized; none is generated.
 - **Pip the sparrow and the Bless Them mark** were drawn for this project. The sparrow comes from Matthew 10:29: *not one of them will fall to the ground apart from the will of your Father.*
 
 The application code is proprietary. All rights reserved.

@@ -2,7 +2,7 @@
 
 This page records how Bless Them is checked, what passed in the latest run, and what is knowingly left for later. Re-run everything with the commands in [Automated checks](#automated-checks).
 
-**Latest run** (October 2026, on the commit that added this page):
+**Latest run** (October 2026, after the scenery and glass pass):
 
 | Check | Result |
 | --- | --- |
@@ -10,11 +10,12 @@ This page records how Bless Them is checked, what passed in the latest run, and 
 | Content lint | ✅ 198 entries across 51 topics, with 0 errors and 0 warnings |
 | Type check | ✅ App, service worker, build config and end-to-end tests |
 | Unit tests | ✅ 46 / 46 |
-| Contrast audit | ✅ Every text and surface pairing meets its target, in light and dark |
-| End-to-end flows A–G | ✅ 7 / 7 (iPhone 13 viewport, Chromium) |
+| Contrast audit | ✅ Every text and surface pairing meets its target, in light and dark, including glass over the darkest and brightest part of every photograph |
+| Words on photographs | ✅ 432 rendered measurements (every scene, every hour, both themes, 390 and 1280 px) meet their targets. The hardest cases run on every e2e pass. |
+| End-to-end | ✅ 10 / 10: flows A–G, the axe audit, and words on photographs in light and dark (iPhone 13 viewport, Chromium) |
 | Accessibility (axe) | ✅ 0 serious or critical violations on 8 screens |
 | Database schema | ✅ 31 / 31 row-level security, limits and privacy checks on Postgres 16 |
-| Production build and offline | ✅ The service worker precaches the app. Today's blessing opens with the network off. |
+| Production build and offline | ✅ The service worker precaches the app (76 files, 2.7 MB; photographs excluded). With the server stopped, Today, Library and Journal open, photographs already seen show from the cache, and unseen ones show their blurred placeholder. |
 
 ## Automated checks
 
@@ -22,7 +23,7 @@ This page records how Bless Them is checked, what passed in the latest run, and 
 npm run scripture       # verify every verse against the publisher's text
 npm run lint:content    # schema, references, word budgets, theology and tone
 npm run check           # typecheck, contrast audit and unit tests
-npm run e2e             # flows A–G and the axe audit (starts the dev server)
+npm run e2e             # flows A–G, the axe audit and words on photographs (starts the dev server)
 npm run build           # production bundle and service worker
 DATABASE_URL=postgres://… npm run test:schema   # RLS and limits on a real Postgres
 ```
@@ -43,7 +44,29 @@ Each flow from the brief is an end-to-end test in [`e2e/flows.spec.ts`](../e2e/f
 
 **Notification delivery** is not covered by automated tests, because headless browsers cannot tap a system notification. The service worker shows each reminder with `showNotification`. On tap it focuses an open window and posts a navigate message, or opens a new window on the deep link. Flow G verifies that the deep link lands on the right blessing.
 
-**Offline.** Checked against `npm run preview`. After the first visit, switching the network off and reloading still opens Today with the day's blessing and verified Scripture, plus a calm offline notice. Journal entries made offline are saved immediately.
+**Offline.** Checked against `npm run preview` with the server stopped, not just emulated offline: Playwright's offline mode lets service-worker fetches through. After the first visit, reloading still opens Today with the day's blessing and verified Scripture, plus a calm offline notice. Journal entries made offline are saved immediately. Photographs already seen come from the `scenery-v1` cache. Any other photograph shows its blurred placeholder, which ships inside the app.
+
+## Words on photographs
+
+axe cannot judge text over an image, so words set straight onto a photograph are measured as rendered. For each element, its text (and text shadow) is hidden, whatever lies behind it is captured, and the text colour is compared with the brightest 2% of those pixels (the darkest 2% for dark text). Ignoring the shadow makes this the worst case.
+
+The full sweep covers 432 measurements. It visits Welcome, Today and the reading view at four hours (one per scene), and the 25 scenic headers (tabs, every journey, collection and topic category). It runs in light and dark, at 390 and 1280 px:
+
+| Words | Target | Worst, light | Worst, dark |
+| --- | --- | --- | --- |
+| Header titles (37.5 px) | 4.5:1, AAA large | 5.15 · swans, phone | 7.29 · swans, phone |
+| The greeting (40 px) | 4.5:1, AAA large | 6.68 · night | 6.68 · night |
+| Header subtitles | 7:1, AAA | 7.03 · snowy pine, desktop | 8.41 · autumn trail |
+| Names on the Today tray | 7:1, AAA | 9.25 | 9.26 |
+| The question on the tray | 7:1, AAA | 13.75 | 11.40 |
+| Scripture in the reading view | 7:1, held to body text | 7.77 · dawn | 7.77 · dawn |
+| Blessing in the reading view | 7:1, held to body text | 7.50 · dawn | 7.51 · dawn |
+| Header eyebrows | 4.5:1, AA as metadata | 5.16 · swans, desktop | 7.29 · swans, desktop |
+| The date on Today | 4.5:1, AA as metadata | 4.87 · midday | 6.97 · midday |
+| Reading-view eyebrow and hint | 4.5:1, AA as metadata | 5.02 | 5.02 |
+| Welcome wordmark | 4.5:1 (logos are exempt) | 5.04 · midday | 5.75 · midday |
+
+The first sweep found titles at 2.2:1 and the greeting at 1.6:1 over the brightest skies. They sat where the photograph was already fading into the cream page. The fix keeps the photograph solid behind the words and dissolves it below them, adds a progressive blur and a deeper scrim behind titles, and uses the stronger glass for the tray. [`e2e/scenery.spec.ts`](../e2e/scenery.spec.ts) re-measures the hardest cases (midday Welcome and Today, the reading view, the swans, snowy pine and Journal headers) in both themes on every run.
 
 ## Design QA
 
@@ -54,11 +77,11 @@ The brief's checklist was applied to every screen. Notes on how each question is
 | **Hierarchy:** is the primary action clear in under two seconds? | One primary (sage) button per screen. On Today, the person row comes first, then the blessing card, ending in **I prayed this**. |
 | **Spacing:** does every screen breathe? | A 4/8 grid with fluid gutters. Cards have 28–36 px radii and generous inner padding, and reading width is capped at 600 px. |
 | **Typography:** editorial, not templated? | Newsreader with optical sizes for Scripture and prayers, and Figtree for the interface. Poetry keeps its line breaks. |
-| **Contrast:** is everything readable? | AAA for body text in both themes. `npm run contrast` fails the build below target. |
+| **Contrast:** is everything readable? | AAA for body text in both themes, on solid surfaces and on glass over every photograph. `npm run contrast` fails the build below target, and words set on photographs are measured as rendered ([above](#words-on-photographs)). |
 | **Motion:** polish, not distraction? | Transitions take 180–300 ms with damped springs. The one celebration is soft light, never confetti, and everything respects reduced motion. |
 | **Copy:** can anything be shortened? | Microcopy was reviewed for length and tone. There is no "just", no guilt, no streaks, and "unlock" language was softened. |
 | **Accessibility:** large text and assistive technology? | At 140% text, no screen scrolls sideways. Controls carry accessible names (axe). Radiogroups, live regions, focus traps in sheets and a skip link are in place. |
-| **Emotional tone:** does it feel peaceful? | Time-of-day light, warm neutrals and Pip used sparingly. In hard seasons, Pip stays tender rather than cheerful. |
+| **Emotional tone:** does it feel peaceful? | Real, quiet places that follow the time of day, under warm frosted glass, with Pip used sparingly. In hard seasons, Pip stays tender rather than cheerful. |
 | **Faithfulness:** is Scripture contextual and trustworthy? | Every verse is verified, every card has *Read context* with a note on who is speaking, and the linter blocks promised outcomes and claims of revelation. |
 | **Monetization:** is trust protected? | No countdowns or fake urgency. Prices and renewal terms show before purchase, *Continue free* is always visible, and free use stays meaningful. |
 
@@ -75,12 +98,25 @@ The brief's checklist was applied to every screen. Notes on how each question is
 - Pip's pose after praying about something hard
 - The unused sleep pose
 
+The scenery and glass pass found and fixed:
+
+- White titles at about 2:1 where the photograph faded into the page
+- The reading view's buttons inheriting the light glass (custom properties resolve where they are declared, so a local tint now re-derives its materials)
+- The homepage nav veil stopping short of the window edges
+- The night scene's crescent moon sitting under the date
+- Swans cropped to two necks on a wide person poster
+- Suggestion chips cut off at the end of their row
+- A stray bright band where a header's scrim ended before its photograph did
+- A test counting the logo's cream leaves as background
+
 ## Accessibility
 
 - **Automated:** axe-core runs on Welcome, the first blessing in onboarding, Today, Library, Journal, People, Settings and search results, with WCAG 2.0, 2.1 and 2.2 A/AA rules. There are 0 serious or critical violations.
 - **Keyboard:** every control is a native button, link or input in a logical tab order. Arrow keys move between people, Escape closes sheets, and focus returns to where it was.
 - **Screen readers:** people are announced with their state ("Noah, prayed for today"). Scripture is a blockquote with its reference, and saves and toasts are announced politely.
-- **Text size and motion:** at 140% text, Today, Library, Journal, People, Settings and a topic page were checked with no horizontal overflow. Reduced motion removes all transforms.
+- **Text size and motion:** at 140% text, Today, Library, Journal, People, Settings and a topic page were checked with no horizontal overflow. Reduced motion removes all transforms, including the scenes' drift and parallax.
+- **Transparency:** Reduce Transparency (in-app or the system setting) makes every glass material and the backdrop solid.
+- **Photographs:** decorative throughout (`aria-hidden`, empty `alt`). The words set on them are measured as rendered ([above](#words-on-photographs)).
 
 ## Content QA
 
@@ -106,3 +142,5 @@ These are deliberate in this build, and each sits behind a seam described in [AR
 6. **Crisis resources are US-first,** with findahelpline.com for everywhere else. Localized lists should come with localization.
 7. **English only,** with two public-domain translations. Licensed translations need permission before they are added.
 8. **First load is about 415 KB of gzipped JavaScript.** It is split into cacheable chunks and is instant after the first visit. Splitting the library by category is the next optimization.
+9. **Photographs need a first visit online.** They are cached as they are seen rather than precached, so the install stays at 2.7 MB. Every photograph at every width is another 2.4 MB as AVIF, or 4.3 MB as WebP. Offline, an unseen photograph shows its blurred placeholder.
+10. **Each person's scene is chosen for them,** from their id. Letting a parent pick it, like a contact poster, is a natural next step.
