@@ -55,7 +55,7 @@ test('C · a hard day → search “friendship rejection” → choose a blessin
   const passage = page.locator('a[href^="/library/entry/"]').first();
   await expect(passage).toBeVisible();
   await passage.click();
-  await expect(page.getByText('Who is this blessing for?')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Who is this blessing for?' })).toBeVisible();
   await page.getByRole('button', { name: 'Share blessing' }).first().click();
   await expect(page.getByRole('dialog', { name: 'Share this blessing' })).toBeVisible();
   await expect(page.getByRole('img', { name: /Share card: .* over Noah\./ })).toBeVisible({ timeout: 10_000 });

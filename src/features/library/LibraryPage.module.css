@@ -36,7 +36,11 @@
   margin: var(--space-3) calc(var(--gutter) * -1) 0;
   padding: 0 var(--gutter) var(--space-1);
   overflow-x: auto;
+  scroll-padding-inline: var(--gutter);
   scrollbar-width: none;
+  /* Chips drift out of view instead of being cut at the edge. */
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent);
+  mask-image: linear-gradient(to right, transparent, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent);
 }
 .suggestions::-webkit-scrollbar {
   display: none;

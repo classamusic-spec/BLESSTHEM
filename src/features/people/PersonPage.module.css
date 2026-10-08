@@ -1,9 +1,44 @@
+/* Their own place, like a contact poster: a photograph behind the top of the page that
+   fades into the app's sky just below their portrait. Each person keeps the same one. */
+.poster {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  height: calc(var(--safe-top) + var(--space-4) + 196px);
+  transform: translateX(-50%);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 52%, rgb(0 0 0 / 0.5) 76%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 52%, rgb(0 0 0 / 0.5) 76%, transparent 100%);
+}
+.posterImage {
+  position: absolute;
+  inset: 0;
+  filter: brightness(var(--scene-brightness));
+}
+@media (min-width: 900px) {
+  .poster {
+    height: calc(var(--space-12) + 196px);
+  }
+}
+
 .hero {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   padding: 0 0 var(--space-4);
+}
+
+/* A glass ring lifts the portrait off the photograph. */
+.avatar {
+  display: grid;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 4px rgb(var(--glass-rgb) / 0.92),
+    0 0 0 4.5px rgb(255 255 255 / 0.4),
+    0 14px 32px -12px rgb(0 0 0 / 0.42);
 }
 
 .name {

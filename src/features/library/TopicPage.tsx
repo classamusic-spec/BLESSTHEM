@@ -9,7 +9,6 @@ import { Button, ButtonLink } from '@/design/Button';
 import { Page, PageHeader } from '@/design/Layout';
 import { fadeUp, stagger } from '@/design/motion';
 import { EmptyState } from '@/design/States';
-import { TopicIcon } from '@/design/TopicIcon';
 import { track } from '@/services/analytics';
 import { usePaywall } from '@/features/premium/PaywallProvider';
 import { EntryRow } from './EntryRow';
@@ -37,6 +36,7 @@ export default function TopicPage() {
     );
   }
 
+  const category = CATEGORY_BY_ID[topic.category];
   const unlock = (entryId?: string) =>
     paywall.open(`topic:${topic.id}`, () => {
       if (entryId) navigate(`/library/entry/${entryId}`);
@@ -44,21 +44,13 @@ export default function TopicPage() {
 
   return (
     <Page>
-      <PageHeader title="" back="/library" size="compact" />
-      <motion.header className={styles.hero} variants={stagger(0.07)} initial="hidden" animate="show">
-        <motion.span variants={fadeUp} className={styles.icon}>
-          <TopicIcon name={topic.icon} size={34} />
-        </motion.span>
-        <motion.p variants={fadeUp} className="overline">
-          {CATEGORY_BY_ID[topic.category].title}
-        </motion.p>
-        <motion.h1 variants={fadeUp} className={styles.title}>
-          {topic.title}
-        </motion.h1>
-        <motion.p variants={fadeUp} className={styles.description}>
-          {topic.description}
-        </motion.p>
-      </motion.header>
+      <PageHeader
+        back="/library"
+        scene={category.scene}
+        eyebrow={category.title}
+        title={topic.title}
+        subtitle={<span className={styles.description}>{topic.description}</span>}
+      />
 
       {locked && (
         <div className={styles.locked}>

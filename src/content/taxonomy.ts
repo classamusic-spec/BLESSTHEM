@@ -1,4 +1,5 @@
 import type { AgeGroup, CategoryId, OccasionId, RelationshipKind, TopicId } from './types.ts';
+import type { SceneId } from './scenery/scenes.ts';
 
 /**
  * The single source of truth for how Bless Them organises prayer topics.
@@ -11,6 +12,8 @@ export interface Category {
   title: string;
   subtitle: string;
   icon: string;
+  /** The photograph behind its topics’ pages. */
+  scene: SceneId;
 }
 
 export interface Topic {
@@ -35,13 +38,13 @@ const FROM_TWEEN: AgeGroup[] = ['tween', 'teen', 'young-adult', 'adult'];
 const FROM_TEEN: AgeGroup[] = ['teen', 'young-adult', 'adult'];
 
 export const CATEGORIES: Category[] = [
-  { id: 'faith', title: 'Their Faith', subtitle: 'Knowing and trusting God', icon: 'SunHorizon' },
-  { id: 'heart', title: 'Their Heart', subtitle: 'Character that grows from within', icon: 'HeartStraight' },
-  { id: 'mind', title: 'Their Mind', subtitle: 'Wisdom, focus, and peace', icon: 'Compass' },
-  { id: 'relationships', title: 'Their Relationships', subtitle: 'Friends, family, and love', icon: 'UsersThree' },
-  { id: 'hard-seasons', title: 'Hard Seasons', subtitle: 'When life feels heavy', icon: 'Lighthouse' },
-  { id: 'future', title: 'Their Future', subtitle: 'Purpose, calling, and courage', icon: 'Mountains' },
-  { id: 'everyday', title: 'Everyday Life', subtitle: 'School, sleep, and new adventures', icon: 'Backpack' },
+  { id: 'faith', title: 'Their Faith', subtitle: 'Knowing and trusting God', icon: 'SunHorizon', scene: 'lake-sunrise' },
+  { id: 'heart', title: 'Their Heart', subtitle: 'Character that grows from within', icon: 'HeartStraight', scene: 'spring-blossoms' },
+  { id: 'mind', title: 'Their Mind', subtitle: 'Wisdom, focus, and peace', icon: 'Compass', scene: 'forest-river' },
+  { id: 'relationships', title: 'Their Relationships', subtitle: 'Friends, family, and love', icon: 'UsersThree', scene: 'wildflower-hillside' },
+  { id: 'hard-seasons', title: 'Hard Seasons', subtitle: 'When life feels heavy', icon: 'Lighthouse', scene: 'lighthouse' },
+  { id: 'future', title: 'Their Future', subtitle: 'Purpose, calling, and courage', icon: 'Mountains', scene: 'mountain-sunrise' },
+  { id: 'everyday', title: 'Everyday Life', subtitle: 'School, sleep, and new adventures', icon: 'Backpack', scene: 'autumn-trail' },
 ];
 
 export const TOPICS: Topic[] = [

@@ -1,6 +1,6 @@
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';
 import { motion } from 'motion/react';
-import type { ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode, type RefObject } from 'react';
 import { Link, useNavigate } from 'react-router';
 import type { SceneId } from '@/content/scenery';
 import { cx } from '@/lib/cx';
@@ -34,58 +34,100 @@ interface PageHeaderProps {
   size?: 'large' | 'compact';
   /** A photograph behind the title: the page’s own place. The subtitle sits below it. */
   scene?: SceneId;
+  /** The title for the slim bar that appears on scroll, when the page’s own title is elsewhere. */
+  condensedTitle?: ReactNode;
+  /** The bar appears once this scrolls under it (by default, the title). */
+  condenseAfter?: RefObject<HTMLElement | null>;
 }
 
-export function PageHeader({ title, eyebrow, subtitle, back, actions, size = 'large', scene }: PageHeaderProps) {
+/** True once `target` has scrolled up under the bar. */
+function useCondensed(target: RefObject<HTMLElement | null>, bar: RefObject<HTMLElement | null>) {
+  const [condensed, setCondensed] = useState(false);
+  useEffect(() => {
+    const el = target.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+    const inset = bar.current?.offsetHeight || 56;
+    const io = new IntersectionObserver(([entry]) => setCondensed(!entry.isIntersecting && entry.boundingClientRect.top < inset), {
+      rootMargin: `-${inset}px 0px 0px 0px`,
+    });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [target, bar]);
+  return condensed;
+}
+
+export function PageHeader({ title, eyebrow, subtitle, back, actions, size = 'large', scene, condensedTitle, condenseAfter }: PageHeaderProps) {
   const navigate = useNavigate();
-  if (scene) {
-    return (
-      <header className={styles.sceneHeader}>
-        <div className={styles.band}>
-          <div className={styles.bandScene} aria-hidden="true">
-            <SceneImage scene={scene} priority sizes="100vw" className={styles.bandImage} />
-          </div>
-          {(back || actions) && (
-            <div className={styles.headerBar}>
-              {back ? (
-                <IconButton label="Back" tone="surface" onClick={() => (typeof back === 'string' ? navigate(back) : window.history.length > 1 ? navigate(-1) : navigate('/today'))}>
-                  <CaretLeft size={20} weight="bold" />
-                </IconButton>
-              ) : (
-                <span />
-              )}
-              {actions && <div className={styles.actions}>{actions}</div>}
-            </div>
-          )}
-          {eyebrow && <p className={cx('overline', styles.bandEyebrow)}>{eyebrow}</p>}
-          <h1 className={styles.bandTitle}>{title}</h1>
-        </div>
-        {subtitle && <p className={styles.bandSubtitle}>{subtitle}</p>}
-      </header>
-    );
-  }
-  return (
-    <header className={cx(styles.header, size === 'compact' && styles.headerCompact)}>
-      {(back || actions) && (
-        <div className={styles.headerBar}>
+  const headerRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const barRef = useRef<HTMLDivElement>(null);
+  const condensed = useCondensed(condenseAfter ?? (title ? titleRef : headerRef), barRef);
+  const goBack = () => (typeof back === 'string' ? navigate(back) : window.history.length > 1 ? navigate(-1) : navigate('/today'));
+
+  const bar = (back || actions) && (
+    <div className={styles.headerBar}>
+      {back ? (
+        <IconButton label="Back" tone="surface" onClick={goBack}>
+          <CaretLeft size={20} weight="bold" />
+        </IconButton>
+      ) : (
+        <span />
+      )}
+      {actions && <div className={styles.actions}>{actions}</div>}
+    </div>
+  );
+
+  // Large titles hand over to a slim frosted bar once they scroll away, as on iOS.
+  const condensedBar = (
+    <div className={cx(styles.condensed, condensed && styles.condensedOn)} aria-hidden={!condensed} inert={!condensed}>
+      <div ref={barRef} className={styles.condensedBar}>
+        <div className={styles.condensedRow}>
           {back ? (
-            <IconButton
-              label="Back"
-              tone="surface"
-              onClick={() => (typeof back === 'string' ? navigate(back) : window.history.length > 1 ? navigate(-1) : navigate('/today'))}
-            >
+            <IconButton label="Back" onClick={goBack}>
               <CaretLeft size={20} weight="bold" />
             </IconButton>
           ) : (
             <span />
           )}
-          {actions && <div className={styles.actions}>{actions}</div>}
+          <p className={styles.condensedTitle}>{condensedTitle ?? title}</p>
+          {actions ? <div className={cx(styles.actions, styles.condensedActions)}>{actions}</div> : <span />}
         </div>
-      )}
-      {eyebrow && <p className={cx('overline', styles.eyebrow)}>{eyebrow}</p>}
-      <h1 className={styles.title}>{title}</h1>
-      {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
-    </header>
+      </div>
+    </div>
+  );
+
+  if (scene) {
+    return (
+      <>
+        {condensedBar}
+        <header ref={headerRef} className={styles.sceneHeader}>
+          <div className={styles.band}>
+            <div className={styles.bandScene} aria-hidden="true">
+              <SceneImage scene={scene} priority sizes="100vw" className={styles.bandImage} />
+            </div>
+            {bar}
+            {eyebrow && <p className={cx('overline', styles.bandEyebrow)}>{eyebrow}</p>}
+            <h1 ref={titleRef} className={styles.bandTitle}>
+              {title}
+            </h1>
+          </div>
+          {subtitle && <p className={styles.bandSubtitle}>{subtitle}</p>}
+        </header>
+      </>
+    );
+  }
+  return (
+    <>
+      {condensedBar}
+      <header ref={headerRef} className={cx(styles.header, size === 'compact' && styles.headerCompact)}>
+        {bar}
+        {eyebrow && <p className={cx('overline', styles.eyebrow)}>{eyebrow}</p>}
+        <h1 ref={titleRef} className={styles.title}>
+          {title}
+        </h1>
+        {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
+      </header>
+    </>
   );
 }
 

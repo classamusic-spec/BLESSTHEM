@@ -1,9 +1,10 @@
 import { CalendarPlus, HandHeart, PencilSimple, Trash } from '@phosphor-icons/react';
 import { motion } from 'motion/react';
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import { ENTRY_BY_ID } from '@/content/blessings';
 import { JOURNEY_BY_ID } from '@/content/journeys';
+import { sceneForPerson } from '@/content/scenery';
 import { formatRef } from '@/content/scripture';
 import { AGE_LABELS, OCCASION_BY_ID, TOPIC_BY_ID } from '@/content/taxonomy';
 import { RELATIONSHIP_LABEL } from '@/data/models';
@@ -13,6 +14,7 @@ import { ProgressRing } from '@/design/Controls';
 import { Page, PageHeader, Section } from '@/design/Layout';
 import { fadeUp, stagger } from '@/design/motion';
 import { PersonAvatar } from '@/design/PersonAvatar';
+import { SceneImage } from '@/design/SceneImage';
 import { EmptyState } from '@/design/States';
 import { TopicIcon } from '@/design/TopicIcon';
 import { monthRhythm } from '@/engine/rhythm';
@@ -36,6 +38,7 @@ export default function PersonPage() {
   const selectPerson = useStore((s) => s.selectPerson);
   const removeSpecialDate = useStore((s) => s.removeSpecialDate);
   const [sheet, setSheet] = useState<'date' | 'prayer' | null>(null);
+  const nameRef = useRef<HTMLHeadingElement>(null);
 
   const recent = useMemo(
     () =>
@@ -69,8 +72,13 @@ export default function PersonPage() {
 
   return (
     <Page>
+      <div className={styles.poster} aria-hidden="true">
+        <SceneImage scene={sceneForPerson(person.id)} priority sizes="100vw" className={styles.posterImage} />
+      </div>
       <PageHeader
         title=""
+        condensedTitle={person.name}
+        condenseAfter={nameRef}
         back="/people"
         size="compact"
         actions={
@@ -81,10 +89,10 @@ export default function PersonPage() {
       />
 
       <motion.section className={styles.hero} variants={stagger(0.07)} initial="hidden" animate="show">
-        <motion.div variants={fadeUp}>
-          <PersonAvatar person={person} size={92} />
+        <motion.div variants={fadeUp} className={styles.avatar}>
+          <PersonAvatar person={person} size={96} />
         </motion.div>
-        <motion.h1 variants={fadeUp} className={styles.name}>
+        <motion.h1 ref={nameRef} variants={fadeUp} className={styles.name}>
           {person.name}
         </motion.h1>
         <motion.p variants={fadeUp} className={styles.meta}>

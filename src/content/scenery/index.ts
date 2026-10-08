@@ -19,6 +19,24 @@ export const DAYPART_SCENE: Record<'morning' | 'day' | 'evening' | 'night', Scen
   night: 'crescent-moon',
 };
 
+/** Calm, wide places for people’s pages (they crop to a short band). Each person keeps theirs. */
+const PERSON_SCENES: SceneId[] = [
+  'lake-sunrise',
+  'spring-blossoms',
+  'wildflower-hillside',
+  'golden-trees',
+  'meadow-dawn',
+  'misty-hayfield',
+  'forest-river',
+  'lake-dock',
+];
+
+export function sceneForPerson(personId: string): SceneId {
+  let hash = 0;
+  for (const ch of personId) hash = (hash * 31 + ch.charCodeAt(0)) >>> 0;
+  return PERSON_SCENES[hash % PERSON_SCENES.length];
+}
+
 export function sceneUrl(id: SceneId, width: number, format: ImageFormat = 'webp'): string {
   return `/scenery/${id}-${width}.${format}`;
 }
