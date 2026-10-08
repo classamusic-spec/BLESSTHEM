@@ -104,6 +104,7 @@ export function PageHeader({ title, eyebrow, subtitle, back, actions, size = 'la
           <div className={styles.band}>
             <div className={styles.bandScene} aria-hidden="true">
               <SceneImage scene={scene} priority sizes="100vw" className={styles.bandImage} />
+              <span className={styles.bandBlur} />
             </div>
             {bar}
             {eyebrow && <p className={cx('overline', styles.bandEyebrow)}>{eyebrow}</p>}

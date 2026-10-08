@@ -130,6 +130,8 @@
 
 /* ── Scenic headers: a photograph behind the page title ───── */
 .sceneHeader {
+  /* How far the photograph runs on below the title as it dissolves into the page. */
+  --band-fade: 64px;
   padding-bottom: var(--space-6);
 }
 
@@ -139,7 +141,7 @@
   flex-direction: column;
   justify-content: flex-end;
   min-height: clamp(210px, 30svh, 290px);
-  padding: var(--space-2) 0 var(--space-6);
+  padding: var(--space-2) 0 var(--space-5);
   color: var(--on-scene);
 }
 .band .headerBar {
@@ -151,21 +153,55 @@
   position: absolute;
   z-index: -1;
   top: calc(-1 * (var(--safe-top) + var(--space-4)));
-  bottom: calc(-1 * var(--space-10));
+  bottom: calc(-1 * var(--band-fade));
   left: 50%;
   width: 100vw;
   transform: translateX(-50%);
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 66%, rgb(0 0 0 / 0.5) 84%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 66%, rgb(0 0 0 / 0.5) 84%, transparent 100%);
+  /* Solid behind the title; it dissolves only below it, where the page takes over. */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 calc(100% - var(--band-fade)),
+    rgb(0 0 0 / 0.72) calc(100% - var(--band-fade) * 0.72),
+    rgb(0 0 0 / 0.36) calc(100% - var(--band-fade) * 0.42),
+    rgb(0 0 0 / 0.1) calc(100% - var(--band-fade) * 0.16),
+    transparent
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 calc(100% - var(--band-fade)),
+    rgb(0 0 0 / 0.72) calc(100% - var(--band-fade) * 0.72),
+    rgb(0 0 0 / 0.36) calc(100% - var(--band-fade) * 0.42),
+    rgb(0 0 0 / 0.1) calc(100% - var(--band-fade) * 0.16),
+    transparent
+  );
+}
+/* A progressive blur under the title smooths bright detail (sun on water, sky through
+   leaves), so the words sit on calm tone rather than texture. */
+.bandBlur {
+  position: absolute;
+  inset: auto 0 0;
+  height: calc(var(--band-fade) + 168px);
+  -webkit-backdrop-filter: blur(14px) saturate(112%);
+  backdrop-filter: blur(14px) saturate(112%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 58%);
+  mask-image: linear-gradient(to bottom, transparent, #000 58%);
 }
 .bandScene::after {
   content: '';
   position: absolute;
   inset: 0;
-  /* Dark enough behind the title for 4.5:1 (AAA, large text) over the brightest scene. */
+  /* Measured on every scene (QA.md): the title keeps 4.5:1 (AAA, large text) and the
+     eyebrow 4.5:1 (AA) over the brightest part of the brightest photograph. */
   background:
-    linear-gradient(0deg, rgb(14 10 6 / 0) 0%, rgb(14 10 6 / 0.42) 26%, rgb(14 10 6 / 0.3) 46%, rgb(14 10 6 / 0) 70%),
+    linear-gradient(
+      0deg,
+      rgb(14 10 6 / 0.4) 0,
+      rgb(14 10 6 / 0.55) var(--band-fade),
+      rgb(14 10 6 / 0.55) calc(var(--band-fade) + 128px),
+      rgb(14 10 6 / 0.3) calc(var(--band-fade) + 200px),
+      rgb(14 10 6 / 0) calc(var(--band-fade) + 280px)
+    ),
     linear-gradient(180deg, rgb(14 10 6 / 0.34) 0%, rgb(14 10 6 / 0) 30%);
 }
 .bandImage {
@@ -193,7 +229,8 @@
 }
 
 .bandSubtitle {
-  margin-top: var(--space-4);
+  /* Clear of the dissolving photograph, so it reads on the page itself. */
+  margin-top: calc(var(--band-fade) - var(--space-2));
   max-width: 46ch;
   color: var(--color-text-secondary);
   font-size: var(--text-callout);

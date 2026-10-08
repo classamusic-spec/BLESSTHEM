@@ -105,6 +105,7 @@ export function TodayPage() {
           <motion.div className={styles.sceneDrift} style={reduce ? undefined : { y: sceneY }}>
             <SceneImage key={DAYPART_SCENE[part]} scene={DAYPART_SCENE[part]} priority sizes="100vw" className={styles.sceneImage} />
           </motion.div>
+          <span className={styles.sceneBlur} />
         </div>
         <motion.div variants={fadeUp} className={styles.topRow}>
           <p className={styles.date}>{formatLongDate(today)}</p>

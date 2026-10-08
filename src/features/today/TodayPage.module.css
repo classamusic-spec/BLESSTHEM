@@ -1,5 +1,7 @@
 /* ── Hero: today’s scene, with the greeting set into it ───── */
 .hero {
+  /* The photograph dissolves behind the top edge of the tray, never behind the words. */
+  --hero-fade: 96px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -19,24 +21,43 @@
   width: 100vw;
   transform: translateX(-50%);
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 58%, rgb(0 0 0 / 0.55) 78%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 58%, rgb(0 0 0 / 0.55) 78%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - var(--hero-fade)), rgb(0 0 0 / 0.45) calc(100% - var(--hero-fade) / 2), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - var(--hero-fade)), rgb(0 0 0 / 0.45) calc(100% - var(--hero-fade) / 2), transparent);
+}
+/* Progressive blur behind the greeting: calm tone under the words, detail above them. */
+.sceneBlur {
+  position: absolute;
+  inset: auto 0 0;
+  height: calc(var(--hero-fade) + 240px);
+  -webkit-backdrop-filter: blur(16px) saturate(112%);
+  backdrop-filter: blur(16px) saturate(112%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 45%);
+  mask-image: linear-gradient(to bottom, transparent, #000 45%);
 }
 .scene::after {
   content: '';
   position: absolute;
   inset: 0;
+  /* Measured on every daypart scene (QA.md): the greeting keeps 4.5:1 (AAA, large text). */
   background:
-    linear-gradient(0deg, rgb(14 10 6 / 0.34) 0%, rgb(14 10 6 / 0.14) 26%, rgb(14 10 6 / 0) 46%),
+    linear-gradient(
+      0deg,
+      rgb(14 10 6 / 0.5) 0,
+      rgb(14 10 6 / 0.48) calc(var(--hero-fade) + 150px),
+      rgb(14 10 6 / 0.24) calc(var(--hero-fade) + 230px),
+      rgb(14 10 6 / 0) calc(var(--hero-fade) + 320px)
+    ),
     var(--scene-scrim);
   pointer-events: none;
 }
-/* Night scenes are dark already: no dimming, a lighter scrim, so the dusk glow stays. */
+/* Night scenes are dark already: no dimming and a lighter scrim, so the dusk glow stays. */
 .night .sceneDrift {
   filter: brightness(1.08) saturate(1.05);
 }
 .night .scene::after {
-  background: linear-gradient(180deg, rgb(8 8 12 / 0.28) 0%, rgb(8 8 12 / 0) 40%);
+  background:
+    linear-gradient(0deg, rgb(8 8 12 / 0.3) 0, rgb(8 8 12 / 0.3) calc(var(--hero-fade) + 150px), rgb(8 8 12 / 0) calc(var(--hero-fade) + 300px)),
+    linear-gradient(180deg, rgb(8 8 12 / 0.28) 0%, rgb(8 8 12 / 0) 40%);
 }
 
 .sceneDrift {
@@ -139,7 +160,7 @@
   margin-top: calc(-1 * var(--space-8));
   padding: var(--space-5) var(--space-4) var(--space-3);
   border-radius: var(--radius-xl);
-  background: var(--surface-glass);
+  background: var(--surface-glass-strong);
   -webkit-backdrop-filter: var(--glass-filter);
   backdrop-filter: var(--glass-filter);
   box-shadow: var(--glass-border), var(--glass-shadow-float);

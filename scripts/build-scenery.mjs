@@ -3,8 +3,8 @@
  * Scenery: hand-picked nature photography, every image public domain, CC0 or CC BY
  * (credited in Settings › About › Photography).
  *
- *   node scripts/build-scenery.mjs           # build what is missing or out of date
- *   node scripts/build-scenery.mjs --force   # re-encode everything
+ *   npm run scenery              # build what is missing or out of date
+ *   npm run scenery -- --force   # re-encode everything
  *
  * Sources, licences and credits live in src/content/scenery/sources.json. Originals are
  * cached in /scenery-src (git-ignored) and downloaded when missing. Each photo gets the
@@ -15,7 +15,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import sharp from '../node_modules/sharp/dist/index.mjs';
+import sharp from 'sharp';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SOURCES = path.join(ROOT, 'src/content/scenery/sources.json');

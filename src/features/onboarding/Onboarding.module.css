@@ -43,7 +43,8 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgb(14 10 6 / 0.42) 0%, rgb(14 10 6 / 0.08) 30%, rgb(14 10 6 / 0) 50%, rgb(14 10 6 / 0.2) 100%);
+  /* Deep enough at the top for the wordmark over the brightest sky (QA.md). */
+  background: linear-gradient(180deg, rgb(14 10 6 / 0.62) 0%, rgb(14 10 6 / 0.52) 11%, rgb(14 10 6 / 0.12) 30%, rgb(14 10 6 / 0) 50%, rgb(14 10 6 / 0.2) 100%);
 }
 .welcomeImage {
   position: absolute;

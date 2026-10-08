@@ -20,6 +20,7 @@
     "scripture": "node scripts/build-scripture.mjs",
     "verse": "node scripts/verse.mjs",
     "icons": "node scripts/build-icons.mjs",
+    "scenery": "node scripts/build-scenery.mjs",
     "contrast": "node scripts/contrast.mjs",
     "lint:content": "node scripts/lint-content.mjs",
     "check": "npm run typecheck && npm run contrast && npm run test"
