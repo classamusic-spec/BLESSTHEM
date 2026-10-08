@@ -36,8 +36,8 @@ export function NavigationBar() {
                 aria-current={active ? 'page' : undefined}
                 onClick={() => !active && haptics.selection()}
               >
+                {active && <motion.span layoutId="nav-lens" className={styles.lens} transition={spring.soft} />}
                 <span className={styles.iconWrap}>
-                  {active && <motion.span layoutId="nav-pill" className={styles.pill} transition={spring.ui} />}
                   <Icon size={24} weight={active ? 'fill' : 'regular'} className={styles.icon} aria-hidden="true" />
                 </span>
                 <span className={styles.label}>{label}</span>

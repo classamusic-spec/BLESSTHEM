@@ -6,11 +6,12 @@ import { RouteFallback } from '@/app/RouteFallback';
 import { useStore } from '@/data/store';
 import { weekStart, weekSummary } from '@/engine/rhythm';
 import { addDays, dayKey } from '@/lib/dates';
+import { SceneBackdrop } from '@/design/SceneBackdrop';
 import { ToastProvider } from '@/design/Toast';
 import { TodayPage } from '@/features/today/TodayPage';
 import { configureAnalytics, track } from '@/services/analytics';
 import { onServiceWorkerMessage } from '@/services/sw-register';
-import { applyDaypart, applySettings } from '@/services/theme';
+import { applySettings } from '@/services/theme';
 import { useNotificationScheduler } from '@/features/notifications/useNotificationScheduler';
 import { loadTranslation } from '@/content/scripture';
 import { PaywallProvider } from '@/features/premium/PaywallProvider';
@@ -58,22 +59,22 @@ function useAppEffects() {
   }, [settings.translation]);
 
   useEffect(() => {
-    applyDaypart();
     recordOpen();
     const source = new URLSearchParams(window.location.search).get('source') ?? undefined;
     track({ name: 'app_opened', props: { source } });
     summarizeLastWeek();
-    const id = window.setInterval(applyDaypart, 5 * 60_000);
     const media = window.matchMedia('(prefers-color-scheme: dark)');
+    const transparency = window.matchMedia('(prefers-reduced-transparency: reduce)');
     const onScheme = () => applySettings(useStore.getState().settings);
     media.addEventListener('change', onScheme);
+    transparency.addEventListener('change', onScheme);
     // Let the splash breathe for a beat, then fade it away.
     const splash = document.getElementById('splash');
     const t = window.setTimeout(() => splash?.classList.add('is-done'), 380);
     const t2 = window.setTimeout(() => splash?.remove(), 1000);
     return () => {
-      window.clearInterval(id);
       media.removeEventListener('change', onScheme);
+      transparency.removeEventListener('change', onScheme);
       window.clearTimeout(t);
       window.clearTimeout(t2);
     };
@@ -114,6 +115,7 @@ export function App() {
       <ToastProvider>
         <BrowserRouter>
           <PaywallProvider>
+          <SceneBackdrop />
           <a href="#main" className="skip-link">
             Skip to content
           </a>

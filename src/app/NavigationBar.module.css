@@ -1,54 +1,59 @@
-/* ── Bottom bar ─────────────────────────────────── */
+/* ── Bottom bar: a floating capsule of liquid glass ───── */
 .bar {
   position: fixed;
-  inset: auto 0 0;
+  left: 50%;
+  bottom: calc(max(var(--safe-bottom), 8px) + 12px);
   z-index: 40;
-  padding-bottom: var(--safe-bottom);
-  background: color-mix(in srgb, var(--color-bg-raised) 92%, transparent);
-  backdrop-filter: saturate(1.6) blur(18px);
-  -webkit-backdrop-filter: saturate(1.6) blur(18px);
-  box-shadow: 0 -1px 0 var(--color-border);
+  width: min(calc(100% - 2 * var(--space-5)), 420px);
+  transform: translateX(-50%);
+  border-radius: var(--radius-pill);
+  background: var(--glass-sheen), var(--glass-fill-chrome);
+  -webkit-backdrop-filter: var(--glass-filter);
+  backdrop-filter: var(--glass-filter);
+  box-shadow: var(--glass-rim), var(--glass-shadow-float);
+}
+:global(.no-nav) .bar {
+  display: none;
 }
 
 .list {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  max-width: 560px;
-  height: var(--nav-height);
-  margin: 0 auto;
-  padding: 0 var(--space-2);
+  height: 64px;
+  padding: 5px;
 }
 
 .item {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
+  gap: 1px;
   height: 100%;
-  color: var(--color-text-tertiary);
+  border-radius: var(--radius-pill);
+  color: var(--color-text-secondary);
   text-decoration: none;
-  border-radius: var(--radius-md);
-  transition: color var(--dur-base) var(--ease-out);
+  transition: color var(--dur-base) var(--ease-out), transform var(--dur-fast) var(--ease-out);
 }
-.item:active .iconWrap {
-  transform: scale(0.9);
+.item:active {
+  transform: scale(0.94);
+}
+
+/* The selected tab sits under a brighter lens of glass that glides between tabs. */
+.lens {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-pill);
+  background: var(--nav-lens);
+  box-shadow: var(--nav-lens-shadow);
 }
 
 .iconWrap {
   position: relative;
   display: grid;
   place-items: center;
-  width: 56px;
-  height: 32px;
-  transition: transform var(--dur-fast) var(--ease-out);
-}
-
-.pill {
-  position: absolute;
-  inset: 0;
-  border-radius: var(--radius-pill);
-  background: var(--color-brand-soft);
+  height: 28px;
 }
 
 .icon {
@@ -56,8 +61,9 @@
 }
 
 .label {
-  font-size: 11.5px;
-  font-weight: 600;
+  position: relative;
+  font-size: 11px;
+  font-weight: 620;
   letter-spacing: 0.01em;
 }
 
@@ -66,7 +72,7 @@
 }
 .active .label {
   color: var(--color-text);
-  font-weight: 700;
+  font-weight: 720;
 }
 
 /* ── Sidebar ────────────────────────────────────── */
@@ -77,8 +83,10 @@
   flex-direction: column;
   height: 100dvh;
   padding: var(--space-8) var(--space-5) var(--space-6);
-  border-right: 1px solid var(--color-border);
-  background: color-mix(in srgb, var(--color-bg-raised) 60%, transparent);
+  background: var(--glass-sheen), var(--glass-fill-chrome);
+  -webkit-backdrop-filter: var(--glass-filter);
+  backdrop-filter: var(--glass-filter);
+  box-shadow: inset -1px 0 0 rgb(255 255 255 / 0.35), 1px 0 0 rgb(84 62 38 / 0.08);
 }
 
 .brand {
@@ -128,7 +136,8 @@
   position: absolute !important;
   inset: 0;
   border-radius: var(--radius-md);
-  background: var(--color-brand-soft);
+  background: var(--nav-lens);
+  box-shadow: var(--nav-lens-shadow);
 }
 .sideActive {
   color: var(--color-text);

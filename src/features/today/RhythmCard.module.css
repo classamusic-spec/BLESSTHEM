@@ -2,9 +2,9 @@
   margin-top: var(--space-10);
   padding: var(--space-6);
   border-radius: var(--radius-xl);
-  background: var(--color-surface);
+  background: var(--surface-glass);
   box-shadow:
-    0 0 0 1px var(--color-border) inset,
+    var(--glass-border),
     var(--shadow-sm);
 }
 

@@ -1,6 +1,8 @@
 /// <reference lib="webworker" />
 import { cleanupOutdatedCaches, createHandlerBoundToURL, precacheAndRoute } from 'workbox-precaching';
 import { NavigationRoute, registerRoute } from 'workbox-routing';
+import { CacheFirst } from 'workbox-strategies';
+import { ExpirationPlugin } from 'workbox-expiration';
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -9,6 +11,17 @@ declare const self: ServiceWorkerGlobalScope;
 precacheAndRoute(self.__WB_MANIFEST);
 cleanupOutdatedCaches();
 registerRoute(new NavigationRoute(createHandlerBoundToURL('/index.html')));
+
+// Scenery photographs are cached the first time they are seen, at the size this screen
+// needs, rather than precached in every size. Until then, each scene's tiny blurred
+// placeholder (bundled with the app) stands in, so nothing ever looks broken offline.
+registerRoute(
+  ({ url, request }) => url.origin === self.location.origin && url.pathname.startsWith('/scenery/') && request.destination === 'image',
+  new CacheFirst({
+    cacheName: 'scenery-v1',
+    plugins: [new ExpirationPlugin({ maxEntries: 90, maxAgeSeconds: 60 * 60 * 24 * 365, purgeOnQuotaError: true })],
+  }),
+);
 
 self.addEventListener('install', () => {
   void self.skipWaiting();

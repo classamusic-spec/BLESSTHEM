@@ -1,0 +1,36 @@
+.frame {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* The placeholder: a 24-pixel copy of the photo, softly blurred — never a grey box. */
+.frame::before {
+  content: '';
+  position: absolute;
+  inset: -16px;
+  background-image: var(--lqip);
+  background-size: cover;
+  background-position: var(--focus, center);
+  filter: blur(16px) saturate(1.1);
+  transform: scale(1.04);
+}
+
+.img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: var(--focus, center);
+  opacity: 0;
+  transition: opacity 700ms var(--ease-out);
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.loaded .img {
+  opacity: 1;
+}

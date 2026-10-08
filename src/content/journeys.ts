@@ -1,3 +1,4 @@
+import type { SceneId } from './scenery/scenes.ts';
 import type { AgeGroup, RelationshipKind, TopicId } from './types.ts';
 
 /**
@@ -18,6 +19,8 @@ export interface Journey {
   description: string;
   icon: string;
   tone: 'sage' | 'gold' | 'blue' | 'rose' | 'sand' | 'night';
+  /** The photograph that carries this journey (see scenery/sources.json for credits). */
+  scene: SceneId;
   ages?: AgeGroup[];
   relationships?: RelationshipKind[];
   days: JourneyDay[];
@@ -33,6 +36,7 @@ export const JOURNEYS: Journey[] = [
     description: 'A week of blessings for a child facing something hard — a new team, a hard conversation, a brave first step.',
     icon: 'Mountains',
     tone: 'sage',
+    scene: 'mountain-sunrise',
     days: [
       d('You are not alone', 'courage'),
       d('When it feels too big', 'fear'),
@@ -50,6 +54,7 @@ export const JOURNEYS: Journey[] = [
     description: 'Short, tender blessings to speak at the bedside — for restless minds, the dark, and the comfort of being held.',
     icon: 'MoonStars',
     tone: 'night',
+    scene: 'moonrise',
     days: [
       d('Lie down in peace', 'sleep'),
       d('The One who never sleeps', 'protection'),
@@ -67,6 +72,7 @@ export const JOURNEYS: Journey[] = [
     description: 'A blessing for each of the last seven days before a new school year.',
     icon: 'Backpack',
     tone: 'gold',
+    scene: 'autumn-trail',
     ages: ['preschool', 'elementary', 'tween', 'teen'],
     days: [
       d('A new beginning', 'new-experiences'),
@@ -85,6 +91,7 @@ export const JOURNEYS: Journey[] = [
     description: 'For seasons when something is heavy — friendships, school, worries, or a hurt they can’t yet name.',
     icon: 'Lighthouse',
     tone: 'blue',
+    scene: 'lighthouse',
     ages: ['elementary', 'tween', 'teen', 'young-adult'],
     days: [
       d('You are seen', 'identity'),
@@ -103,6 +110,7 @@ export const JOURNEYS: Journey[] = [
     description: 'Two weeks of blessings for belonging, kindness, forgiveness and wise friendships.',
     icon: 'UsersThree',
     tone: 'rose',
+    scene: 'wildflower-hillside',
     ages: ['elementary', 'tween', 'teen', 'young-adult'],
     days: [
       d('A faithful friend', 'friendship'),
@@ -128,6 +136,7 @@ export const JOURNEYS: Journey[] = [
     description: 'Three weeks of blessings for wise hearts, clear minds and steady character.',
     icon: 'Compass',
     tone: 'sand',
+    scene: 'forest-river',
     ages: ['elementary', 'tween', 'teen', 'young-adult', 'adult'],
     days: [
       d('Ask for wisdom', 'wisdom'),
@@ -160,6 +169,7 @@ export const JOURNEYS: Journey[] = [
     description: 'Thirty days of blessings for identity, choices, friendships, faith and the future — spoken with respect.',
     icon: 'Path',
     tone: 'sage',
+    scene: 'canyon-trail',
     ages: ['teen', 'young-adult'],
     days: [
       d('Who you are', 'identity'),
@@ -201,6 +211,7 @@ export const JOURNEYS: Journey[] = [
     description: 'For grown children building lives of their own — their work, love, faith and future.',
     icon: 'Signpost',
     tone: 'gold',
+    scene: 'lake-sunrise',
     ages: ['young-adult', 'adult'],
     relationships: ['child', 'grandchild'],
     days: [
@@ -227,6 +238,7 @@ export const JOURNEYS: Journey[] = [
     description: 'Blessings to speak over your spouse — patient love, forgiveness, shared faith and a peaceful home.',
     icon: 'HeartStraight',
     tone: 'rose',
+    scene: 'swans',
     relationships: ['spouse'],
     days: [
       d('Patient, kind love', 'love'),
@@ -259,15 +271,16 @@ export interface Collection {
   to: string;
   tone: Journey['tone'];
   icon: string;
+  scene: SceneId;
 }
 
 export const COLLECTIONS: Collection[] = [
-  { id: 'back-to-school', title: 'Back to School', subtitle: 'Courage, friends and focus for a new year', topics: ['school', 'courage', 'new-experiences', 'friendship', 'teachers', 'focus'], from: '08-01', to: '10-15', tone: 'gold', icon: 'Backpack' },
-  { id: 'thanksgiving', title: 'A Grateful Season', subtitle: 'Blessings of thankfulness', topics: ['gratitude', 'family', 'faithfulness'], from: '10-16', to: '11-30', tone: 'sand', icon: 'FlowerTulip' },
-  { id: 'advent', title: 'Advent', subtitle: 'Waiting, hope and the gift of peace', topics: ['peace', 'faith', 'gratitude', 'trust'], from: '12-01', to: '12-25', tone: 'night', icon: 'Star' },
-  { id: 'new-year', title: 'A New Year', subtitle: 'Purpose and steady faithfulness', topics: ['purpose', 'change', 'faithfulness', 'wisdom'], from: '12-26', to: '01-31', tone: 'blue', icon: 'Sparkle' },
-  { id: 'easter', title: 'Lent & Easter', subtitle: 'Grace, forgiveness and new life', topics: ['forgiveness', 'faith', 'trust', 'humility'], from: '02-15', to: '04-30', tone: 'sage', icon: 'Butterfly' },
-  { id: 'summer', title: 'Summer Days', subtitle: 'Adventures, rest and safe travels', topics: ['travel', 'new-experiences', 'peace', 'friendship'], from: '06-01', to: '07-31', tone: 'gold', icon: 'Sun' },
+  { id: 'back-to-school', title: 'Back to School', subtitle: 'Courage, friends and focus for a new year', topics: ['school', 'courage', 'new-experiences', 'friendship', 'teachers', 'focus'], from: '08-01', to: '10-15', tone: 'gold', icon: 'Backpack', scene: 'golden-trees' },
+  { id: 'thanksgiving', title: 'A Grateful Season', subtitle: 'Blessings of thankfulness', topics: ['gratitude', 'family', 'faithfulness'], from: '10-16', to: '11-30', tone: 'sand', icon: 'FlowerTulip', scene: 'misty-hayfield' },
+  { id: 'advent', title: 'Advent', subtitle: 'Waiting, hope and the gift of peace', topics: ['peace', 'faith', 'gratitude', 'trust'], from: '12-01', to: '12-25', tone: 'night', icon: 'Star', scene: 'snowy-pine' },
+  { id: 'new-year', title: 'A New Year', subtitle: 'Purpose and steady faithfulness', topics: ['purpose', 'change', 'faithfulness', 'wisdom'], from: '12-26', to: '01-31', tone: 'blue', icon: 'Sparkle', scene: 'snow-sunrise' },
+  { id: 'easter', title: 'Lent & Easter', subtitle: 'Grace, forgiveness and new life', topics: ['forgiveness', 'faith', 'trust', 'humility'], from: '02-15', to: '04-30', tone: 'sage', icon: 'Butterfly', scene: 'spring-blossoms' },
+  { id: 'summer', title: 'Summer Days', subtitle: 'Adventures, rest and safe travels', topics: ['travel', 'new-experiences', 'peace', 'friendship'], from: '06-01', to: '07-31', tone: 'gold', icon: 'Sun', scene: 'lake-dock' },
 ];
 
 /** The collection in season on a given MM-DD, if any (windows may wrap the new year). */

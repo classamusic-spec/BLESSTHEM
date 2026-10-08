@@ -5,12 +5,12 @@
   width: 100%;
   padding: var(--space-4) var(--space-5);
   border-radius: var(--radius-lg);
-  background: var(--color-surface);
+  background: var(--surface-glass);
   color: var(--color-text);
   text-align: left;
   text-decoration: none;
   box-shadow:
-    0 0 0 1px var(--color-border) inset,
+    var(--glass-border),
     var(--shadow-xs);
   transition:
     transform var(--dur-fast) var(--ease-out),

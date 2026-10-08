@@ -1,0 +1,99 @@
+.card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  padding: var(--space-2);
+  border-radius: var(--radius-xl);
+  color: var(--color-text);
+  text-decoration: none;
+  box-shadow: var(--glass-edge), var(--glass-shadow);
+  transform: translateZ(0);
+  transition:
+    transform var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out);
+}
+.feature {
+  min-height: 212px;
+}
+.tile {
+  min-height: 176px;
+}
+@media (hover: hover) {
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--glass-edge), var(--glass-shadow-float);
+  }
+  .card:hover .photo {
+    transform: scale(1.035);
+  }
+}
+.card:active {
+  transform: scale(0.985);
+}
+
+.photo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  filter: brightness(var(--scene-brightness));
+  transition: transform 900ms var(--ease-out);
+}
+/* Light from above, a little weight at the bottom: the caption settles into the scene. */
+.photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.06) 0%, rgb(0 0 0 / 0) 40%, rgb(14 10 6 / 0.18) 100%);
+}
+
+.caption {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: calc(var(--radius-xl) - var(--space-2));
+  background: var(--surface-glass-strong);
+  -webkit-backdrop-filter: var(--glass-filter);
+  backdrop-filter: var(--glass-filter);
+  box-shadow: var(--glass-rim);
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.kicker {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-gold-text);
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: var(--text-title-3);
+  font-weight: 500;
+  line-height: 1.22;
+  letter-spacing: -0.005em;
+}
+
+.body {
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}
+
+.accessory {
+  display: grid;
+  place-items: center;
+  flex: none;
+  color: var(--color-gold-text);
+}

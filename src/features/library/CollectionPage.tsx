@@ -7,7 +7,6 @@ import { Button, ButtonLink } from '@/design/Button';
 import { Page, PageHeader } from '@/design/Layout';
 import { fadeUp, stagger } from '@/design/motion';
 import { EmptyState } from '@/design/States';
-import { TopicIcon } from '@/design/TopicIcon';
 import { usePaywall } from '@/features/premium/PaywallProvider';
 import { EntryRow } from './EntryRow';
 import styles from './TopicPage.module.css';
@@ -32,21 +31,7 @@ export default function CollectionPage() {
 
   return (
     <Page>
-      <PageHeader title="" back="/library" size="compact" />
-      <motion.header className={styles.hero} variants={stagger(0.07)} initial="hidden" animate="show">
-        <motion.span variants={fadeUp} className={styles.icon}>
-          <TopicIcon name={collection.icon} size={34} />
-        </motion.span>
-        <motion.p variants={fadeUp} className="overline">
-          Seasonal collection
-        </motion.p>
-        <motion.h1 variants={fadeUp} className={styles.title}>
-          {collection.title}
-        </motion.h1>
-        <motion.p variants={fadeUp} className={styles.description}>
-          {collection.subtitle}
-        </motion.p>
-      </motion.header>
+      <PageHeader back="/library" scene={collection.scene} eyebrow="Seasonal collection" title={collection.title} subtitle={collection.subtitle} />
       {!plus && (
         <div className={styles.locked}>
           <p>Seasonal collections are part of Bless Them+ — fresh blessings for the rhythms of the year.</p>

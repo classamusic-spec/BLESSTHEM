@@ -7,6 +7,8 @@ import { ProgressDots } from '@/design/Controls';
 import { ease } from '@/design/motion';
 import type { ComposedBlessing } from '@/engine/compose';
 import { daypart } from '@/lib/dates';
+import { DAYPART_SCENE } from '@/content/scenery';
+import { SceneImage } from '@/design/SceneImage';
 import { Pip } from '@/mascot/Pip';
 import { haptics } from '@/services/haptics';
 import { ScriptureText } from './ScriptureText';
@@ -37,7 +39,7 @@ export function BlessingMoment({ open, onClose, composed, personName, prayed, on
   ];
   const [index, setIndex] = useState(0);
   const [dir, setDir] = useState(1);
-  const night = ['evening', 'night'].includes(daypart());
+  const scene = DAYPART_SCENE[daypart()];
   const closeRef = useRef<HTMLButtonElement>(null);
   const restore = useRef<HTMLElement | null>(null);
 
@@ -138,7 +140,8 @@ export function BlessingMoment({ open, onClose, composed, personName, prayed, on
     <AnimatePresence>
       {open && (
         <motion.div
-          className={`${styles.moment} ${night ? styles.night : ''}`}
+          className={styles.moment}
+          data-glass
           role="dialog"
           aria-modal="true"
           aria-label={`Blessing for ${personName}`}
@@ -147,6 +150,11 @@ export function BlessingMoment({ open, onClose, composed, personName, prayed, on
           exit={{ opacity: 0 }}
           transition={{ duration: 0.36, ease: ease.out }}
         >
+          {/* Today’s scene, softened and dimmed: a quiet place to read aloud. */}
+          <div className={styles.scene} aria-hidden="true">
+            <SceneImage scene={scene} sizes="100vw" priority className={styles.sceneImage} />
+          </div>
+          <div className={styles.shade} aria-hidden="true" />
           <div className={styles.glow} aria-hidden="true" />
           <header className={styles.top}>
             <ProgressDots count={steps.length} index={index} label={`Part ${index + 1} of ${steps.length}: ${step.label}`} />

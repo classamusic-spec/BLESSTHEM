@@ -8,11 +8,24 @@
   position: sticky;
   top: 0;
   z-index: 20;
+  isolation: isolate;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: calc(var(--safe-top) + var(--space-4)) 0 var(--space-4);
-  background: linear-gradient(to bottom, var(--color-bg) 70%, transparent);
+}
+/* A frosted veil the width of the window that dissolves downwards: no hard edge. */
+.nav::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0 calc(50% - 50vw) -12px;
+  background: linear-gradient(to bottom, rgb(var(--veil-rgb) / 0.86) 30%, rgb(var(--veil-rgb) / 0));
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent);
+  mask-image: linear-gradient(to bottom, #000 45%, transparent);
+  pointer-events: none;
 }
 .logo {
   text-decoration: none;
@@ -67,10 +80,36 @@
   color: var(--color-text-tertiary);
 }
 
+/* The phone rests on a photograph of first light, like a postcard on a table. */
+.stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: var(--space-12) var(--space-5);
+}
+.stageScene {
+  position: absolute;
+  inset: 0 calc(var(--gutter) * -1);
+  border-radius: 0;
+  overflow: hidden;
+}
+@media (min-width: 640px) {
+  .stageScene {
+    inset: 0;
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--glass-edge), var(--glass-shadow);
+  }
+}
+.stageImage {
+  position: absolute;
+  inset: 0;
+  filter: brightness(var(--scene-brightness));
+}
+
 .device {
   position: relative;
   justify-self: center;
-  width: min(100%, 400px);
+  width: min(100%, 380px);
   padding: 14px;
   border-radius: 48px;
   background: linear-gradient(160deg, #2a2622, #171412);
@@ -124,9 +163,9 @@
   position: relative;
   padding: var(--space-8) var(--space-6);
   border-radius: var(--radius-2xl);
-  background: var(--color-surface);
+  background: var(--surface-glass);
   box-shadow:
-    0 0 0 1px var(--color-border) inset,
+    var(--glass-border),
     var(--shadow-sm);
 }
 .stepNum {

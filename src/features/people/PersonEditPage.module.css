@@ -49,11 +49,11 @@
   min-height: 44px;
   padding: 0 var(--space-4);
   border-radius: var(--radius-pill);
-  background: var(--color-surface);
+  background: var(--surface-glass);
   font-size: var(--text-callout);
   font-weight: 580;
   box-shadow:
-    0 0 0 1px var(--color-border-strong) inset,
+    var(--glass-border),
     var(--shadow-xs);
   transition: background-color var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out);
 }

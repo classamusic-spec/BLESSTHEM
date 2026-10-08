@@ -2,8 +2,10 @@ import { CaretLeft, CaretRight } from '@phosphor-icons/react';
 import { motion } from 'motion/react';
 import type { ReactNode } from 'react';
 import { Link, useNavigate } from 'react-router';
+import type { SceneId } from '@/content/scenery';
 import { cx } from '@/lib/cx';
 import { IconButton } from './Button';
+import { SceneImage } from './SceneImage';
 import { page } from './motion';
 import styles from './Layout.module.css';
 
@@ -30,10 +32,38 @@ interface PageHeaderProps {
   back?: string | boolean;
   actions?: ReactNode;
   size?: 'large' | 'compact';
+  /** A photograph behind the title: the page’s own place. The subtitle sits below it. */
+  scene?: SceneId;
 }
 
-export function PageHeader({ title, eyebrow, subtitle, back, actions, size = 'large' }: PageHeaderProps) {
+export function PageHeader({ title, eyebrow, subtitle, back, actions, size = 'large', scene }: PageHeaderProps) {
   const navigate = useNavigate();
+  if (scene) {
+    return (
+      <header className={styles.sceneHeader}>
+        <div className={styles.band}>
+          <div className={styles.bandScene} aria-hidden="true">
+            <SceneImage scene={scene} priority sizes="100vw" className={styles.bandImage} />
+          </div>
+          {(back || actions) && (
+            <div className={styles.headerBar}>
+              {back ? (
+                <IconButton label="Back" tone="surface" onClick={() => (typeof back === 'string' ? navigate(back) : window.history.length > 1 ? navigate(-1) : navigate('/today'))}>
+                  <CaretLeft size={20} weight="bold" />
+                </IconButton>
+              ) : (
+                <span />
+              )}
+              {actions && <div className={styles.actions}>{actions}</div>}
+            </div>
+          )}
+          {eyebrow && <p className={cx('overline', styles.bandEyebrow)}>{eyebrow}</p>}
+          <h1 className={styles.bandTitle}>{title}</h1>
+        </div>
+        {subtitle && <p className={styles.bandSubtitle}>{subtitle}</p>}
+      </header>
+    );
+  }
   return (
     <header className={cx(styles.header, size === 'compact' && styles.headerCompact)}>
       {(back || actions) && (
@@ -162,21 +192,6 @@ export function Ornament({ className }: { className?: string }) {
         <circle cx="20" cy="8" r="1.8" fill="var(--color-gold)" />
       </svg>
       <span className={styles.rule} />
-    </div>
-  );
-}
-
-/**
- * Ambient window light — the brand’s quiet signature. Soft, slowly drifting
- * light that changes with the time of day (see tokens.css › daypart).
- */
-export function Ambient({ className, intensity = 1 }: { className?: string; intensity?: number }) {
-  return (
-    <div className={cx(styles.ambient, className)} style={{ opacity: intensity }} aria-hidden="true">
-      <span className={styles.lightA} />
-      <span className={styles.lightB} />
-      <span className={styles.lightC} />
-      <span className={styles.beam} />
     </div>
   );
 }

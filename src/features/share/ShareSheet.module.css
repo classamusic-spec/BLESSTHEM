@@ -36,8 +36,54 @@
   }
 }
 
-.styleRow {
-  margin-bottom: var(--space-4);
+/* Card styles: four photographs and two quiet colours, as swatches. */
+.swatches {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-1);
+  margin-bottom: var(--space-3);
+}
+.swatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 48px;
+  padding: 2px 0;
+  border-radius: var(--radius-md);
+}
+.swatchDot {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  box-shadow: var(--glass-border), var(--shadow-xs);
+  transition: box-shadow var(--dur-base) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+.swatch:active .swatchDot {
+  transform: scale(0.94);
+}
+.swatchOn .swatchDot {
+  box-shadow:
+    0 0 0 2px var(--color-bg-raised),
+    0 0 0 4px var(--color-brand),
+    var(--shadow-sm);
+}
+.dot-linen {
+  background: radial-gradient(circle at 75% 20%, rgb(240 205 140 / 0.7), transparent 60%), #faf7f1;
+}
+.dot-sage {
+  background: radial-gradient(circle at 75% 20%, rgb(240 208 150 / 0.4), transparent 60%), #3b5845;
+}
+.swatchLabel {
+  font-size: 11.5px;
+  font-weight: 620;
+  color: var(--color-text-secondary);
+}
+.swatchOn .swatchLabel {
+  color: var(--color-text);
+  font-weight: 720;
 }
 
 .nameRow {
@@ -72,8 +118,8 @@
   font-size: 12px;
   font-weight: 600;
   text-align: center;
-  background: var(--color-surface);
-  box-shadow: 0 0 0 1px var(--color-border) inset;
+  background: var(--surface-glass);
+  box-shadow: var(--glass-border);
   transition: background-color var(--dur-fast) var(--ease-out);
 }
 .channel svg {

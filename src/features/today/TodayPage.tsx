@@ -1,18 +1,22 @@
 import { ArrowsClockwise, GearSix } from '@phosphor-icons/react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router';
 import { OCCASION_BY_ID } from '@/content/taxonomy';
 import { JOURNEY_BY_ID } from '@/content/journeys';
 import { currentBlessing, isPlus, useStore } from '@/data/store';
 import { Button } from '@/design/Button';
-import { Ambient, Page } from '@/design/Layout';
+import { DAYPART_SCENE } from '@/content/scenery';
+import { Page } from '@/design/Layout';
+import { SceneImage } from '@/design/SceneImage';
 import { fadeUp, stagger } from '@/design/motion';
 import { PersonSelector } from '@/design/PersonSelector';
 import { BlessingSkeleton, EmptyState } from '@/design/States';
 import { headingName } from '@/engine/compose';
+import { useDaypart } from '@/hooks/useDaypart';
 import { useToday } from '@/hooks/useToday';
 import { formatLongDate, greeting } from '@/lib/dates';
+import { cx } from '@/lib/cx';
 import { initials } from '@/lib/text';
 import { track } from '@/services/analytics';
 import { BlessingCard } from '@/features/blessing/BlessingCard';
@@ -39,6 +43,11 @@ export function TodayPage() {
   const plus = useStore(isPlus);
   const paywall = usePaywall();
   const [focusOpen, setFocusOpen] = useState(false);
+  const part = useDaypart();
+  const reduce = useReducedMotion();
+  const { scrollY } = useScroll();
+  // The scene drifts more slowly than the page, like a view out of a window.
+  const sceneY = useTransform(scrollY, [0, 480], [0, 150]);
 
   // Deep links from notifications and widgets: /today?person=…&from=notification
   useEffect(() => {
@@ -90,10 +99,15 @@ export function TodayPage() {
 
   return (
     <Page className={styles.page}>
-      <Ambient />
-      <motion.header className={styles.hero} variants={stagger(0.07)} initial="hidden" animate="show">
+      <motion.header className={cx(styles.hero, part === 'night' && styles.night)} variants={stagger(0.08, 0.05)} initial="hidden" animate="show">
+        {/* Today’s scene: the photograph changes with the time of day. */}
+        <div className={styles.scene} aria-hidden="true">
+          <motion.div className={styles.sceneDrift} style={reduce ? undefined : { y: sceneY }}>
+            <SceneImage key={DAYPART_SCENE[part]} scene={DAYPART_SCENE[part]} priority sizes="100vw" className={styles.sceneImage} />
+          </motion.div>
+        </div>
         <motion.div variants={fadeUp} className={styles.topRow}>
-          <p className="overline">{formatLongDate(today)}</p>
+          <p className={styles.date}>{formatLongDate(today)}</p>
           <Link to="/settings" className={styles.profile} aria-label="Settings and profile">
             {firstName ? <span className={styles.profileInitial}>{initials(firstName)}</span> : <GearSix size={20} />}
           </Link>
@@ -102,14 +116,20 @@ export function TodayPage() {
           {greeting()}
           {firstName ? `, ${firstName}.` : '.'}
         </motion.h1>
-        <motion.p variants={fadeUp} className={styles.question}>
-          Who are you blessing today?
-        </motion.p>
       </motion.header>
 
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.18, duration: 0.4 }}>
+      <motion.section
+        className={styles.tray}
+        aria-labelledby="who-today"
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.22, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <p id="who-today" className={styles.question}>
+          Who are you blessing today?
+        </p>
         <PersonSelector people={people} selectedId={person.id} prayedIds={prayedIds} onSelect={selectPerson} onAdd={addPerson} />
-      </motion.div>
+      </motion.section>
 
       <UpcomingMoments />
 

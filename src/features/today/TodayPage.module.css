@@ -1,5 +1,70 @@
+/* ── Hero: today’s scene, with the greeting set into it ───── */
 .hero {
-  padding: var(--space-4) 0 var(--space-5);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: clamp(300px, 46svh, 440px);
+  padding: var(--space-2) 0 calc(var(--space-12) + var(--space-2));
+  color: var(--on-scene);
+}
+
+/* The photograph bleeds past the column to the edges of the window and fades into the
+   app’s own sky below. Height follows the header, so long greetings still sit on it. */
+.scene {
+  position: absolute;
+  z-index: -1;
+  top: calc(-1 * (var(--safe-top) + var(--space-4)));
+  bottom: calc(-1 * var(--space-16));
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 58%, rgb(0 0 0 / 0.55) 78%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 58%, rgb(0 0 0 / 0.55) 78%, transparent 100%);
+}
+.scene::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(0deg, rgb(14 10 6 / 0.34) 0%, rgb(14 10 6 / 0.14) 26%, rgb(14 10 6 / 0) 46%),
+    var(--scene-scrim);
+  pointer-events: none;
+}
+/* Night scenes are dark already: no dimming, a lighter scrim, so the dusk glow stays. */
+.night .sceneDrift {
+  filter: brightness(1.08) saturate(1.05);
+}
+.night .scene::after {
+  background: linear-gradient(180deg, rgb(8 8 12 / 0.28) 0%, rgb(8 8 12 / 0) 40%);
+}
+
+.sceneDrift {
+  position: absolute;
+  inset: -6% 0 -18%;
+  filter: brightness(var(--scene-brightness));
+}
+
+.sceneImage {
+  position: absolute;
+  inset: 0;
+  animation: scene-breathe 48s var(--ease-in-out) infinite alternate;
+  transform-origin: 60% 40%;
+}
+@keyframes scene-breathe {
+  from {
+    transform: scale(1.02);
+  }
+  to {
+    transform: scale(1.09);
+  }
+}
+
+@media (min-width: 900px) {
+  .scene {
+    top: calc(-1 * var(--space-12));
+    border-radius: 0 0 0 var(--radius-2xl);
+  }
 }
 
 .topRow {
@@ -7,7 +72,17 @@
   align-items: center;
   justify-content: space-between;
   min-height: 44px;
-  margin-bottom: var(--space-5);
+  margin-bottom: auto;
+  padding-bottom: var(--space-8);
+}
+
+.date {
+  font-size: var(--text-overline);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--on-scene-soft);
+  text-shadow: var(--on-scene-shadow);
 }
 
 .profile {
@@ -16,22 +91,26 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: var(--color-surface);
-  color: var(--color-text-secondary);
+  background: linear-gradient(160deg, rgb(255 255 255 / 0.4), rgb(255 255 255 / 0.08) 60%), rgb(255 255 255 / 0.16);
+  color: var(--on-scene);
   box-shadow:
-    0 0 0 1px var(--color-border) inset,
-    var(--shadow-xs);
+    inset 0 0 0 1px rgb(255 255 255 / 0.42),
+    inset 0 1px 0 rgb(255 255 255 / 0.6),
+    0 6px 18px -8px rgb(0 0 0 / 0.4);
   text-decoration: none;
   transition: transform var(--dur-fast) var(--ease-out);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  backdrop-filter: blur(18px) saturate(160%);
 }
 .profile:active {
   transform: scale(0.94);
 }
 .profileInitial {
   font-family: var(--font-serif);
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   font-weight: 500;
-  color: var(--color-text);
+  color: var(--on-scene);
+  text-shadow: 0 1px 2px rgb(0 0 0 / 0.25);
 }
 
 @media (min-width: 900px) {
@@ -41,19 +120,38 @@
 }
 
 .greeting {
+  max-width: 13ch;
   font-family: var(--font-serif);
-  font-size: var(--text-display);
-  font-weight: 380;
-  line-height: 1.08;
-  letter-spacing: -0.022em;
+  font-size: calc(var(--text-display) * 1.12);
+  font-weight: 360;
+  line-height: 1.04;
+  letter-spacing: -0.025em;
   text-wrap: balance;
   font-variation-settings: 'opsz' 72;
+  color: var(--on-scene);
+  text-shadow: var(--on-scene-shadow);
+}
+
+/* ── The tray: who are you blessing today? ───────────────── */
+.tray {
+  --gutter: var(--space-4);
+  position: relative;
+  margin-top: calc(-1 * var(--space-8));
+  padding: var(--space-5) var(--space-4) var(--space-3);
+  border-radius: var(--radius-xl);
+  background: var(--surface-glass);
+  -webkit-backdrop-filter: var(--glass-filter);
+  backdrop-filter: var(--glass-filter);
+  box-shadow: var(--glass-border), var(--glass-shadow-float);
 }
 
 .question {
-  margin-top: var(--space-3);
-  font-size: var(--text-body);
-  color: var(--color-text-secondary);
+  padding: 0 var(--space-1);
+  font-family: var(--font-serif);
+  font-size: var(--text-title-3);
+  font-weight: 450;
+  letter-spacing: -0.005em;
+  color: var(--color-text);
 }
 
 .journey {

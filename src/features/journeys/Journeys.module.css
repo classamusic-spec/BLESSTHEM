@@ -2,136 +2,13 @@
   display: grid;
   gap: var(--space-3);
 }
-
-.card {
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
-  padding: var(--space-5);
-  border-radius: var(--radius-xl);
-  color: var(--color-text);
-  text-decoration: none;
-  box-shadow: var(--shadow-sm);
-  transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
-}
-@media (hover: hover) {
-  .card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+@media (min-width: 640px) {
+  .list {
+    grid-template-columns: 1fr 1fr;
   }
-}
-.card:active {
-  transform: scale(0.99);
-}
-
-.tone-sage {
-  background: radial-gradient(100% 140% at 100% 0%, rgb(var(--glow-rgb) / 0.18), transparent 60%), var(--color-surface-sage);
-}
-.tone-gold {
-  background: radial-gradient(100% 140% at 100% 0%, rgb(var(--glow-rgb) / 0.3), transparent 60%), var(--color-surface-gold);
-}
-.tone-blue {
-  background: radial-gradient(100% 140% at 100% 0%, rgb(var(--glow-rgb) / 0.14), transparent 60%), var(--color-surface-blue);
-}
-.tone-rose {
-  background: radial-gradient(100% 140% at 100% 0%, rgb(var(--glow-rgb) / 0.16), transparent 60%), color-mix(in srgb, var(--color-rose) 18%, var(--color-surface));
-}
-.tone-sand {
-  background: radial-gradient(100% 140% at 100% 0%, rgb(var(--glow-rgb) / 0.2), transparent 60%), var(--color-surface-sand);
-}
-.tone-night {
-  background: radial-gradient(100% 140% at 100% 0%, rgb(var(--glow-rgb) / 0.2), transparent 60%), #24211d;
-  color: #f2ece3;
-  --color-text: #f2ece3;
-  --color-text-secondary: #cbc2b6;
-  --color-text-tertiary: #a59c90;
-  --color-brand-text: #afc8ae;
-  --color-gold-text: #d9be86;
-}
-
-.cardIcon {
-  display: grid;
-  place-items: center;
-  width: 54px;
-  height: 54px;
-  flex: none;
-  border-radius: 18px;
-  background: color-mix(in srgb, var(--color-surface) 80%, transparent);
-  color: var(--color-brand-text);
-}
-.tone-night .cardIcon {
-  background: rgb(255 255 255 / 0.08);
-  color: #d9be86;
-}
-
-.cardText {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-width: 0;
-}
-.cardLength {
-  font-size: 11.5px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-gold-text);
-}
-.cardTitle {
-  margin-top: 2px;
-  font-family: var(--font-serif);
-  font-size: var(--text-title-3);
-  font-weight: 500;
-  line-height: 1.25;
-}
-.cardSub {
-  font-size: var(--text-caption);
-  color: var(--color-text-secondary);
-}
-.lock {
-  flex: none;
-  color: var(--color-gold-text);
 }
 
 /* ── Journey detail ───────────────────── */
-.hero {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  padding: var(--space-7) var(--space-6);
-  border-radius: var(--radius-2xl);
-  color: var(--color-text);
-  box-shadow: var(--shadow-sm);
-}
-.heroIcon {
-  display: grid;
-  place-items: center;
-  width: 60px;
-  height: 60px;
-  margin-bottom: var(--space-2);
-  border-radius: 20px;
-  background: color-mix(in srgb, var(--color-surface) 82%, transparent);
-  color: var(--color-brand-text);
-}
-.heroLength {
-  font-size: var(--text-overline);
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-gold-text);
-}
-.heroTitle {
-  font-family: var(--font-serif);
-  font-size: var(--text-title-1);
-  font-weight: 420;
-  line-height: 1.1;
-  letter-spacing: -0.015em;
-}
-.heroBody {
-  color: var(--color-text-secondary);
-  line-height: 1.55;
-}
-
 .who {
   margin-top: var(--space-8);
 }

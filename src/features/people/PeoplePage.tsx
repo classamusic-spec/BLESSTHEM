@@ -33,6 +33,7 @@ export default function PeoplePage() {
       <PageHeader
         title="People"
         subtitle="The ones you carry in prayer."
+        scene="lake-sunrise"
         actions={
           <Button size="sm" variant="secondary" icon={<Plus weight="bold" />} onClick={add}>
             Add

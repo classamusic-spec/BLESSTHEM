@@ -11,11 +11,11 @@
   min-height: 48px;
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-md);
-  background: var(--color-surface);
+  background: var(--surface-glass);
   font-size: var(--text-caption);
   font-weight: 600;
   text-align: left;
-  box-shadow: 0 0 0 1px var(--color-border) inset;
+  box-shadow: var(--glass-border);
   transition: box-shadow var(--dur-base) var(--ease-out), background-color var(--dur-base) var(--ease-out);
 }
 .occasion svg {

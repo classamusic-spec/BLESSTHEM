@@ -11,6 +11,27 @@
   padding-top: var(--space-2);
 }
 
+/* A postcard of golden evening light, with Pip settled at its edge. */
+.postcard {
+  position: relative;
+  width: 100%;
+  height: 168px;
+  margin-bottom: var(--space-10);
+}
+.postcardImage {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--glass-edge), var(--glass-shadow);
+  filter: brightness(var(--scene-brightness));
+}
+.postcardPip {
+  position: absolute;
+  left: 50%;
+  bottom: -46px;
+  transform: translateX(-50%);
+}
+
 .eyebrow {
   margin-top: var(--space-3);
   color: var(--color-gold-text);
@@ -78,10 +99,10 @@
   min-height: 72px;
   padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-lg);
-  background: var(--color-surface);
+  background: var(--surface-glass);
   text-align: left;
   box-shadow:
-    0 0 0 1px var(--color-border-strong) inset,
+    var(--glass-border),
     var(--shadow-xs);
   transition: box-shadow var(--dur-base) var(--ease-out), background-color var(--dur-base) var(--ease-out);
 }

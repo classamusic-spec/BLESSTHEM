@@ -27,12 +27,12 @@
   padding: 14px 16px;
   border: 0;
   border-radius: var(--radius-md);
-  background: var(--color-surface);
+  background: var(--surface-glass-strong);
   color: var(--color-text);
   font-size: max(16px, var(--text-body)); /* ≥16px prevents iOS zoom */
   line-height: 1.45;
   box-shadow:
-    0 0 0 1px var(--color-border-strong) inset,
+    var(--glass-border),
     var(--shadow-xs);
   transition: box-shadow var(--dur-base) var(--ease-out);
   appearance: none;
@@ -112,8 +112,8 @@
   gap: 2px;
   padding: 4px;
   border-radius: var(--radius-pill);
-  background: var(--color-surface-sunken);
-  box-shadow: 0 0 0 1px var(--color-border) inset;
+  background: color-mix(in srgb, var(--color-surface-sunken) 78%, transparent);
+  box-shadow: inset 0 1px 2px rgb(59 43 25 / 0.06), var(--glass-border);
 }
 .segment {
   position: relative;
@@ -134,8 +134,8 @@
   position: absolute;
   inset: 0;
   border-radius: var(--radius-pill);
-  background: var(--color-surface);
-  box-shadow: var(--shadow-sm);
+  background: var(--nav-lens);
+  box-shadow: var(--nav-lens-shadow), var(--shadow-xs);
 }
 .segmentLabel {
   position: relative;
@@ -150,10 +150,10 @@
   min-height: 68px;
   padding: var(--space-4) var(--space-5);
   border-radius: var(--radius-lg);
-  background: var(--color-surface);
+  background: var(--surface-glass);
   text-align: left;
   box-shadow:
-    0 0 0 1px var(--color-border) inset,
+    var(--glass-border),
     var(--shadow-xs);
   transition:
     box-shadow var(--dur-base) var(--ease-out),

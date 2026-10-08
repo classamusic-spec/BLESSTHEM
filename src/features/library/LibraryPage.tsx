@@ -7,10 +7,10 @@ import { collectionInSeason, JOURNEYS } from '@/content/journeys';
 import { CATEGORIES, TOPICS } from '@/content/taxonomy';
 import { isPlus, useStore } from '@/data/store';
 import { Page, PageHeader, Section } from '@/design/Layout';
+import { PhotoCard } from '@/design/PhotoCard';
 import { fadeUp, stagger } from '@/design/motion';
 import { TopicCard } from '@/design/Topic';
 import { TopicIcon } from '@/design/TopicIcon';
-import { cx } from '@/lib/cx';
 import { Pip } from '@/mascot/Pip';
 import { track } from '@/services/analytics';
 import styles from './LibraryPage.module.css';
@@ -28,7 +28,7 @@ export default function LibraryPage() {
 
   return (
     <Page>
-      <PageHeader title="Library" subtitle="Scripture blessings for every season of their lives." />
+      <PageHeader title="Library" subtitle="Scripture blessings for every season of their lives." scene="forest-river" />
 
       <Link to="/library/search" className={styles.search}>
         <MagnifyingGlass size={20} weight="bold" aria-hidden="true" />
@@ -44,29 +44,25 @@ export default function LibraryPage() {
 
       <motion.div className={styles.features} variants={stagger(0.08)} initial="hidden" animate="show">
         <motion.div variants={fadeUp}>
-          <Link to="/library/journeys" className={cx(styles.feature, styles.featureJourney)}>
-            <span className={styles.featureText}>
-              <span className={cx('overline', styles.featureKicker)}>Prayer journeys</span>
-              <span className={styles.featureTitle}>Guided blessings, day by day</span>
-              <span className={styles.featureBody}>{JOURNEYS.length} journeys — courage, bedtime peace, your teen, your marriage.</span>
-            </span>
-            <span className={styles.featurePip} aria-hidden="true">
-              <Pip pose="sprig" size={92} alive={false} />
-            </span>
-          </Link>
+          <PhotoCard
+            to="/library/journeys"
+            scene="mountain-sunrise"
+            kicker="Prayer journeys"
+            title="Guided blessings, day by day"
+            body={`${JOURNEYS.length} journeys — courage, bedtime peace, your teen, your marriage.`}
+            accessory={<Pip pose="sprig" size={60} alive={false} />}
+          />
         </motion.div>
         {season && (
           <motion.div variants={fadeUp}>
-            <Link to={`/library/collection/${season.id}`} className={cx(styles.feature, styles.featureSeason)}>
-              <span className={styles.featureText}>
-                <span className={cx('overline', styles.featureKicker)}>In season</span>
-                <span className={styles.featureTitle}>{season.title}</span>
-                <span className={styles.featureBody}>{season.subtitle}</span>
-              </span>
-              <span className={styles.seasonIcon} aria-hidden="true">
-                <TopicIcon name={season.icon} size={34} />
-              </span>
-            </Link>
+            <PhotoCard
+              to={`/library/collection/${season.id}`}
+              scene={season.scene}
+              kicker="In season"
+              title={season.title}
+              body={season.subtitle}
+              accessory={<TopicIcon name={season.icon} size={28} />}
+            />
           </motion.div>
         )}
       </motion.div>

@@ -2,21 +2,22 @@ import { AppleLogo, CaretLeft, EnvelopeSimple, GoogleLogo, HandHeart, HeartStrai
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useMemo, useRef, useState, type ReactElement } from 'react';
 import { Link, useNavigate } from 'react-router';
-import { Logo } from '@/brand/Logo';
+import { LogoMark } from '@/brand/Logo';
+import { DAYPART_SCENE } from '@/content/scenery';
 import { FOCUS_CHOICES, AGE_HINTS, AGE_LABELS } from '@/content/taxonomy';
 import { AGE_GROUPS, type AgeGroup, type TopicId } from '@/content/types';
 import { RELATIONSHIP_LABEL, RELATIONSHIP_PRONOUNS, type OnboardingIntent, type Person, type Pronouns, type Relationship } from '@/data/models';
 import { useStore } from '@/data/store';
 import { Button, IconButton } from '@/design/Button';
 import { ChoiceCard, ProgressDots, TextArea, TextField } from '@/design/Controls';
-import { Ambient } from '@/design/Layout';
 import { ease, fadeUp, stagger } from '@/design/motion';
+import { SceneImage } from '@/design/SceneImage';
 import { TopicChip } from '@/design/Topic';
 import { chooseDaily, defaultTopicsFor, topicSuits } from '@/engine/personalize';
 import { classifyTopics } from '@/engine/search';
 import { checkSafety, type SafetyResult } from '@/engine/safety';
 import { headingName } from '@/engine/compose';
-import { dayKey } from '@/lib/dates';
+import { daypart, dayKey } from '@/lib/dates';
 import { cx } from '@/lib/cx';
 import { Pip } from '@/mascot/Pip';
 import { track } from '@/services/analytics';
@@ -185,7 +186,14 @@ export default function Onboarding() {
 
   return (
     <div className={cx(styles.shell, step === 'welcome' && styles.welcomeShell)}>
-      <Ambient intensity={step === 'welcome' ? 1 : 0.7} />
+      {/* The welcome opens onto today’s scene; the steps after it rest on the app’s sky. */}
+      <AnimatePresence>
+        {step === 'welcome' && (
+          <motion.div className={styles.welcomeScene} aria-hidden="true" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: 0.5 } }}>
+            <SceneImage scene={DAYPART_SCENE[daypart()]} priority sizes="100vw" className={styles.welcomeImage} />
+          </motion.div>
+        )}
+      </AnimatePresence>
       {step !== 'welcome' && (
         <header className={styles.bar}>
           <IconButton label="Back" onClick={back} tone="surface">
@@ -207,20 +215,22 @@ export default function Onboarding() {
           exit={{ opacity: 0, x: dir * -18, transition: { duration: 0.18 } }}
         >
           {step === 'welcome' && (
-            <motion.div className={styles.welcome} variants={stagger(0.12, 0.15)} initial="hidden" animate="show">
-              <motion.div variants={fadeUp} className={styles.welcomeLogo}>
-                <Logo size={30} />
+            <motion.div className={styles.welcome} variants={stagger(0.12, 0.2)} initial="hidden" animate="show">
+              <motion.div variants={fadeUp} className={styles.welcomeLogo} role="img" aria-label="Bless Them">
+                <LogoMark size={30} tone="on-brand" />
+                <span className={styles.welcomeWordmark} aria-hidden="true">
+                  Bless Them
+                </span>
               </motion.div>
-              <motion.div variants={fadeUp} className={styles.welcomePip}>
-                <Pip pose="sprig" size={168} glow />
-              </motion.div>
-              <motion.h1 variants={fadeUp} className={styles.statement}>
-                Speak life over the people you love.
-              </motion.h1>
-              <motion.p variants={fadeUp} className={styles.lede}>
-                Bless Them helps you turn Scripture into simple, meaningful prayers and blessings for the people God has placed in your life.
-              </motion.p>
-              <motion.div variants={fadeUp} className={styles.welcomeActions}>
+              <motion.div variants={fadeUp} className={styles.welcomePanel}>
+                <span className={styles.welcomePip}>
+                  <Pip pose="sprig" size={108} glow />
+                </span>
+                <h1 className={styles.statement}>Speak life over the people you love.</h1>
+                <p className={styles.lede}>
+                  Bless Them helps you turn Scripture into simple, meaningful prayers and blessings for the people God has placed in your life.
+                </p>
+              <div className={styles.welcomeActions}>
                 <Button block onClick={() => go('who')}>
                   Begin
                 </Button>
@@ -228,6 +238,7 @@ export default function Onboarding() {
                 <Link to="/about" className={styles.learn}>
                   What is Bless Them?
                 </Link>
+              </div>
               </motion.div>
             </motion.div>
           )}

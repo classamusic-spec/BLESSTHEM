@@ -5,17 +5,19 @@
   min-height: 44px;
   padding: 0 var(--space-4);
   border-radius: var(--radius-pill);
-  background: var(--color-surface);
+  background: var(--surface-glass-thin);
   color: var(--color-text);
   font-size: var(--text-callout);
   font-weight: 560;
   box-shadow:
-    0 0 0 1px var(--color-border-strong) inset,
+    var(--glass-border),
     var(--shadow-xs);
   transition:
     background-color var(--dur-base) var(--ease-out),
     box-shadow var(--dur-base) var(--ease-out),
     color var(--dur-base) var(--ease-out);
+  -webkit-backdrop-filter: var(--glass-filter);
+  backdrop-filter: var(--glass-filter);
 }
 .chip:active {
   transform: scale(0.97);
@@ -55,11 +57,11 @@
   min-height: 64px;
   padding: var(--space-3) var(--space-4) var(--space-3) var(--space-3);
   border-radius: var(--radius-lg);
-  background: var(--color-surface);
+  background: var(--surface-glass);
   color: var(--color-text);
   text-decoration: none;
   box-shadow:
-    0 0 0 1px var(--color-border) inset,
+    var(--glass-border),
     var(--shadow-xs);
   transition:
     transform var(--dur-fast) var(--ease-out),

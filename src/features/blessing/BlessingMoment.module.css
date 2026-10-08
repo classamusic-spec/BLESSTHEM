@@ -5,13 +5,8 @@
   display: flex;
   flex-direction: column;
   padding: calc(var(--safe-top) + var(--space-3)) var(--gutter) calc(var(--safe-bottom) + var(--space-4));
-  background: var(--color-bg);
-  color: var(--color-text);
   overflow: hidden;
-}
-
-/* At night the room is dark; so is the screen. */
-.night {
+  /* Always a dim room: light words over today’s scene, at any hour. */
   --color-bg: #15120f;
   --color-text: #f1e9dc;
   --color-text-secondary: #cbbfae;
@@ -24,8 +19,40 @@
   --color-brand-soft: #26332a;
   --color-brand-text: #afc8ae;
   --glow-rgb: 214 168 92;
+  --glass-rgb: 38 33 29;
+  --glass-alpha-thin: 0.42;
+  --glass-sheen: linear-gradient(160deg, rgb(255 255 255 / 0.14), rgb(255 255 255 / 0.02) 40%, rgb(255 255 255 / 0) 62%);
+  --glass-rim: inset 0 0 0 1px rgb(255 255 255 / 0.12), inset 0 1px 0 rgb(255 255 255 / 0.18);
+  --glass-edge: 0 0 0 0.5px rgb(0 0 0 / 0.4);
+  --shadow-xs: 0 1px 2px rgb(0 0 0 / 0.3);
   background: #15120f;
   color: #f1e9dc;
+}
+
+/* The photograph: blurred, dimmed and slowly breathing, so the words stay the focus.
+   Brightness and shade keep light text at AAA over the brightest scene. */
+.scene {
+  position: absolute;
+  inset: -32px;
+  filter: blur(10px) brightness(0.5) saturate(1.15);
+}
+.sceneImage {
+  position: absolute;
+  inset: 0;
+  animation: moment-drift 40s var(--ease-in-out) infinite alternate;
+}
+@keyframes moment-drift {
+  from {
+    transform: scale(1.04) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.12) translate3d(-2%, -1.5%, 0);
+  }
+}
+.shade {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(130% 90% at 50% 45%, rgb(10 8 6 / 0.42), rgb(10 8 6 / 0.62));
 }
 
 .glow {

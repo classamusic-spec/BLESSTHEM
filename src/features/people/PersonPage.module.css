@@ -91,8 +91,8 @@
   gap: var(--space-3);
   padding: var(--space-2) var(--space-2) var(--space-2) var(--space-3);
   border-radius: var(--radius-lg);
-  background: var(--color-surface);
-  box-shadow: 0 0 0 1px var(--color-border) inset;
+  background: var(--surface-glass);
+  box-shadow: var(--glass-border);
 }
 .dayIcon {
   display: grid;
@@ -125,10 +125,10 @@
   gap: var(--space-4);
   padding: var(--space-4);
   border-radius: var(--radius-lg);
-  background: var(--color-surface);
+  background: var(--surface-glass);
   color: var(--color-text);
   text-decoration: none;
-  box-shadow: 0 0 0 1px var(--color-border) inset;
+  box-shadow: var(--glass-border);
 }
 .journey strong {
   display: block;
@@ -143,8 +143,8 @@
   display: grid;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  background: var(--color-surface);
-  box-shadow: 0 0 0 1px var(--color-border) inset;
+  background: var(--surface-glass);
+  box-shadow: var(--glass-border);
 }
 .recent li + li .recentItem {
   box-shadow: inset 0 1px 0 var(--color-border);

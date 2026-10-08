@@ -7,6 +7,7 @@ import type { PlanId } from '@/data/models';
 import { Button } from '@/design/Button';
 import { fadeUp, spring, stagger } from '@/design/motion';
 import { cx } from '@/lib/cx';
+import { SceneImage } from '@/design/SceneImage';
 import { Pip } from '@/mascot/Pip';
 import { track } from '@/services/analytics';
 import { haptics } from '@/services/haptics';
@@ -83,7 +84,12 @@ export function Paywall({ source, onClose, onUnlocked }: PaywallProps) {
         ) : (
           <motion.div key="offer" variants={stagger(0.05)} initial="hidden" animate="show" exit={{ opacity: 0 }}>
             <motion.div variants={fadeUp} className={styles.hero}>
-              <Pip pose="nest" size={112} glow />
+              <div className={styles.postcard} aria-hidden="true">
+                <SceneImage scene="golden-grass" sizes="(min-width: 540px) 480px, 92vw" className={styles.postcardImage} />
+                <span className={styles.postcardPip}>
+                  <Pip pose="nest" size={96} glow />
+                </span>
+              </div>
               <p className={cx('overline', styles.eyebrow)}>Bless Them+</p>
               <h2 className={styles.title}>Pray more intentionally for the people you love.</h2>
               <p className={styles.lede}>Unlimited personalized Scripture blessings for your family.</p>

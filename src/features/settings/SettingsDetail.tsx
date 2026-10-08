@@ -5,6 +5,7 @@ import { Navigate, useNavigate, useParams } from 'react-router';
 import { ENTRIES } from '@/content/blessings';
 import { TRANSLATIONS, getPassage, loadTranslation, type TranslationId } from '@/content/scripture';
 import { TOPICS } from '@/content/taxonomy';
+import { PHOTO_CREDITS } from '@/content/scenery';
 import { isPlus, useStore } from '@/data/store';
 import { Button } from '@/design/Button';
 import { ConfirmationSheet } from '@/design/ConfirmationSheet';
@@ -394,6 +395,11 @@ function AccessibilitySection() {
           detail="Calmer transitions, no drifting light"
           control={<Switch label="Reduce motion" checked={settings.motion === 'reduce'} onChange={(v) => update({ motion: v ? 'reduce' : 'system' })} />}
         />
+        <SettingsRow
+          label="Reduce transparency"
+          detail="Solid surfaces instead of frosted glass"
+          control={<Switch label="Reduce transparency" checked={settings.transparency === 'reduce'} onChange={(v) => update({ transparency: v ? 'reduce' : 'system' })} />}
+        />
         <SettingsRow label="Haptics" detail="A soft tap when you complete a blessing" control={<Switch label="Haptics" checked={settings.haptics} onChange={(v) => update({ haptics: v })} />} />
       </SettingsGroup>
     </div>
@@ -539,6 +545,24 @@ function AboutSection() {
         <p>Berean Standard Bible (BSB): public domain, BSB Publishing. World English Bible (WEB): public domain; “World English Bible” is a trademark of eBible.org.</p>
         <h3>Typography & icons</h3>
         <p>Newsreader and Figtree (SIL Open Font License). Icons by Phosphor (MIT).</p>
+        <h3>Photography</h3>
+        <p>Every photograph is a real place, chosen by hand: public-domain work by park rangers and foresters, and photographers who share their work freely. Thank you to each of them.</p>
+        <ul role="list" className={styles.credits}>
+          {PHOTO_CREDITS.map((c) => (
+            <li key={c.id}>
+              <span className={styles.creditPlace}>{c.description}</span>
+              <span className={styles.small}>
+                <a href={c.page} target="_blank" rel="noreferrer">
+                  {c.creator}
+                </a>
+                {' · '}
+                <a href={c.licenseUrl} target="_blank" rel="noreferrer">
+                  {c.license}
+                </a>
+              </span>
+            </li>
+          ))}
+        </ul>
         <p className={styles.small}>Version {APP_VERSION}</p>
       </div>
       <Button variant="secondary" onClick={() => navigate('/about')}>

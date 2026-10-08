@@ -54,6 +54,7 @@ export function initialState(): PersistedState {
       theme: 'system',
       textScale: 1,
       motion: 'system',
+      transparency: 'system',
       haptics: true,
       translation: 'bsb',
       audioRate: 0.95,

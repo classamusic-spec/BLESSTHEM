@@ -6,8 +6,8 @@ import { ENTRY_BY_ID } from '@/content/blessings';
 import { useStore } from '@/data/store';
 import type { Person } from '@/data/models';
 import { ButtonLink } from '@/design/Button';
-import { Ambient } from '@/design/Layout';
 import { fadeUp, stagger } from '@/design/motion';
+import { SceneImage } from '@/design/SceneImage';
 import { Pip } from '@/mascot/Pip';
 import { BlessingCard } from '@/features/blessing/BlessingCard';
 import styles from './AboutPage.module.css';
@@ -49,7 +49,6 @@ export default function AboutPage() {
 
       <main id="main">
         <section className={styles.hero}>
-          <Ambient />
           <motion.div className={styles.heroText} variants={stagger(0.1, 0.1)} initial="hidden" animate="show">
             <motion.h1 variants={fadeUp} className={styles.title}>
               Speak Scripture over the people you love.
@@ -62,11 +61,16 @@ export default function AboutPage() {
               <span className={styles.small}>Free to begin · No ads, ever</span>
             </motion.div>
           </motion.div>
-          <motion.div className={styles.device} initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}>
-            <div className={styles.screen} aria-hidden="true" inert>
-              <BlessingCard person={SAMPLE} entryId={sampleEntry} minimal footer={<div />} />
-            </div>
-          </motion.div>
+          <div className={styles.stage}>
+            <motion.div className={styles.stageScene} aria-hidden="true" initial={{ opacity: 0, scale: 1.04 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}>
+              <SceneImage scene="meadow-dawn" priority sizes="(min-width: 900px) 520px, 100vw" className={styles.stageImage} />
+            </motion.div>
+            <motion.div className={styles.device} initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}>
+              <div className={styles.screen} aria-hidden="true" inert>
+                <BlessingCard person={SAMPLE} entryId={sampleEntry} minimal footer={<div />} />
+              </div>
+            </motion.div>
+          </div>
         </section>
 
         <section className={styles.value}>

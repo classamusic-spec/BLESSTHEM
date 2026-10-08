@@ -1,5 +1,4 @@
 import type { Settings } from '@/data/models';
-import { daypart } from '@/lib/dates';
 import { setHapticsEnabled } from './haptics';
 
 /** Applies appearance and accessibility settings to the document. */
@@ -10,13 +9,12 @@ export function applySettings(settings: Settings) {
   root.style.setProperty('--ts', String(settings.textScale));
   if (settings.motion === 'reduce') root.dataset.motion = 'reduce';
   else delete root.dataset.motion;
+  const solid = settings.transparency === 'reduce' || window.matchMedia('(prefers-reduced-transparency: reduce)').matches;
+  if (solid) root.dataset.transparency = 'reduce';
+  else delete root.dataset.transparency;
   root.classList.toggle('dynamic-type', settings.dynamicType);
   setHapticsEnabled(settings.haptics);
   updateThemeColor();
-}
-
-export function applyDaypart() {
-  document.documentElement.dataset.daypart = daypart();
 }
 
 export function isDark(): boolean {

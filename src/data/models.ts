@@ -130,6 +130,8 @@ export interface Settings {
   theme: 'system' | 'light' | 'dark';
   textScale: number;
   motion: 'system' | 'reduce';
+  /** Solid surfaces instead of glass. Older saved settings may lack it (treated as 'system'). */
+  transparency?: 'system' | 'reduce';
   haptics: boolean;
   translation: 'bsb' | 'web';
   audioRate: number;

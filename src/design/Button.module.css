@@ -78,41 +78,46 @@
 }
 
 /* ── Variants ─────────────────────────────── */
+/* Primary: solid sage with a soft glassy highlight, like light on a glazed stone. */
 .primary {
-  background: var(--color-brand);
+  background-color: var(--color-brand);
+  background-image: linear-gradient(180deg, rgb(255 255 255 / 0.16), rgb(255 255 255 / 0.03) 48%, rgb(0 0 0 / 0.04));
   color: var(--color-on-brand);
   box-shadow:
-    0 1px 0 rgb(255 255 255 / 0.14) inset,
-    0 10px 24px -12px rgb(46 70 54 / 0.55),
-    0 2px 4px rgb(46 70 54 / 0.12);
+    inset 0 1px 0 rgb(255 255 255 / 0.22),
+    inset 0 0 0 1px rgb(255 255 255 / 0.06),
+    0 10px 24px -12px rgb(46 70 54 / 0.6),
+    0 2px 4px rgb(46 70 54 / 0.14);
 }
 @media (hover: hover) {
   .primary:hover:not(:disabled) {
-    background: var(--color-brand-hover);
+    background-color: var(--color-brand-hover);
   }
 }
 .primary:active:not(:disabled) {
-  background: var(--color-brand-pressed);
-  box-shadow: 0 4px 12px -8px rgb(46 70 54 / 0.5);
+  background-color: var(--color-brand-pressed);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.12), 0 4px 12px -8px rgb(46 70 54 / 0.5);
 }
 
 .secondary {
-  background: var(--color-surface);
+  background: var(--surface-glass);
   color: var(--color-text);
   box-shadow:
-    0 0 0 1px var(--color-border-strong) inset,
+    var(--glass-border),
     var(--shadow-xs);
+  -webkit-backdrop-filter: var(--glass-filter);
+  backdrop-filter: var(--glass-filter);
 }
 @media (hover: hover) {
   .secondary:hover:not(:disabled) {
-    background: var(--color-bg-raised);
+    background: var(--surface-glass-strong);
     box-shadow:
-      0 0 0 1px var(--color-text-tertiary) inset,
+      var(--glass-border),
       var(--shadow-sm);
   }
 }
 .secondary:active:not(:disabled) {
-  background: var(--color-surface-sunken);
+  background: var(--glass-sheen), color-mix(in srgb, var(--color-surface-sunken) 88%, transparent);
 }
 
 .ghost {
@@ -213,10 +218,12 @@
   color: var(--color-text);
 }
 .tone-surface {
-  background: var(--color-surface);
+  background: var(--surface-glass-thin);
   box-shadow:
-    0 0 0 1px var(--color-border) inset,
+    var(--glass-border),
     var(--shadow-xs);
+  -webkit-backdrop-filter: var(--glass-filter);
+  backdrop-filter: var(--glass-filter);
 }
 .tone-surface:hover {
   color: var(--color-text);

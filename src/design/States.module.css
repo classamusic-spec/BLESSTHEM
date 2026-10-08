@@ -44,8 +44,8 @@
   text-align: center;
   padding: var(--space-8) var(--space-6);
   border-radius: var(--radius-xl);
-  background: var(--color-surface);
-  box-shadow: 0 0 0 1px var(--color-border) inset;
+  background: var(--surface-glass);
+  box-shadow: var(--glass-border);
 }
 .error .body {
   margin: 0 0 var(--space-2);
@@ -82,8 +82,8 @@
 .cardSkeleton {
   padding: var(--space-8) var(--space-6);
   border-radius: var(--radius-xl);
-  background: var(--color-surface);
-  box-shadow: 0 0 0 1px var(--color-border) inset;
+  background: var(--surface-glass);
+  box-shadow: var(--glass-border);
   min-height: 520px;
 }
 

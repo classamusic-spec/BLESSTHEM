@@ -27,42 +27,95 @@
   flex-direction: column;
 }
 
-/* ── Welcome ──────────────────────────────── */
+/* ── Welcome: today’s scene, and a pane of glass to begin on ── */
 .welcomeShell {
-  justify-content: center;
+  justify-content: flex-end;
+}
+
+.welcomeScene {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  filter: brightness(var(--scene-brightness));
+}
+.welcomeScene::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(14 10 6 / 0.42) 0%, rgb(14 10 6 / 0.08) 30%, rgb(14 10 6 / 0) 50%, rgb(14 10 6 / 0.2) 100%);
+}
+.welcomeImage {
+  position: absolute;
+  inset: 0;
+  animation: welcome-drift 36s var(--ease-in-out) infinite alternate;
+}
+@keyframes welcome-drift {
+  from {
+    transform: scale(1.04);
+  }
+  to {
+    transform: scale(1.12) translate3d(-1.5%, 1%, 0);
+  }
 }
 
 .welcome {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: var(--space-8) 0 var(--space-4);
+  justify-content: space-between;
+  gap: var(--space-8);
+  padding: var(--space-2) 0 var(--space-2);
 }
 
 .welcomeLogo {
-  margin-bottom: var(--space-6);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--on-scene);
+  filter: drop-shadow(0 1px 8px rgb(0 0 0 / 0.25));
+}
+.welcomeWordmark {
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  font-weight: 450;
+  letter-spacing: -0.01em;
+  text-shadow: var(--on-scene-shadow);
 }
 
+.welcomePanel {
+  position: relative;
+  padding: var(--space-8) var(--space-6) var(--space-5);
+  border-radius: var(--radius-2xl);
+  background: var(--surface-glass-strong);
+  -webkit-backdrop-filter: var(--glass-filter);
+  backdrop-filter: var(--glass-filter);
+  box-shadow: var(--glass-border), var(--glass-shadow-float);
+}
+
+/* Pip perches on the top edge of the glass. */
 .welcomePip {
-  margin: 0 0 var(--space-4) -18px;
+  position: absolute;
+  top: -78px;
+  right: 14px;
 }
 
 .statement {
+  max-width: 12ch;
   font-family: var(--font-serif);
-  font-size: var(--text-hero);
+  font-size: calc(var(--text-hero) * 0.86);
   font-weight: 360;
   line-height: 1.04;
-  letter-spacing: -0.028em;
+  letter-spacing: -0.026em;
   text-wrap: balance;
   font-variation-settings: 'opsz' 72;
 }
 
 .lede {
-  margin-top: var(--space-5);
+  margin-top: var(--space-4);
   max-width: 40ch;
   font-size: calc(1.0625rem * var(--ts));
-  line-height: 1.6;
+  line-height: 1.58;
   color: var(--color-text-secondary);
   text-wrap: pretty;
 }
@@ -71,8 +124,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-3);
-  margin-top: var(--space-10);
+  gap: var(--space-2);
+  margin-top: var(--space-7);
 }
 
 .small {
@@ -162,11 +215,11 @@
   min-height: 44px;
   padding: 0 var(--space-4);
   border-radius: var(--radius-pill);
-  background: var(--color-surface);
+  background: var(--surface-glass);
   font-size: var(--text-callout);
   font-weight: 580;
   box-shadow:
-    0 0 0 1px var(--color-border-strong) inset,
+    var(--glass-border),
     var(--shadow-xs);
   transition:
     background-color var(--dur-base) var(--ease-out),
@@ -320,11 +373,13 @@
   }
 }
 .google {
-  background: var(--color-surface);
+  background: var(--surface-glass);
   color: var(--color-text);
   box-shadow:
-    0 0 0 1px var(--color-border-strong) inset,
+    var(--glass-border),
     var(--shadow-xs);
+  -webkit-backdrop-filter: var(--glass-filter);
+  backdrop-filter: var(--glass-filter);
 }
 .email {
   background: var(--color-surface-sunken);

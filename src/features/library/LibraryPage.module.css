@@ -5,13 +5,15 @@
   min-height: 56px;
   padding: 0 var(--space-5);
   border-radius: var(--radius-pill);
-  background: var(--color-surface);
+  background: var(--surface-glass);
   color: var(--color-text-tertiary);
   text-decoration: none;
   box-shadow:
-    0 0 0 1px var(--color-border-strong) inset,
+    var(--glass-border),
     var(--shadow-sm);
   transition: box-shadow var(--dur-base) var(--ease-out);
+  -webkit-backdrop-filter: var(--glass-filter);
+  backdrop-filter: var(--glass-filter);
 }
 .search:hover {
   box-shadow:
@@ -66,77 +68,6 @@
   .features {
     grid-template-columns: 1fr 1fr;
   }
-}
-
-.feature {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
-  min-height: 132px;
-  padding: var(--space-5) var(--space-5);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  color: var(--color-text);
-  text-decoration: none;
-  box-shadow: var(--shadow-sm);
-  transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
-}
-@media (hover: hover) {
-  .feature:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-  }
-}
-.featureJourney {
-  background:
-    radial-gradient(90% 120% at 100% 100%, rgb(var(--glow-rgb) / 0.22), transparent 60%),
-    var(--color-surface-sage);
-}
-.featureSeason {
-  background:
-    radial-gradient(90% 120% at 100% 0%, rgb(var(--glow-rgb) / 0.3), transparent 60%),
-    var(--color-surface-gold);
-}
-
-.featureText {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  flex: 1;
-  min-width: 0;
-}
-.featureKicker {
-  color: var(--color-brand-text);
-}
-.featureSeason .featureKicker {
-  color: var(--color-gold-text);
-}
-.featureTitle {
-  font-family: var(--font-serif);
-  font-size: var(--text-title-3);
-  font-weight: 500;
-  line-height: 1.25;
-}
-.featureBody {
-  font-size: var(--text-caption);
-  color: var(--color-text-secondary);
-  line-height: 1.45;
-}
-.featurePip {
-  flex: none;
-  margin: -12px -14px -18px 0;
-}
-.seasonIcon {
-  display: grid;
-  place-items: center;
-  width: 64px;
-  height: 64px;
-  flex: none;
-  border-radius: 22px;
-  background: var(--color-surface);
-  color: var(--color-gold-text);
-  box-shadow: var(--shadow-xs);
 }
 
 .categorySub {

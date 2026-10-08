@@ -2,13 +2,16 @@ import { ChatCircleText, Copy, DownloadSimple, EnvelopeSimple, Export, LockSimpl
 import { motion } from 'motion/react';
 import { useEffect, useMemo, useState } from 'react';
 import { Button } from '@/design/Button';
-import { Segmented, Switch } from '@/design/Controls';
+import { Switch } from '@/design/Controls';
 import { Sheet } from '@/design/Sheet';
 import { useToast } from '@/design/Toast';
 import type { ComposedBlessing } from '@/engine/compose';
 import { track } from '@/services/analytics';
 import { haptics } from '@/services/haptics';
-import { channelLinks, downloadBlob, renderShareCard, shareImage, type CardStyle } from '@/services/share';
+import { SCENES } from '@/content/scenery';
+import { daypart, type Daypart } from '@/lib/dates';
+import { cx } from '@/lib/cx';
+import { CARD_STYLES, channelLinks, downloadBlob, PHOTO_STYLES, renderShareCard, shareImage, type CardStyle } from '@/services/share';
 import styles from './ShareSheet.module.css';
 
 /**
@@ -16,8 +19,11 @@ import styles from './ShareSheet.module.css';
  * reference are shared — never journal entries or private notes — and the parent
  * decides whether the person’s name appears at all.
  */
+/** A card that matches the hour: first light in the morning, moonlight at night. */
+const STYLE_FOR: Record<Daypart, CardStyle> = { morning: 'dawn', day: 'meadow', evening: 'golden', night: 'moonlit' };
+
 export function ShareSheet({ open, onClose, composed }: { open: boolean; onClose(): void; composed: ComposedBlessing }) {
-  const [style, setStyle] = useState<CardStyle>('linen');
+  const [style, setStyle] = useState<CardStyle>(() => STYLE_FOR[daypart()]);
   const [includeName, setIncludeName] = useState(true);
   const line = includeName ? composed.shareLine : composed.shareLineWithoutName;
   const nameOptional = composed.shareLine !== composed.shareLineWithoutName;
@@ -80,18 +86,27 @@ export function ShareSheet({ open, onClose, composed }: { open: boolean; onClose
         </motion.div>
       </div>
 
-      <div className={styles.styleRow}>
-        <Segmented<CardStyle>
-          label="Card style"
-          layoutId="share-style"
-          value={style}
-          onChange={setStyle}
-          options={[
-            { value: 'linen', label: 'Linen' },
-            { value: 'sage', label: 'Sage' },
-            { value: 'night', label: 'Evening' },
-          ]}
-        />
+      <div className={styles.swatches} role="radiogroup" aria-label="Card style">
+        {CARD_STYLES.map(({ id, label }) => {
+          const scene = PHOTO_STYLES[id];
+          const on = style === id;
+          return (
+            <button
+              key={id}
+              type="button"
+              role="radio"
+              aria-checked={on}
+              className={cx(styles.swatch, on && styles.swatchOn)}
+              onClick={() => {
+                if (!on) haptics.selection();
+                setStyle(id);
+              }}
+            >
+              <span className={cx(styles.swatchDot, styles[`dot-${id}`])} style={scene ? { backgroundImage: `url(${SCENES[scene].lqip})` } : undefined} aria-hidden="true" />
+              <span className={styles.swatchLabel}>{label}</span>
+            </button>
+          );
+        })}
       </div>
 
       {nameOptional && (

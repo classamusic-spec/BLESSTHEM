@@ -55,6 +55,7 @@ export default function JournalPage() {
       <PageHeader
         title="Journal"
         subtitle="What you’ve prayed, and what God has carried you through."
+        scene="lake-dock"
         actions={
           <Button size="sm" variant="secondary" icon={<Plus weight="bold" />} onClick={() => setComposing(true)}>
             New

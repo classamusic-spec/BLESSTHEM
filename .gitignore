@@ -5,6 +5,7 @@
 .vite
 /screenshots
 /scripture-src
+/scenery-src
 coverage
 dev-dist
 dist

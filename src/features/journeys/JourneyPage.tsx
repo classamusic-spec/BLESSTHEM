@@ -9,10 +9,8 @@ import { currentBlessing, isPlus, useStore } from '@/data/store';
 import { Button, ButtonLink } from '@/design/Button';
 import { ProgressRing } from '@/design/Controls';
 import { Page, PageHeader } from '@/design/Layout';
-import { fadeUp, stagger } from '@/design/motion';
 import { PersonSelector } from '@/design/PersonSelector';
 import { EmptyState } from '@/design/States';
-import { TopicIcon } from '@/design/TopicIcon';
 import { journeyPlan, journeySuits, nextJourneyDay } from '@/engine/journeys';
 import { useToday } from '@/hooks/useToday';
 import { dayKey } from '@/lib/dates';
@@ -70,21 +68,7 @@ export default function JourneyPage() {
 
   return (
     <Page>
-      <PageHeader title="" back="/library/journeys" size="compact" />
-      <motion.header className={cx(styles.hero, styles[`tone-${journey.tone}`])} variants={stagger(0.07)} initial="hidden" animate="show">
-        <motion.span variants={fadeUp} className={styles.heroIcon}>
-          <TopicIcon name={journey.icon} size={30} />
-        </motion.span>
-        <motion.p variants={fadeUp} className={styles.heroLength}>
-          {journey.days.length}-day journey
-        </motion.p>
-        <motion.h1 variants={fadeUp} className={styles.heroTitle}>
-          {journey.title}
-        </motion.h1>
-        <motion.p variants={fadeUp} className={styles.heroBody}>
-          {journey.description}
-        </motion.p>
-      </motion.header>
+      <PageHeader back="/library/journeys" scene={journey.scene} eyebrow={`${journey.days.length}-day journey`} title={journey.title} subtitle={journey.description} />
 
       {eligible.length === 0 ? (
         <EmptyState compact pose="curious" title="This journey is for someone else in your life." body="It’s written for a different relationship or age. Add someone it fits from People." action={<ButtonLink to="/people/new" variant="secondary" size="md">Add someone</ButtonLink>} />
