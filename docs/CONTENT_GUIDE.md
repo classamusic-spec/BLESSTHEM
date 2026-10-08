@@ -43,7 +43,7 @@ Imagine a parent sitting on the edge of a child's bed at 7:10 on a school mornin
 | `relationships` | — | optional | Restrict only when needed (e.g. siblings → child, grandchild). |
 | `occasions` | — | optional | Special moments this entry fits (e.g. `first-day-of-school`). |
 | `keywords` | — | 4–10, lowercase | Words a worried parent might actually type: “scared”, “mean kids”, “can’t sleep”. |
-| `notes` | — | 1–2 sentences | Reviewer guardrails: what this passage does *not* mean. |
+| `notes` | — | 1–2 sentences | Reviewer guardrails: what this passage does *not* mean. Never shown, and stripped from production builds. |
 
 **Ids** are `${topic}-${book}-${chapter}-${firstVerse}` in lowercase: `courage-jos-1-9`, `anxiety-php-4-6`.
 
