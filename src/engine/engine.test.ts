@@ -4,7 +4,7 @@ import type { Blessing, Person } from '@/data/models';
 import { addDays } from '@/lib/dates';
 import { composeBlessing, fillTemplate, headingName, prayerName, talkStage } from './compose';
 import { chooseDaily, defaultTopicsFor, entrySuits, topicSuits } from './personalize';
-import { monthRhythm, rhythmLine } from './rhythm';
+import { monthRhythm, rhythmLine, weekStart, weekSummary } from './rhythm';
 import { checkSafety } from './safety';
 import { classifyTopics, detectAge, search } from './search';
 
@@ -55,6 +55,8 @@ describe('composition', () => {
     expect(c.blessing).not.toMatch(/\{|\}/);
     expect(c.speakHeading).toBe('Speak this over Noah');
     expect(c.shareLine).toMatch(/^Today I’m praying .+ over Noah\.$/);
+    expect(c.shareLineWithoutName).toMatch(/^Today I’m praying .+ over my son\.$/);
+    expect(composeBlessing(entry, person({ relationship: 'other' })).shareLineWithoutName).toMatch(/over someone I love\.$/);
   });
 });
 
@@ -157,5 +159,22 @@ describe('rhythm', () => {
     expect(r.prayedDays).toBe(2);
     expect(rhythmLine(r, '2026-10-07')).toBe('2 days of prayer this month.');
     expect(rhythmLine(monthRhythm([], '2026-10-07'), '2026-10-07')).toBe('There’s always room to begin again today.');
+  });
+
+  it('summarizes a week as counts only, for the north-star metrics', () => {
+    expect(weekStart('2026-10-08')).toBe('2026-10-05'); // Thursday → Monday
+    expect(weekStart('2026-10-05')).toBe('2026-10-05');
+    expect(weekStart('2026-10-11')).toBe('2026-10-05'); // Sunday closes the week
+
+    const b = (personId: string, date: string, prayed = true): Blessing => ({ id: `${personId}-${date}`, personId, date, entryId: 'x', topicId: 'faith', source: 'daily', createdAt: date, prayedAt: prayed ? date : undefined });
+    const blessings = [
+      ...['2026-09-28', '2026-09-30', '2026-10-02', '2026-10-04'].map((d) => b('noah', d)),
+      b('ella', '2026-09-29'),
+      b('ella', '2026-10-01', false),
+      b('noah', '2026-10-05'), // the following week
+    ];
+    const summary = weekSummary(blessings, ['2026-09-28', '2026-09-29', '2026-09-29', '2026-10-05'], '2026-09-28');
+    expect(summary).toEqual({ week: '2026-09-28', activeDays: 2, blessings: 5, peopleBlessed: 2, peopleBlessed3Plus: 1 });
+    expect(Object.values(summary).every((v) => typeof v === 'number' || /^\d{4}-\d{2}-\d{2}$/.test(v))).toBe(true);
   });
 });

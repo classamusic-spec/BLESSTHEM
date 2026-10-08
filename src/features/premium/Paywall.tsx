@@ -75,7 +75,7 @@ export function Paywall({ source, onClose, onUnlocked }: PaywallProps) {
           <motion.div key="done" className={styles.done} initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} transition={spring.soft}>
             <Pip pose="happy" size={140} glow />
             <h2 className={styles.doneTitle}>Welcome to Bless Them+</h2>
-            <p className={styles.doneBody}>Everything is unlocked. Thank you for building a rhythm of prayer for the people you love.</p>
+            <p className={styles.doneBody}>Everything is open to you. Thank you for building a rhythm of prayer for the people you love.</p>
             <Button onClick={onUnlocked ?? onClose} size="md">
               Continue
             </Button>

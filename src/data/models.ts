@@ -158,6 +158,8 @@ export interface PersistedState {
   selectedPersonId?: string;
   firstOpenedAt?: string;
   openDays: DayKey[];
+  /** Monday of the last week whose aggregate summary was sent to analytics. */
+  summarizedWeek?: DayKey;
   dismissed: string[];
 }
 

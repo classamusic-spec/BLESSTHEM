@@ -58,8 +58,11 @@ test('C · a hard day → search “friendship rejection” → choose a blessin
   await expect(page.getByText('Who is this blessing for?')).toBeVisible();
   await page.getByRole('button', { name: 'Share blessing' }).first().click();
   await expect(page.getByRole('dialog', { name: 'Share this blessing' })).toBeVisible();
-  await expect(page.getByRole('img', { name: /Share card/ })).toBeVisible({ timeout: 10_000 });
+  await expect(page.getByRole('img', { name: /Share card: .* over Noah\./ })).toBeVisible({ timeout: 10_000 });
   await expect(page.getByText('Only this line and the Scripture are shared.')).toBeVisible();
+  // The parent decides whether a child’s name leaves the app.
+  await page.getByRole('switch', { name: 'Show their name on the card' }).click();
+  await expect(page.getByRole('img', { name: /Share card: .* over my son\./ })).toBeVisible({ timeout: 10_000 });
 });
 
 test('D · add a second child → choose their needs → switch between children', async ({ page }) => {
@@ -84,7 +87,7 @@ test('E · premium topic → elegant paywall → subscribe → content unlocks i
   await finishOnboarding(page);
   await page.goto('/library/topic/anxiety');
   await expect(page.getByText('is part of Bless Them+')).toBeVisible();
-  await page.getByRole('button', { name: 'Unlock the full library' }).click();
+  await page.getByRole('button', { name: 'Explore the full library' }).click();
   const paywall = page.getByRole('dialog', { name: 'Bless Them+' });
   await expect(paywall.getByText('Pray more intentionally for the people you love.')).toBeVisible();
   await expect(paywall.getByText(/\$34\.99/).first()).toBeVisible();

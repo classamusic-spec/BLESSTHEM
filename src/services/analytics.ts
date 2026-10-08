@@ -12,6 +12,7 @@
 
 export type ProductEvent =
   | { name: 'app_opened'; props?: { source?: string } }
+  | { name: 'week_summarized'; props: { week: string; activeDays: number; blessings: number; peopleBlessed: number; peopleBlessed3Plus: number } }
   | { name: 'onboarding_started' }
   | { name: 'onboarding_step'; props: { step: string } }
   | { name: 'onboarding_completed'; props: { signedUp: boolean } }

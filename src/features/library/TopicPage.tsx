@@ -66,7 +66,7 @@ export default function TopicPage() {
             <strong>{topic.title}</strong> is part of Bless Them+. The full library has {Object.keys(TOPIC_BY_ID).length} topics for every season of life.
           </p>
           <Button size="md" onClick={() => unlock()}>
-            Unlock the full library
+            Explore the full library
           </Button>
         </div>
       )}

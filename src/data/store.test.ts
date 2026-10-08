@@ -56,6 +56,15 @@ describe('store', () => {
     expect(useStore.getState().journal[0].answeredAt).toBeUndefined();
   });
 
+  it('keeps answered status only on prayer requests', () => {
+    const entry = useStore.getState().addJournalEntry({ kind: 'request', text: 'Peace before the move.' });
+    useStore.getState().markAnswered(entry.id, 'The first night was calm.');
+    useStore.getState().updateJournalEntry(entry.id, { text: 'Peace before our move.' });
+    expect(useStore.getState().journal[0].answeredAt).toBeDefined();
+    useStore.getState().updateJournalEntry(entry.id, { kind: 'gratitude' });
+    expect(useStore.getState().journal[0]).toMatchObject({ kind: 'gratitude', answeredAt: undefined, answerNote: undefined });
+  });
+
   it('limits favorites on the free plan and lifts the limit on Bless Them+', () => {
     const ids = ENTRIES.slice(0, FREE_LIMITS.favorites + 1).map((e) => e.id);
     ids.slice(0, FREE_LIMITS.favorites).forEach((id) => useStore.getState().toggleFavorite(id));

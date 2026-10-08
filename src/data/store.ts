@@ -69,6 +69,7 @@ export type NewPerson = Omit<Person, 'id' | 'createdAt' | 'order' | 'hue' | 'pro
 
 export interface Actions {
   recordOpen(): void;
+  markWeekSummarized(week: DayKey): void;
   setIntent(intent: OnboardingIntent): void;
   completeOnboarding(opts: { signedUp: boolean }): void;
 
@@ -139,6 +140,10 @@ export const useStore = create<AppStore>()(
         if (!s.openDays.includes(today)) {
           set({ openDays: [...s.openDays, today].slice(-400), firstOpenedAt: s.firstOpenedAt ?? now() });
         }
+      },
+
+      markWeekSummarized(week) {
+        set({ summarizedWeek: week });
       },
 
       setIntent(intent) {
@@ -319,7 +324,14 @@ export const useStore = create<AppStore>()(
       },
 
       updateJournalEntry(id, patch) {
-        set((s) => ({ journal: s.journal.map((j) => (j.id === id ? { ...j, ...patch, updatedAt: now() } : j)) }));
+        set((s) => ({
+          journal: s.journal.map((j) => {
+            if (j.id !== id) return j;
+            const next = { ...j, ...patch, updatedAt: now() };
+            // Only prayer requests can be answered (the server schema enforces this too).
+            return next.kind === 'request' ? next : { ...next, answeredAt: undefined, answerNote: undefined };
+          }),
+        }));
       },
 
       deleteJournalEntry(id) {
@@ -408,8 +420,8 @@ export const useStore = create<AppStore>()(
       storage: createJSONStorage(() => localStorage),
       partialize: (s) => {
         // Persist data only — never functions.
-        const { version, installId, onboarded, intent, account, people, specialDates, blessings, journal, favorites, journeys, subscription, notifications, settings, selectedPersonId, firstOpenedAt, openDays, dismissed } = s;
-        return { version, installId, onboarded, intent, account, people, specialDates, blessings, journal, favorites, journeys, subscription, notifications, settings, selectedPersonId, firstOpenedAt, openDays, dismissed };
+        const { version, installId, onboarded, intent, account, people, specialDates, blessings, journal, favorites, journeys, subscription, notifications, settings, selectedPersonId, firstOpenedAt, openDays, summarizedWeek, dismissed } = s;
+        return { version, installId, onboarded, intent, account, people, specialDates, blessings, journal, favorites, journeys, subscription, notifications, settings, selectedPersonId, firstOpenedAt, openDays, summarizedWeek, dismissed };
       },
       migrate: (persisted, fromVersion) => {
         // Future schema changes are applied here, step by step from `fromVersion`.

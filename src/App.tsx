@@ -4,6 +4,8 @@ import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate } from
 import { AppShell } from '@/app/AppShell';
 import { RouteFallback } from '@/app/RouteFallback';
 import { useStore } from '@/data/store';
+import { weekStart, weekSummary } from '@/engine/rhythm';
+import { addDays, dayKey } from '@/lib/dates';
 import { ToastProvider } from '@/design/Toast';
 import { TodayPage } from '@/features/today/TodayPage';
 import { configureAnalytics, track } from '@/services/analytics';
@@ -32,6 +34,16 @@ const SettingsDetail = lazy(() => import('@/features/settings/SettingsDetail'));
 const PlusPage = lazy(() => import('@/features/premium/PlusPage'));
 const AboutPage = lazy(() => import('@/features/marketing/AboutPage'));
 
+/** Once a week, send last week's counts (never names or text) for the north-star metrics. */
+function summarizeLastWeek() {
+  const s = useStore.getState();
+  const lastWeek = addDays(weekStart(dayKey()), -7);
+  if (!s.firstOpenedAt || s.summarizedWeek === lastWeek) return;
+  if (dayKey(new Date(s.firstOpenedAt)) > addDays(lastWeek, 6)) return; // installed this week
+  track({ name: 'week_summarized', props: { ...weekSummary(s.blessings, s.openDays, lastWeek) } });
+  s.markWeekSummarized(lastWeek);
+}
+
 function useAppEffects() {
   const settings = useStore((s) => s.settings);
   const installId = useStore((s) => s.installId);
@@ -50,6 +62,7 @@ function useAppEffects() {
     recordOpen();
     const source = new URLSearchParams(window.location.search).get('source') ?? undefined;
     track({ name: 'app_opened', props: { source } });
+    summarizeLastWeek();
     const id = window.setInterval(applyDaypart, 5 * 60_000);
     const media = window.matchMedia('(prefers-color-scheme: dark)');
     const onScheme = () => applySettings(useStore.getState().settings);

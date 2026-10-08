@@ -51,7 +51,7 @@ export default function CollectionPage() {
         <div className={styles.locked}>
           <p>Seasonal collections are part of Bless Them+ — fresh blessings for the rhythms of the year.</p>
           <Button size="md" onClick={() => paywall.open(`collection:${collection.id}`)}>
-            Unlock collections
+            Explore collections
           </Button>
         </div>
       )}

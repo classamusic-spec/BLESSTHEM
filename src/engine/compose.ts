@@ -1,7 +1,7 @@
 import type { AgeGroup, CuratedEntry, RelationshipKind } from '@/content/types';
 import { TOPIC_BY_ID, type Topic } from '@/content/taxonomy';
 import { getPassage, type Passage, type TranslationId } from '@/content/scripture';
-import { RELATIONSHIP_KIND, type Person, type Pronouns } from '@/data/models';
+import { RELATIONSHIP_KIND, type Person, type Pronouns, type Relationship } from '@/data/models';
 import { capitalize } from '@/lib/text';
 
 /**
@@ -80,6 +80,8 @@ export interface ComposedBlessing {
   speakHeading: string;
   /** e.g. “Today I’m praying courage over Noah.” — share-card line, no private content. */
   shareLine: string;
+  /** The same line without the person’s name, e.g. “Today I’m praying courage over my son.” */
+  shareLineWithoutName: string;
 }
 
 export function composeBlessing(entry: CuratedEntry, person: PersonLike, translation: TranslationId = 'bsb'): ComposedBlessing {
@@ -95,6 +97,7 @@ export function composeBlessing(entry: CuratedEntry, person: PersonLike, transla
     talk: pickTalk(entry, person),
     speakHeading: `Speak this over ${heading}`,
     shareLine: shareLine(topic, person),
+    shareLineWithoutName: shareLine(topic, person, false),
   };
 }
 
@@ -126,8 +129,26 @@ const SHARE_NOUNS: Partial<Record<string, string>> = {
   love: 'faithful love',
 };
 
-function shareLine(topic: Topic, person: PersonLike): string {
+const UNNAMED: Record<Relationship, string> = {
+  son: 'my son',
+  daughter: 'my daughter',
+  child: 'my child',
+  grandson: 'my grandson',
+  granddaughter: 'my granddaughter',
+  grandchild: 'my grandchild',
+  husband: 'my husband',
+  wife: 'my wife',
+  spouse: 'my spouse',
+  family: 'our family',
+  mother: 'my mother',
+  father: 'my father',
+  parent: 'my parent',
+  friend: 'my friend',
+  other: 'someone I love',
+};
+
+function shareLine(topic: Topic, person: PersonLike, withName = true): string {
   const noun = SHARE_NOUNS[topic.id] ?? topic.title.toLowerCase();
-  const who = relationshipKind(person) === 'family' ? 'our family' : person.name.trim();
+  const who = relationshipKind(person) === 'family' ? 'our family' : withName ? person.name.trim() : UNNAMED[person.relationship];
   return `Today I’m praying ${noun} over ${who}.`;
 }

@@ -175,6 +175,7 @@ export function BlessingCard({ person, entryId, blessing, eyebrow, footer, onPra
             prayed={prayed}
             onPray={pray}
             confirmation={`You blessed ${name === 'your family' ? 'your family' : name} today.`}
+            gentle={composed.topic.category === 'hard-seasons'}
             onReflect={() => {
               setSeed({ kind: 'reflection', personId: person.id, blessingId: blessing?.id, entryId });
               setSheet('reflect');

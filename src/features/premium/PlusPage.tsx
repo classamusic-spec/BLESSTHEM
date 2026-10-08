@@ -21,7 +21,7 @@ export default function PlusPage() {
         <EmptyState
           pose="happy"
           title="You’re on Bless Them+"
-          body="Everything is unlocked. Thank you for building a rhythm of prayer for the people you love."
+          body="Everything is open to you. Thank you for building a rhythm of prayer for the people you love."
           action={<ButtonLink to="/settings/subscription" variant="secondary" size="md">Manage subscription</ButtonLink>}
         />
       ) : (

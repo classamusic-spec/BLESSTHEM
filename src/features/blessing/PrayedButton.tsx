@@ -3,6 +3,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useState } from 'react';
 import { Button } from '@/design/Button';
 import { ease, spring } from '@/design/motion';
+import { daypart } from '@/lib/dates';
 import { Pip } from '@/mascot/Pip';
 import { haptics } from '@/services/haptics';
 import styles from './PrayedButton.module.css';
@@ -15,6 +16,8 @@ interface PrayedButtonProps {
   /** e.g. “You blessed Noah today.” */
   confirmation: string;
   label?: string;
+  /** Hard seasons (grief, illness, fear…): Pip stays tender rather than happy. */
+  gentle?: boolean;
 }
 
 const MOTES = [
@@ -31,7 +34,7 @@ const MOTES = [
  * “I prayed this.” A quiet moment of completion: a soft expanding glow, a check
  * drawn in one stroke, a few motes of light — and a gentle haptic. No confetti.
  */
-export function PrayedButton({ prayed, onPray, onReflect, onShare, confirmation, label = 'I prayed this' }: PrayedButtonProps) {
+export function PrayedButton({ prayed, onPray, onReflect, onShare, confirmation, label = 'I prayed this', gentle }: PrayedButtonProps) {
   const [celebrating, setCelebrating] = useState(false);
   const reduce = useReducedMotion();
 
@@ -81,7 +84,8 @@ export function PrayedButton({ prayed, onPray, onReflect, onShare, confirmation,
             )}
             <div className={styles.confirmRow}>
               <span className={styles.pip}>
-                <Pip pose={celebrating ? 'happy' : 'heart'} size={64} alive={!reduce} />
+                {/* After a late-night prayer, Pip settles down to sleep. */}
+                <Pip pose={celebrating && !gentle ? 'happy' : daypart() === 'night' ? 'sleep' : 'heart'} size={64} alive={!reduce} />
               </span>
               <div>
                 <p className={styles.title}>
