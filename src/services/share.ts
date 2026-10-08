@@ -25,7 +25,7 @@ export const CARD_STYLES: Array<{ id: CardStyle; label: string }> = [
 ];
 
 export interface ShareCardInput {
-  line: string; // “Today I’m praying courage over Noah.”
+  line: string; // “Today I’m praying courage over Gabriel.”
   verse: string;
   reference: string; // “Joshua 1:9 · BSB”
   style: CardStyle;

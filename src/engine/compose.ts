@@ -28,7 +28,7 @@ export function prayerName(person: PersonLike): string {
   return relationshipKind(person) === 'family' ? 'our family' : person.name.trim();
 }
 
-/** How the person is named in headings: “Speak this over Noah” / “…over your family”. */
+/** How the person is named in headings: “Speak this over Gabriel” / “…over your family”. */
 export function headingName(person: PersonLike): string {
   return relationshipKind(person) === 'family' ? 'your family' : person.name.trim();
 }
@@ -78,7 +78,7 @@ export interface ComposedBlessing {
   prayer: string;
   talk?: string;
   speakHeading: string;
-  /** e.g. “Today I’m praying courage over Noah.” — share-card line, no private content. */
+  /** e.g. “Today I’m praying courage over Gabriel.” — share-card line, no private content. */
   shareLine: string;
   /** The same line without the person’s name, e.g. “Today I’m praying courage over my son.” */
   shareLineWithoutName: string;

@@ -57,9 +57,10 @@ export default function JourneyPage() {
   const day = plan[nextDay];
   const dayBlessing = todays?.journeyId === journey.id && todays.journeyDay === nextDay ? todays : undefined;
 
+  const open = plus || journey.free;
   const begin = () => {
     if (!person) return;
-    if (!plus) {
+    if (!open) {
       paywall.open(`journey:${journey.id}`, () => start(journey.id, person.id));
       return;
     }
@@ -83,10 +84,14 @@ export default function JourneyPage() {
 
           {!progress && (
             <div className={styles.begin}>
-              <Button block onClick={begin} icon={!plus ? <LockSimple /> : undefined}>
+              <Button block onClick={begin} icon={!open ? <LockSimple /> : undefined}>
                 Begin with {person?.name}
               </Button>
-              {!plus && <p className={styles.small}>Prayer journeys are part of Bless Them+.</p>}
+              {open ? (
+                journey.free && !plus && <p className={styles.small}>Free for every family.</p>
+              ) : (
+                <p className={styles.small}>Prayer journeys are part of Bless Them+.</p>
+              )}
             </div>
           )}
 

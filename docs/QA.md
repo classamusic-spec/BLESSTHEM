@@ -34,10 +34,10 @@ Each flow from the brief is an end-to-end test in [`e2e/flows.spec.ts`](../e2e/f
 
 | Flow | What the test does | Result |
 | --- | --- | --- |
-| **A** Install → onboarding → add child → personalized blessing → mark as prayed | Welcome, "My child", name and age, two needs, then a real blessing for Noah *before* any account. The parent continues without an account, taps **I prayed this**, and sees *Covered in prayer today.* | ✅ |
+| **A** Install → onboarding → add child → personalized blessing → mark as prayed | Welcome, "My child", name and age, two needs, then a real blessing for Gabriel *before* any account. The parent continues without an account, taps **I prayed this**, and sees *Covered in prayer today.* | ✅ |
 | **B** Open tomorrow → new blessing → reflection | Simulates the next day by moving every stored date back one day. Today shows a different passage, and the parent writes a reflection that appears in the journal. | ✅ |
 | **C** Hard day → search "friendship rejection" → blessing → share | Plain-language search returns friendship and rejection passages. The parent opens one, chooses who it is for, and the share card renders. Switching off *Show their name* changes it to "…over my son." | ✅ |
-| **D** Second child → individual needs → switch between children | Adds Ella, a preschooler, with her own needs. Switching between Noah and Ella on Today shows each child's own blessing. | ✅ |
+| **D** Second child → individual needs → switch between children | Adds Joshua, a preschooler, with his own needs. Switching between Gabriel and Joshua on Today shows each child's own blessing. | ✅ |
 | **E** Premium topic → paywall → subscribe → content unlocks | A Plus topic opens the paywall with the brief's headline, both prices and *Continue free*. *Start my family plan* (preview purchase) unlocks the topic immediately. | ✅ |
 | **F** Prayer marked answered → gratitude | A prayer request in the journal is marked answered with a note ("He met Sam at lunch"). A *Thank you, God.* moment follows, and the entry shows when and how it was answered. | ✅ |
 | **G** Notification → tap → the right blessing | The reminder deep link (`/today?person=…&from=notification`) opens directly on that person's blessing. | ✅ |
@@ -112,7 +112,7 @@ The scenery and glass pass found and fixed:
 
 - **Automated:** axe-core runs on Welcome, the first blessing in onboarding, Today, Library, Journal, People, Settings and search results, with WCAG 2.0, 2.1 and 2.2 A/AA rules. There are 0 serious or critical violations.
 - **Keyboard:** every control is a native button, link or input in a logical tab order. Arrow keys move between people, Escape closes sheets, and focus returns to where it was.
-- **Screen readers:** people are announced with their state ("Noah, prayed for today"). Scripture is a blockquote with its reference, and saves and toasts are announced politely.
+- **Screen readers:** people are announced with their state ("Gabriel, prayed for today"). Scripture is a blockquote with its reference, and saves and toasts are announced politely.
 - **Text size and motion:** at 140% text, Today, Library, Journal, People, Settings and a topic page were checked with no horizontal overflow. Reduced motion removes all transforms, including the scenes' drift and parallax.
 - **Transparency:** Reduce Transparency (in-app or the system setting) makes every glass material and the backdrop solid.
 - **Photographs:** decorative throughout (`aria-hidden`, empty `alt`). The words set on them are measured as rendered ([above](#words-on-photographs)).

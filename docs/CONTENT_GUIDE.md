@@ -53,7 +53,7 @@ The app fills these in. Only these tokens are allowed:
 
 | Token | Becomes |
 |---|---|
-| `{name}` / `{Name}` | “Noah” — or “our family” / “Our family” for a family |
+| `{name}` / `{Name}` | “Gabriel” — or “our family” / “Our family” for a family |
 | `{them}` / `{Them}` | him / her / them |
 | `{their}` / `{Their}` | his / her / their |
 | `{theirs}` | his / hers / theirs |

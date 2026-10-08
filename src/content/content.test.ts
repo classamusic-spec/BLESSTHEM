@@ -90,7 +90,7 @@ describe('curated content', () => {
 describe('prayer journeys', () => {
   const child = (age: Person['ageGroup'], relationship: Person['relationship'] = 'son'): Person => ({
     id: `p-${age}-${relationship}`,
-    name: 'Noah',
+    name: 'Gabriel',
     relationship,
     ageGroup: age,
     pronouns: 'he',

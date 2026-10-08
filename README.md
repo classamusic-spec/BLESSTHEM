@@ -7,9 +7,9 @@
 <p align="center"><em>Speak Scripture over the people you love.</em></p>
 
 <p align="center">
-  <img src="docs/screenshots/first-blessing.webp" width="240" alt="A personalized blessing for Noah, with Psalm 27:14 and a blessing written in his name">
+  <img src="docs/screenshots/first-blessing.webp" width="240" alt="A personalized blessing for Gabriel, with Psalm 27:14 and a blessing written in his name">
   &nbsp;
-  <img src="docs/screenshots/today.webp" width="240" alt="The Today screen: choosing who to bless, an upcoming birthday, and today’s blessing for Noah">
+  <img src="docs/screenshots/today.webp" width="240" alt="The Today screen: choosing who to bless, an upcoming birthday, and today’s blessing for Gabriel">
   &nbsp;
   <img src="docs/screenshots/covered-in-prayer.webp" width="240" alt="The calm confirmation after praying: Covered in prayer today">
 </p>
@@ -71,7 +71,7 @@ Bless Them is not a Bible reader, a streak machine or an AI oracle. It never inv
 - **Real places, frosted glass.** Every screen sits in a quiet landscape, under warm frosted glass. There are nineteen hand-picked photographs, all public domain, CC0 or CC BY and credited in the app. Today follows the clock, from first light over a meadow to a crescent moon at night. Each journey, collection, topic and person has a place of their own.
 - **Today.** One blessing per person per day. Choices are deterministic for each person and date, suit their age and relationship, follow their focus topics and today’s concern, and do not repeat a passage within a week.
 - **The blessing card.** Scripture, *Hold onto this*, *Speak this over {name}*, a prayer, and *Talk about it*. Read-aloud and the passage’s wider context are one tap away. The translation, BSB or WEB, is a setting.
-- **The library.** 56 topics in eight parts of life: *Their Faith*, *Their Heart*, *Their Mind*, *Their Relationships*, *Uniquely Made*, *Hard Seasons*, *Their Future* and *Everyday Life*. *Uniquely Made* is for families raising a child with a disability, autism or other special needs, and it is free for everyone. Seasonal collections and guided journeys sit alongside them, from *7 Days of Courage* to *Blessing Your Marriage*. Search accepts plain language, such as “my son is nervous about tryouts”.
+- **The library.** 56 topics in eight parts of life: *Their Faith*, *Their Heart*, *Their Mind*, *Their Relationships*, *Uniquely Made*, *Hard Seasons*, *Their Future* and *Everyday Life*. *Uniquely Made* is for families raising a child with a disability, autism or other special needs. It is free for everyone, along with its guided journey, *7 Days, Uniquely Made*. Seasonal collections and guided journeys sit alongside them, from *7 Days of Courage* to *Blessing Your Marriage*. Search accepts plain language, such as “my son is nervous about tryouts”.
 - **People and special moments.** Profiles hold age, pronouns, focus topics and an optional private note. Birthdays, first days and surgeries get blessings written for the occasion.
 - **Journal.** Reflections, prayer requests, gratitude and notes, with optional photos. Requests can be marked answered, and favorites are kept.
 - **Rhythm, not streaks.** The app shows a gentle record of the days you prayed. Missing a day costs nothing.
@@ -146,7 +146,7 @@ Every word of Scripture in the app comes from a public-domain translation and is
 - **Private by default.** Names, prayers, notes, journal entries and searches stay on the device. Analytics events are typed and carry no content: no names, no prayer text, no queries. They can be switched off in Settings.
 - **Export and delete.** Settings exports everything as JSON or erases it in one step.
 - **Crisis handling.** If a parent types something that suggests self-harm, abuse, violence or a medical emergency, the app answers with compassion and real help first, such as 988, 911 or Childhelp. Scripture may follow gently, as a complement, never a substitute. Detection runs only on the device.
-- **Pastoral notifications.** Reminders read like “A blessing for Noah is ready.” The app never says “Don’t lose your streak!”
+- **Pastoral notifications.** Reminders read like “A blessing for Gabriel is ready.” The app never says “Don’t lose your streak!”
 
 ## Accessibility
 

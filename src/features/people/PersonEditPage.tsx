@@ -128,7 +128,7 @@ export default function PersonEditPage() {
           autoCapitalize="words"
           autoComplete="off"
           maxLength={40}
-          placeholder={isFamily ? 'Our family' : 'Ella'}
+          placeholder={isFamily ? 'Our family' : 'Joshua'}
           error={error}
         />
 

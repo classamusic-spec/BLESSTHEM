@@ -9,39 +9,39 @@ beforeEach(() => {
   useStore.setState({ ...initialState() });
 });
 
-const addNoah = () =>
-  useStore.getState().addPerson({ name: 'Noah', relationship: 'son', ageGroup: 'elementary', focusTopics: ['courage', 'kindness'] });
+const addGabriel = () =>
+  useStore.getState().addPerson({ name: 'Gabriel', relationship: 'son', ageGroup: 'elementary', focusTopics: ['courage', 'kindness'] });
 
 describe('store', () => {
   it('derives pronouns and a hue for a new person', () => {
-    const noah = addNoah();
-    expect(noah.pronouns).toBe('he');
-    expect(noah.hue).toBeTruthy();
-    expect(useStore.getState().selectedPersonId).toBe(noah.id);
+    const gabriel = addGabriel();
+    expect(gabriel.pronouns).toBe('he');
+    expect(gabriel.hue).toBeTruthy();
+    expect(useStore.getState().selectedPersonId).toBe(gabriel.id);
   });
 
   it('prepares a stable blessing for today and records prayer', () => {
-    const noah = addNoah();
-    const b1 = useStore.getState().ensureBlessing(noah.id)!;
-    const b2 = useStore.getState().ensureBlessing(noah.id)!;
+    const gabriel = addGabriel();
+    const b1 = useStore.getState().ensureBlessing(gabriel.id)!;
+    const b2 = useStore.getState().ensureBlessing(gabriel.id)!;
     expect(b1.id).toBe(b2.id);
     expect(useStore.getState().markPrayed(b1.id).first).toBe(true);
-    expect(currentBlessing(useStore.getState().blessings, noah.id, dayKey())?.prayedAt).toBeTruthy();
+    expect(currentBlessing(useStore.getState().blessings, gabriel.id, dayKey())?.prayedAt).toBeTruthy();
     expect(useStore.getState().markPrayed(b1.id).first).toBe(false);
   });
 
   it('replaces today’s blessing when the focus changes', () => {
-    const noah = addNoah();
-    const first = useStore.getState().ensureBlessing(noah.id)!;
-    const next = useStore.getState().changeFocus(noah.id, 'kindness')!;
+    const gabriel = addGabriel();
+    const first = useStore.getState().ensureBlessing(gabriel.id)!;
+    const next = useStore.getState().changeFocus(gabriel.id, 'kindness')!;
     expect(next.topicId).toBe('kindness');
     expect(useStore.getState().blessings.find((b) => b.id === first.id)?.replaced).toBe(next.id === first.id ? undefined : true);
   });
 
   it('keeps the parent’s journal entries when a person is removed', () => {
-    const noah = addNoah();
-    const entry = useStore.getState().addJournalEntry({ kind: 'request', text: 'Big math test Thursday.', personId: noah.id });
-    useStore.getState().removePerson(noah.id);
+    const gabriel = addGabriel();
+    const entry = useStore.getState().addJournalEntry({ kind: 'request', text: 'Big math test Thursday.', personId: gabriel.id });
+    useStore.getState().removePerson(gabriel.id);
     const kept = useStore.getState().journal.find((j) => j.id === entry.id);
     expect(kept).toBeDefined();
     expect(kept?.personId).toBeUndefined();
@@ -82,16 +82,16 @@ describe('store', () => {
   });
 
   it('completes a journey day when its blessing is prayed', () => {
-    const noah = addNoah();
-    const progress = useStore.getState().startJourney('courage-7', noah.id);
+    const gabriel = addGabriel();
+    const progress = useStore.getState().startJourney('courage-7', gabriel.id);
     const entry = ENTRIES.find((e) => e.topic === 'courage')!;
-    const b = useStore.getState().setBlessing(noah.id, entry.id, 'journey', { journeyId: 'courage-7', journeyDay: 0 })!;
+    const b = useStore.getState().setBlessing(gabriel.id, entry.id, 'journey', { journeyId: 'courage-7', journeyDay: 0 })!;
     useStore.getState().markPrayed(b.id);
     expect(useStore.getState().journeys.find((j) => j.id === progress.id)?.completedDays).toEqual([0]);
   });
 
   it('erases everything on reset', () => {
-    addNoah();
+    addGabriel();
     useStore.getState().addJournalEntry({ kind: 'gratitude', text: 'Thankful.' });
     useStore.getState().resetAll();
     expect(useStore.getState().people).toHaveLength(0);

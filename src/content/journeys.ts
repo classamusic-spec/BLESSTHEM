@@ -23,12 +23,36 @@ export interface Journey {
   scene: SceneId;
   ages?: AgeGroup[];
   relationships?: RelationshipKind[];
+  /** Open to everyone, not only Bless Them+. */
+  free?: boolean;
   days: JourneyDay[];
 }
 
 const d = (title: string, topic: TopicId): JourneyDay => ({ title, topic });
 
 export const JOURNEYS: Journey[] = [
+  {
+    // For families raising a child with a disability, autism or other special needs. Free,
+    // like the Uniquely Made topics it draws on.
+    id: 'uniquely-made-7',
+    title: '7 Days, Uniquely Made',
+    subtitle: 'For a child with special needs',
+    description:
+      'A week of blessings for a child with a disability, autism or other special needs: loved as they are, understood without words, and carried every day.',
+    icon: 'FlowerTulip',
+    tone: 'sage',
+    scene: 'meadow-dawn',
+    free: true,
+    days: [
+      d('Made with care', 'wonderfully-made'),
+      d('Understood completely', 'seen-and-understood'),
+      d('You belong here', 'wonderfully-made'),
+      d('Gently held', 'seen-and-understood'),
+      d('Asking for healing', 'healing'),
+      d('Hope that holds', 'healing'),
+      d('Carried, one day at a time', 'worry-and-future'),
+    ],
+  },
   {
     id: 'courage-7',
     title: '7 Days of Courage',

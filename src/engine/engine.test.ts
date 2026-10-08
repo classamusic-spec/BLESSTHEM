@@ -10,7 +10,7 @@ import { classifyTopics, detectAge, search } from './search';
 
 const person = (patch: Partial<Person> = {}): Person => ({
   id: 'p1',
-  name: 'Noah',
+  name: 'Gabriel',
   relationship: 'son',
   ageGroup: 'elementary',
   pronouns: 'he',
@@ -25,8 +25,8 @@ describe('composition', () => {
   const template = 'Father, give {name} courage. Remind {them} that {their} worth is not earned. {Name}’s heart is yours. Amen.';
 
   it('fills names and pronouns', () => {
-    expect(fillTemplate(template, person())).toBe('Father, give Noah courage. Remind him that his worth is not earned. Noah’s heart is yours. Amen.');
-    expect(fillTemplate(template, person({ name: 'Ella', pronouns: 'she', relationship: 'daughter' }))).toContain('Remind her that her worth');
+    expect(fillTemplate(template, person())).toBe('Father, give Gabriel courage. Remind him that his worth is not earned. Gabriel’s heart is yours. Amen.');
+    expect(fillTemplate(template, person({ name: 'Joshua', pronouns: 'they', relationship: 'son' }))).toContain('Remind them that their worth');
     expect(fillTemplate(template, person({ name: 'Sam', pronouns: 'they', relationship: 'child' }))).toContain('Remind them that their worth');
   });
 
@@ -53,8 +53,8 @@ describe('composition', () => {
     expect(c.passage).not.toBeNull();
     expect(c.prayer).not.toMatch(/\{|\}/);
     expect(c.blessing).not.toMatch(/\{|\}/);
-    expect(c.speakHeading).toBe('Speak this over Noah');
-    expect(c.shareLine).toMatch(/^Today I’m praying .+ over Noah\.$/);
+    expect(c.speakHeading).toBe('Speak this over Gabriel');
+    expect(c.shareLine).toMatch(/^Today I’m praying .+ over Gabriel\.$/);
     expect(c.shareLineWithoutName).toMatch(/^Today I’m praying .+ over my son\.$/);
     expect(composeBlessing(entry, person({ relationship: 'other' })).shareLineWithoutName).toMatch(/over someone I love\.$/);
   });
@@ -168,10 +168,10 @@ describe('rhythm', () => {
 
     const b = (personId: string, date: string, prayed = true): Blessing => ({ id: `${personId}-${date}`, personId, date, entryId: 'x', topicId: 'faith', source: 'daily', createdAt: date, prayedAt: prayed ? date : undefined });
     const blessings = [
-      ...['2026-09-28', '2026-09-30', '2026-10-02', '2026-10-04'].map((d) => b('noah', d)),
-      b('ella', '2026-09-29'),
-      b('ella', '2026-10-01', false),
-      b('noah', '2026-10-05'), // the following week
+      ...['2026-09-28', '2026-09-30', '2026-10-02', '2026-10-04'].map((d) => b('gabriel', d)),
+      b('joshua', '2026-09-29'),
+      b('joshua', '2026-10-01', false),
+      b('gabriel', '2026-10-05'), // the following week
     ];
     const summary = weekSummary(blessings, ['2026-09-28', '2026-09-29', '2026-09-29', '2026-10-05'], '2026-09-28');
     expect(summary).toEqual({ week: '2026-09-28', activeDays: 2, blessings: 5, peopleBlessed: 2, peopleBlessed3Plus: 1 });

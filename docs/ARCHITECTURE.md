@@ -115,7 +115,7 @@ Content lives in `src/content/blessings/*.ts`. Each file exports `entries: Curat
 - `keywords`: for search. Never shown.
 - `notes`: reviewer guardrails. Kept in source and **stripped from production bundles** by the `trimBundle` plugin in `vite.config.ts`.
 
-Today the library holds **218 entries across 56 topics in 8 categories**, plus 9 journeys, 6 seasonal collections and 18 special-moment occasions. `scripts/lint-content.mjs` enforces the schema, verified references, word budgets, template tokens, and theological and tonal guardrails. The guardrails cover divine-revelation claims, promised outcomes, prosperity framing, church clichés and gamified language. [CONTENT_GUIDE.md](CONTENT_GUIDE.md) is the editorial standard.
+Today the library holds **218 entries across 56 topics in 8 categories**, plus 10 journeys, 6 seasonal collections and 18 special-moment occasions. `scripts/lint-content.mjs` enforces the schema, verified references, word budgets, template tokens, and theological and tonal guardrails. The guardrails cover divine-revelation claims, promised outcomes, prosperity framing, church clichés and gamified language. [CONTENT_GUIDE.md](CONTENT_GUIDE.md) is the editorial standard.
 
 ## Scenery
 
@@ -243,7 +243,7 @@ The schema is in [`supabase/schema.sql`](../supabase/schema.sql):
 
 ## Notifications
 
-Reminders are pastoral, never manipulative. Copy reads like "A blessing for Noah is ready." Nothing ever threatens a streak.
+Reminders are pastoral, never manipulative. Copy reads like "A blessing for Gabriel is ready." Nothing ever threatens a streak.
 
 - **Planner.** `src/services/notifications.ts` turns preferences, people and special dates into `PlannedNotice[]`. That covers a morning reminder, an optional evening reminder, and special moments the day before. It is a pure function, so it can be reused by native schedulers.
 - **Web.** While the app is open, notices are scheduled and shown through the service worker. Tapping one deep-links to `/today?person=…&from=notification&kind=…`. If the app is already open, the service worker posts a navigate message instead of opening a new window.
@@ -327,7 +327,7 @@ The targets come from the brief: instant launch, no layout shift, 60fps, cached 
 - **Children.**
   - There are no child accounts. Parents enter only a first name and an age range, plus optional pronouns and a private note.
   - Nothing about a child is ever public.
-  - A share card holds one line, such as “Today I’m praying courage over Noah,” plus the Scripture. Parents can switch the name off (“…over my son”). Journal entries and notes are never shared.
+  - A share card holds one line, such as “Today I’m praying courage over Gabriel,” plus the Scripture. Parents can switch the name off (“…over my son”). Journal entries and notes are never shared.
 
 ## Testing and quality gates
 
@@ -350,7 +350,7 @@ The widget is planned, and the MVP does not wait on it. The app already exposes 
 - **Snapshot.** After choosing or completing a blessing, the native shell writes a small JSON snapshot to the shared App Group (iOS) or DataStore (Android):
 
   ```json
-  { "date": "2026-10-08", "people": [{ "name": "Noah", "topic": "Courage", "reference": "Joshua 1:9", "prayed": false, "url": "blessthem://today?person=p_…" }] }
+  { "date": "2026-10-08", "people": [{ "name": "Gabriel", "topic": "Courage", "reference": "Joshua 1:9", "prayed": false, "url": "blessthem://today?person=p_…" }] }
   ```
 - **Rendering.** WidgetKit (iOS) and Glance (Android) render the person's name, topic and reference. A tap opens the deep link, which the router already handles at `/today?person=…`.
 - **Refresh.** The widget refreshes at midnight, when a blessing is prayed, and when people change. No network is needed.

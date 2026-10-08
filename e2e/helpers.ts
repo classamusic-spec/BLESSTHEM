@@ -5,7 +5,7 @@ export async function onboard(page: Page, opts: { name?: string; topics?: string
   await page.goto('/welcome');
   await page.getByRole('button', { name: 'Begin' }).click();
   await page.getByRole('radio', { name: /My child\b/ }).click();
-  await page.getByLabel('First name').fill(opts.name ?? 'Noah');
+  await page.getByLabel('First name').fill(opts.name ?? 'Gabriel');
   await page.getByRole('button', { name: 'Son', exact: true }).click();
   await page.getByRole('button', { name: /Elementary/ }).click();
   await page.getByRole('button', { name: 'Continue' }).click();

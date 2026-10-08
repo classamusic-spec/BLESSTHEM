@@ -14,7 +14,7 @@ import styles from './AboutPage.module.css';
 
 const SAMPLE: Person = {
   id: 'sample',
-  name: 'Noah',
+  name: 'Gabriel',
   relationship: 'son',
   ageGroup: 'elementary',
   pronouns: 'he',

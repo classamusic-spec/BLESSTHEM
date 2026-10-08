@@ -238,7 +238,7 @@ All components live in [`src/design/`](../src/design). Each one handles its defa
 | `ChoiceCard` | Large tappable options in onboarding, with a check on selection. |
 | `TopicChip`, `TopicCard` | Duotone topic icon and a selected state. Plus topics show a small lock. |
 | `PersonAvatar` | Serif monogram on one of eight soft hues, with a small check once the person is prayed for. A family shows a duotone group icon. |
-| `PersonSelector` | "Who are you blessing today?" A radiogroup with arrow-key support. Names are read as "Noah, prayed for today". |
+| `PersonSelector` | "Who are you blessing today?" A radiogroup with arrow-key support. Names are read as "Gabriel, prayed for today". |
 | `Sheet` | Bottom sheet on phones and centered dialog on wide screens. It traps focus, closes on Escape or a downward drag, and restores focus on close. |
 | `ConfirmationSheet` | For destructive actions. It says exactly what will be removed. |
 | `Toast` | Polite live region with one short sentence and an optional action. |

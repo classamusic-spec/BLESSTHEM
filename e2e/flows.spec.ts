@@ -3,9 +3,9 @@ import { expect, test } from '@playwright/test';
 import { finishOnboarding, onboard } from './helpers';
 
 test('A · install → onboarding → add child → personalized blessing → mark as prayed', async ({ page }) => {
-  await onboard(page, { name: 'Noah' });
-  // The “aha”: a real blessing for Noah, before any account is requested.
-  await expect(page.getByText('Speak this over Noah')).toBeVisible();
+  await onboard(page, { name: 'Gabriel' });
+  // The “aha”: a real blessing for Gabriel, before any account is requested.
+  await expect(page.getByText('Speak this over Gabriel')).toBeVisible();
   await expect(page.locator('blockquote')).not.toBeEmpty();
   const verse = (await page.locator('blockquote').textContent()) ?? '';
   await finishOnboarding(page);
@@ -14,7 +14,7 @@ test('A · install → onboarding → add child → personalized blessing → ma
   await expect(page.locator('blockquote').first()).toHaveText(verse);
   await page.getByRole('button', { name: 'I prayed this' }).click();
   await expect(page.getByText('Covered in prayer today.').first()).toBeVisible();
-  await expect(page.getByRole('radio', { name: /Noah, prayed for today/ })).toBeVisible();
+  await expect(page.getByRole('radio', { name: /Gabriel, prayed for today/ })).toBeVisible();
 });
 
 test('B · open app tomorrow → receive a new blessing → add a reflection', async ({ page }) => {
@@ -58,7 +58,7 @@ test('C · a hard day → search “friendship rejection” → choose a blessin
   await expect(page.getByRole('heading', { name: 'Who is this blessing for?' })).toBeVisible();
   await page.getByRole('button', { name: 'Share blessing' }).first().click();
   await expect(page.getByRole('dialog', { name: 'Share this blessing' })).toBeVisible();
-  await expect(page.getByRole('img', { name: /Share card: .* over Noah\./ })).toBeVisible({ timeout: 10_000 });
+  await expect(page.getByRole('img', { name: /Share card: .* over Gabriel\./ })).toBeVisible({ timeout: 10_000 });
   await expect(page.getByText('Only this line and the Scripture are shared.')).toBeVisible();
   // The parent decides whether a child’s name leaves the app.
   await page.getByRole('switch', { name: 'Show their name on the card' }).click();
@@ -69,17 +69,17 @@ test('D · add a second child → choose their needs → switch between children
   await onboard(page);
   await finishOnboarding(page);
   await page.goto('/people/new');
-  await page.getByLabel('First name').fill('Ella');
-  await page.getByRole('button', { name: 'Daughter', exact: true }).click();
+  await page.getByLabel('First name').fill('Joshua');
+  await page.getByRole('button', { name: 'Son', exact: true }).click();
   await page.getByRole('button', { name: /Preschool/ }).click();
   await page.getByRole('button', { name: 'Faith', exact: true }).click();
   await page.getByRole('button', { name: 'Add to my people' }).click();
-  await expect(page.getByRole('heading', { name: 'Ella' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Joshua' })).toBeVisible();
   await page.getByRole('link', { name: 'Today' }).click();
-  await page.getByRole('radio', { name: 'Ella' }).click();
-  await expect(page.getByText('For Ella', { exact: true })).toBeVisible();
-  await page.getByRole('radio', { name: 'Noah' }).click();
-  await expect(page.getByText('For Noah', { exact: true })).toBeVisible();
+  await page.getByRole('radio', { name: 'Joshua' }).click();
+  await expect(page.getByText('For Joshua', { exact: true })).toBeVisible();
+  await page.getByRole('radio', { name: 'Gabriel' }).click();
+  await expect(page.getByText('For Gabriel', { exact: true })).toBeVisible();
 });
 
 test('E · premium topic → elegant paywall → subscribe → content unlocks immediately', async ({ page }) => {
@@ -117,15 +117,15 @@ test('F · mark an old prayer as answered → a quiet moment of gratitude', asyn
 });
 
 test('G · a reminder deep link lands directly on that person’s blessing', async ({ page }) => {
-  await onboard(page, { name: 'Noah' });
+  await onboard(page, { name: 'Gabriel' });
   await finishOnboarding(page);
   await page.goto('/people/new');
-  await page.getByLabel('First name').fill('Ella');
-  await page.getByRole('button', { name: 'Daughter', exact: true }).click();
+  await page.getByLabel('First name').fill('Joshua');
+  await page.getByRole('button', { name: 'Son', exact: true }).click();
   await page.getByRole('button', { name: 'Add to my people' }).click();
-  const ellaId = page.url().split('/people/')[1];
-  await page.goto(`/today?person=${ellaId}&from=notification&kind=morning`);
-  await expect(page.getByText('For Ella', { exact: true })).toBeVisible();
+  const joshuaId = page.url().split('/people/')[1];
+  await page.goto(`/today?person=${joshuaId}&from=notification&kind=morning`);
+  await expect(page.getByText('For Joshua', { exact: true })).toBeVisible();
   await expect(page).toHaveURL(/\/today$/);
 });
 

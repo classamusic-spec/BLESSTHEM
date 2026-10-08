@@ -32,7 +32,7 @@ export default function JourneysPage() {
                     <ProgressRing value={active.completedDays.length / j.days.length} size={42}>
                       {active.completedDays.length}
                     </ProgressRing>
-                  ) : !plus ? (
+                  ) : !plus && !j.free ? (
                     <LockSimple size={16} weight="bold" aria-label="Bless Them+" />
                   ) : undefined
                 }

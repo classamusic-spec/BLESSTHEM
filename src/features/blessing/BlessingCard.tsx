@@ -29,7 +29,7 @@ interface BlessingCardProps {
   person: Person;
   entryId: string;
   blessing?: Blessing;
-  /** Replaces the default “For Noah · Courage” eyebrow (occasions, journeys). */
+  /** Replaces the default “For Gabriel · Courage” eyebrow (occasions, journeys). */
   eyebrow?: string;
   /** Replaces the completion area (e.g. onboarding’s “I want this each day”). */
   footer?: ReactNode;

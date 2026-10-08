@@ -11,7 +11,7 @@ interface PrayedButtonProps {
   onPray(): void;
   onReflect?(): void;
   onShare?(): void;
-  /** e.g. “You blessed Noah today.” */
+  /** e.g. “You blessed Gabriel today.” */
   confirmation: string;
   label?: string;
   /** Hard seasons (grief, illness, fear…): a quieter moment, light without the rising motes. */

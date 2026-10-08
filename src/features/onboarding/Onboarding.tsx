@@ -278,7 +278,7 @@ export default function Onboarding() {
                   autoComplete="off"
                   autoCapitalize="words"
                   enterKeyHint="next"
-                  placeholder={isFamily ? 'Our family' : isSpouse ? 'Daniel' : 'Noah'}
+                  placeholder={isFamily ? 'Our family' : isSpouse ? 'Daniel' : 'Gabriel'}
                   error={nameError}
                   data-autofocus
                   autoFocus
