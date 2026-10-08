@@ -1,3 +1,4 @@
+import { Compass } from '@phosphor-icons/react';
 import { useParams } from 'react-router';
 import { JOURNEY_BY_ID } from '@/content/journeys';
 import { OCCASION_BY_ID } from '@/content/taxonomy';
@@ -18,7 +19,7 @@ export default function BlessingPage() {
     return (
       <Page>
         <PageHeader title="" back />
-        <EmptyState pose="curious" title="We couldn’t find this blessing." body="It may belong to someone who was removed." action={<ButtonLink to="/journal">Back to Journal</ButtonLink>} />
+        <EmptyState icon={Compass} title="We couldn’t find this blessing." body="It may belong to someone who was removed." action={<ButtonLink to="/journal">Back to Journal</ButtonLink>} />
       </Page>
     );
   }

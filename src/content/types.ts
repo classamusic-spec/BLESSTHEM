@@ -12,7 +12,7 @@ export const AGE_GROUPS: AgeGroup[] = ['baby', 'preschool', 'elementary', 'tween
 
 export type RelationshipKind = 'child' | 'grandchild' | 'spouse' | 'family' | 'parent' | 'friend' | 'other';
 
-export type CategoryId = 'faith' | 'heart' | 'mind' | 'relationships' | 'hard-seasons' | 'future' | 'everyday';
+export type CategoryId = 'faith' | 'heart' | 'mind' | 'relationships' | 'uniquely-made' | 'hard-seasons' | 'future' | 'everyday';
 
 export type TopicId =
   // Their Faith
@@ -24,6 +24,8 @@ export type TopicId =
   | 'wisdom' | 'focus' | 'discernment' | 'learning' | 'peace'
   // Their Relationships
   | 'friendship' | 'siblings' | 'family' | 'teachers' | 'love' | 'dating' | 'conflict'
+  // Uniquely Made (disability, autism and special needs)
+  | 'wonderfully-made' | 'seen-and-understood' | 'healing' | 'caregiver-strength' | 'worry-and-future'
   // Hard Seasons
   | 'fear' | 'anxiety' | 'grief' | 'loneliness' | 'failure' | 'rejection' | 'change' | 'bullying' | 'health'
   // Their Future

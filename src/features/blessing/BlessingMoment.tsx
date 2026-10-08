@@ -1,15 +1,15 @@
-import { ArrowLeft, ArrowRight, X } from '@phosphor-icons/react';
+import { ArrowLeft, ArrowRight, HandHeart, HandsPraying, X } from '@phosphor-icons/react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { IconButton, Button } from '@/design/Button';
+import { Emblem } from '@/design/Emblem';
 import { ProgressDots } from '@/design/Controls';
 import { ease } from '@/design/motion';
 import type { ComposedBlessing } from '@/engine/compose';
 import { daypart } from '@/lib/dates';
 import { DAYPART_SCENE } from '@/content/scenery';
 import { SceneImage } from '@/design/SceneImage';
-import { Pip } from '@/mascot/Pip';
 import { haptics } from '@/services/haptics';
 import { ScriptureText } from './ScriptureText';
 import styles from './BlessingMoment.module.css';
@@ -113,7 +113,7 @@ export function BlessingMoment({ open, onClose, composed, personName, prayed, on
       default:
         return (
           <div className={styles.end}>
-            <Pip pose={prayed ? 'heart' : 'happy'} size={128} glow />
+            <Emblem icon={prayed ? HandHeart : HandsPraying} size={96} glow />
             <p className={styles.endTitle}>{prayed ? 'Covered in prayer today.' : 'Amen.'}</p>
             <p className={styles.endBody}>{prayed ? `You blessed ${personName} today.` : 'Take a breath. You can close whenever you’re ready.'}</p>
             {!prayed && (

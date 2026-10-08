@@ -145,7 +145,7 @@
   color: var(--color-text);
 }
 
-.pipRow {
+.emblemRow {
   display: flex;
   align-items: center;
   gap: var(--space-4);

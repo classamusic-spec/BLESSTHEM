@@ -1,3 +1,4 @@
+import { BookOpenText, Compass } from '@phosphor-icons/react';
 import { useMemo, useState } from 'react';
 import { useParams } from 'react-router';
 import { ENTRY_BY_ID } from '@/content/blessings';
@@ -38,7 +39,7 @@ export default function EntryPage() {
     return (
       <Page>
         <PageHeader title="" back="/library" />
-        <EmptyState pose="curious" title="We couldn’t find that blessing." action={<ButtonLink to="/library">Back to Library</ButtonLink>} />
+        <EmptyState icon={Compass} title="We couldn’t find that blessing." action={<ButtonLink to="/library">Back to Library</ButtonLink>} />
       </Page>
     );
   }
@@ -48,7 +49,7 @@ export default function EntryPage() {
     return (
       <Page>
         <PageHeader title="" back={`/library/topic/${topic.id}`} />
-        <EmptyState pose="nest" title={`${topic.title} is part of Bless Them+`} body="The full library holds Scripture blessings for every season of life." action={<ButtonLink to="/plus">See Bless Them+</ButtonLink>} />
+        <EmptyState icon={BookOpenText} title={`${topic.title} is part of Bless Them+`} body="The full library holds Scripture blessings for every season of life." action={<ButtonLink to="/plus">See Bless Them+</ButtonLink>} />
       </Page>
     );
   }

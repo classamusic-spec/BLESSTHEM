@@ -94,13 +94,6 @@
   box-shadow: var(--glass-border), var(--glass-shadow-float);
 }
 
-/* Pip perches on the top edge of the glass. */
-.welcomePip {
-  position: absolute;
-  top: -78px;
-  right: 14px;
-}
-
 .statement {
   max-width: 12ch;
   font-family: var(--font-serif);
@@ -294,6 +287,15 @@
   justify-content: center;
   gap: var(--space-5);
   min-height: 60dvh;
+}
+
+.preparingEmblem {
+  animation: preparing-breathe 2.4s var(--ease-in-out) infinite alternate;
+}
+@keyframes preparing-breathe {
+  to {
+    transform: scale(1.06);
+  }
 }
 
 .preparingText {

@@ -7,7 +7,7 @@ test('A · install → onboarding → add child → personalized blessing → ma
   // The “aha”: a real blessing for Noah, before any account is requested.
   await expect(page.getByText('Speak this over Noah')).toBeVisible();
   await expect(page.locator('blockquote')).not.toBeEmpty();
-  const verse = await page.locator('blockquote').innerText();
+  const verse = (await page.locator('blockquote').textContent()) ?? '';
   await finishOnboarding(page);
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Maya');
   // The same blessing carries into Today.

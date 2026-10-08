@@ -1,3 +1,4 @@
+import { Compass } from '@phosphor-icons/react';
 import { motion } from 'motion/react';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
@@ -31,7 +32,7 @@ export default function TopicPage() {
     return (
       <Page>
         <PageHeader title="" back="/library" />
-        <EmptyState pose="curious" title="We couldn’t find that topic." action={<ButtonLink to="/library">Back to Library</ButtonLink>} />
+        <EmptyState icon={Compass} title="We couldn’t find that topic." action={<ButtonLink to="/library">Back to Library</ButtonLink>} />
       </Page>
     );
   }

@@ -115,7 +115,7 @@ Content lives in `src/content/blessings/*.ts`. Each file exports `entries: Curat
 - `keywords`: for search. Never shown.
 - `notes`: reviewer guardrails. Kept in source and **stripped from production bundles** by the `trimBundle` plugin in `vite.config.ts`.
 
-Today the library holds **198 entries across 51 topics in 7 categories**, plus 9 journeys, 6 seasonal collections and 18 special-moment occasions. `scripts/lint-content.mjs` enforces the schema, verified references, word budgets, template tokens, and theological and tonal guardrails. The guardrails cover divine-revelation claims, promised outcomes, prosperity framing, church clichés and gamified language. [CONTENT_GUIDE.md](CONTENT_GUIDE.md) is the editorial standard.
+Today the library holds **218 entries across 56 topics in 8 categories**, plus 9 journeys, 6 seasonal collections and 18 special-moment occasions. `scripts/lint-content.mjs` enforces the schema, verified references, word budgets, template tokens, and theological and tonal guardrails. The guardrails cover divine-revelation claims, promised outcomes, prosperity framing, church clichés and gamified language. [CONTENT_GUIDE.md](CONTENT_GUIDE.md) is the editorial standard.
 
 ## Scenery
 

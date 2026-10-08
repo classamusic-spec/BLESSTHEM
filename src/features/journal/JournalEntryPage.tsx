@@ -1,4 +1,4 @@
-import { Heart, PencilSimple, Sparkle, Trash } from '@phosphor-icons/react';
+import { Compass, HandHeart, Heart, PencilSimple, Sparkle, Trash } from '@phosphor-icons/react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
@@ -14,8 +14,8 @@ import { PersonAvatar } from '@/design/PersonAvatar';
 import { Sheet } from '@/design/Sheet';
 import { EmptyState } from '@/design/States';
 import { useToast } from '@/design/Toast';
+import { Emblem } from '@/design/Emblem';
 import { formatLongDate } from '@/lib/dates';
-import { Pip } from '@/mascot/Pip';
 import { haptics } from '@/services/haptics';
 import { deletePhoto, photoURL } from '@/services/photos';
 import { Composer } from './Composer';
@@ -50,7 +50,7 @@ export default function JournalEntryPage() {
     return (
       <Page>
         <PageHeader title="" back="/journal" />
-        <EmptyState pose="curious" title="This entry isn’t here anymore." action={<ButtonLink to="/journal">Back to Journal</ButtonLink>} />
+        <EmptyState icon={Compass} title="This entry isn’t here anymore." action={<ButtonLink to="/journal">Back to Journal</ButtonLink>} />
       </Page>
     );
   }
@@ -168,7 +168,7 @@ export default function JournalEntryPage() {
         <AnimatePresence mode="wait">
           {thanked ? (
             <motion.div key="thanks" className={styles.thanks} initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} transition={spring.gentle}>
-              <Pip pose="heart" size={128} glow />
+              <Emblem icon={HandHeart} size={96} glow />
               <p className={styles.thanksText}>This answered prayer is kept in your journal, so you can always look back on what God has done.</p>
               <Button onClick={() => setSheet(null)}>Done</Button>
             </motion.div>

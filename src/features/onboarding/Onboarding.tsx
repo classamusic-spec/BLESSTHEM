@@ -1,4 +1,4 @@
-import { AppleLogo, CaretLeft, EnvelopeSimple, GoogleLogo, HandHeart, HeartStraight, HouseLine, LockSimple, Plant, Tree, UsersThree } from '@phosphor-icons/react';
+import { AppleLogo, CaretLeft, EnvelopeSimple, GoogleLogo, HandHeart, HeartStraight, HouseLine, LockSimple, Plant, ShieldCheck, Tree, UsersThree } from '@phosphor-icons/react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useMemo, useRef, useState, type ReactElement } from 'react';
 import { Link, useNavigate } from 'react-router';
@@ -13,13 +13,13 @@ import { ChoiceCard, ProgressDots, TextArea, TextField } from '@/design/Controls
 import { ease, fadeUp, stagger } from '@/design/motion';
 import { SceneImage } from '@/design/SceneImage';
 import { TopicChip } from '@/design/Topic';
+import { Emblem } from '@/design/Emblem';
 import { chooseDaily, defaultTopicsFor, topicSuits } from '@/engine/personalize';
 import { classifyTopics } from '@/engine/search';
 import { checkSafety, type SafetyResult } from '@/engine/safety';
 import { headingName } from '@/engine/compose';
 import { daypart, dayKey } from '@/lib/dates';
 import { cx } from '@/lib/cx';
-import { Pip } from '@/mascot/Pip';
 import { track } from '@/services/analytics';
 import { auth } from '@/services/auth';
 import { haptics } from '@/services/haptics';
@@ -121,7 +121,7 @@ export default function Onboarding() {
   }, [draft, relationship, isFamily, isSpouse]);
 
   const choices = useMemo(
-    () => (person ? FOCUS_CHOICES.filter((c) => c.topics.some((t) => topicSuits(t, person))) : FOCUS_CHOICES).slice(0, 18),
+    () => (person ? FOCUS_CHOICES.filter((c) => c.topics.some((t) => topicSuits(t, person))) : FOCUS_CHOICES).slice(0, 19),
     [person],
   );
 
@@ -223,9 +223,6 @@ export default function Onboarding() {
                 </span>
               </motion.div>
               <motion.div variants={fadeUp} className={styles.welcomePanel}>
-                <span className={styles.welcomePip}>
-                  <Pip pose="sprig" size={108} glow />
-                </span>
                 <h1 className={styles.statement}>Speak life over the people you love.</h1>
                 <p className={styles.lede}>
                   Bless Them helps you turn Scripture into simple, meaningful prayers and blessings for the people God has placed in your life.
@@ -440,7 +437,7 @@ export default function Onboarding() {
               <AnimatePresence mode="wait">
                 {preparing || !preview ? (
                   <motion.div key="preparing" className={styles.preparing} exit={{ opacity: 0, transition: { duration: 0.2 } }}>
-                    <Pip pose="sprig" size={120} glow />
+                    <Emblem size={96} glow className={styles.preparingEmblem} />
                     <p className={styles.preparingText}>Preparing a blessing for {headingName(person)}…</p>
                   </motion.div>
                 ) : (
@@ -493,7 +490,7 @@ function AccountStep({ onFinish }: { onFinish(provider: 'guest' | 'apple' | 'goo
   return (
     <div className={styles.content}>
       <div className={styles.accountHero}>
-        <Pip pose="nest" size={120} glow />
+        <Emblem icon={ShieldCheck} size={96} glow />
         <h1 className={styles.title}>Keep every blessing safe.</h1>
         <p className={styles.subtitle}>Create a free account to save your people, prayers and answered prayers.</p>
       </div>

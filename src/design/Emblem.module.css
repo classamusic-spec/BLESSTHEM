@@ -1,0 +1,24 @@
+.emblem {
+  position: relative;
+  isolation: isolate;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  border-radius: 50%;
+  background:
+    radial-gradient(120% 120% at 30% 0%, rgb(var(--glow-rgb) / 0.22), transparent 62%),
+    var(--surface-glass-strong);
+  color: var(--color-brand-text);
+  box-shadow: var(--glass-border), var(--glass-shadow);
+}
+
+/* Warm light gathered behind the medallion. */
+.glow::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: -38%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(var(--glow-rgb) / 0.34), transparent 66%);
+  filter: blur(6px);
+}

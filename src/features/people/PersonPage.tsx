@@ -1,4 +1,4 @@
-import { CalendarPlus, HandHeart, PencilSimple, Trash } from '@phosphor-icons/react';
+import { CalendarPlus, Compass, HandHeart, PencilSimple, Trash } from '@phosphor-icons/react';
 import { motion } from 'motion/react';
 import { useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
@@ -63,7 +63,7 @@ export default function PersonPage() {
     return (
       <Page>
         <PageHeader title="" back="/people" />
-        <EmptyState pose="curious" title="We couldn’t find this person." body="They may have been removed." action={<ButtonLink to="/people">Back to People</ButtonLink>} />
+        <EmptyState icon={Compass} title="We couldn’t find this person." body="They may have been removed." action={<ButtonLink to="/people">Back to People</ButtonLink>} />
       </Page>
     );
   }

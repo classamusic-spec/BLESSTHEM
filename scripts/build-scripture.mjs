@@ -25,7 +25,7 @@ for (const file of fs.readdirSync(BLESSINGS_DIR).filter((f) => f.endsWith('.ts')
 }
 
 /** Passages the app shows outside curated entries (e.g. the safety support sheet). */
-const SYSTEM_REFS = ['PSA 34:18', 'MAT 10:29', 'PSA 84:3', 'NUM 6:24-26', 'JOS 1:9'];
+const SYSTEM_REFS = ['PSA 34:18', 'NUM 6:24-26', 'JOS 1:9'];
 
 /** Every reference the app can display. */
 const refs = new Set(SYSTEM_REFS);

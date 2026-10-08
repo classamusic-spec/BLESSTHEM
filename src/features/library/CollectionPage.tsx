@@ -1,3 +1,4 @@
+import { Compass } from '@phosphor-icons/react';
 import { motion } from 'motion/react';
 import { useParams } from 'react-router';
 import { entriesForTopic } from '@/content/blessings';
@@ -22,7 +23,7 @@ export default function CollectionPage() {
     return (
       <Page>
         <PageHeader title="" back="/library" />
-        <EmptyState pose="curious" title="We couldn’t find that collection." action={<ButtonLink to="/library">Back to Library</ButtonLink>} />
+        <EmptyState icon={Compass} title="We couldn’t find that collection." action={<ButtonLink to="/library">Back to Library</ButtonLink>} />
       </Page>
     );
   }

@@ -42,6 +42,7 @@ export const CATEGORIES: Category[] = [
   { id: 'heart', title: 'Their Heart', subtitle: 'Character that grows from within', icon: 'HeartStraight', scene: 'spring-blossoms' },
   { id: 'mind', title: 'Their Mind', subtitle: 'Wisdom, focus, and peace', icon: 'Compass', scene: 'forest-river' },
   { id: 'relationships', title: 'Their Relationships', subtitle: 'Friends, family, and love', icon: 'UsersThree', scene: 'wildflower-hillside' },
+  { id: 'uniquely-made', title: 'Uniquely Made', subtitle: 'Disability, autism and special needs', icon: 'FlowerTulip', scene: 'meadow-dawn' },
   { id: 'hard-seasons', title: 'Hard Seasons', subtitle: 'When life feels heavy', icon: 'Lighthouse', scene: 'lighthouse' },
   { id: 'future', title: 'Their Future', subtitle: 'Purpose, calling, and courage', icon: 'Mountains', scene: 'mountain-sunrise' },
   { id: 'everyday', title: 'Everyday Life', subtitle: 'School, sleep, and new adventures', icon: 'Backpack', scene: 'autumn-trail' },
@@ -114,6 +115,21 @@ export const TOPICS: Topic[] = [
     description: 'Wisdom and worth in matters of the heart.', related: ['identity', 'discernment', 'self-control'] },
   { id: 'conflict', title: 'Conflict', category: 'relationships', icon: 'Handshake', free: false, ages: FROM_PRESCHOOL,
     description: 'Peacemaking when relationships are strained.', related: ['forgiveness', 'self-control', 'family'] },
+
+  // ── Uniquely Made ──────────────────────────────────────────────
+  // For families raising a child with a disability, autism or other special needs. Free for
+  // everyone: these families carry enough already.
+  { id: 'wonderfully-made', title: 'Wonderfully made', category: 'uniquely-made', icon: 'FlowerTulip', free: true, ages: ALL,
+    description: 'Fully known, deeply loved, exactly who God made.', related: ['identity', 'seen-and-understood', 'confidence'] },
+  { id: 'seen-and-understood', title: 'Seen and understood', category: 'uniquely-made', icon: 'HandHeart', free: true, ages: ALL,
+    description: 'With words or without them, God understands.', related: ['wonderfully-made', 'peace', 'friendship'] },
+  { id: 'healing', title: 'Healing and hope', category: 'uniquely-made', icon: 'Leaf', free: true, ages: ALL,
+    description: 'Asking honestly for healing, and trusting God with every outcome.', related: ['health', 'trust', 'worry-and-future'] },
+  { id: 'caregiver-strength', title: 'Strength for caregivers', category: 'uniquely-made', icon: 'Path', free: true,
+    ages: ['young-adult', 'adult'],
+    description: 'Rest and endurance for the ones who love and carry them.', related: ['worry-and-future', 'peace', 'family'] },
+  { id: 'worry-and-future', title: 'Worry and the future', category: 'uniquely-made', icon: 'Sun', free: true, ages: ALL,
+    description: 'Handing the what-ifs to God, one day at a time.', related: ['caregiver-strength', 'anxiety', 'trust'] },
 
   // ── Hard Seasons ───────────────────────────────────────────────
   { id: 'fear', title: 'Fear', category: 'hard-seasons', icon: 'Lighthouse', free: true, ages: ALL,
@@ -188,6 +204,7 @@ export const FOCUS_CHOICES: FocusChoice[] = [
   { label: 'Fear', topics: ['fear'] },
   { label: 'School', topics: ['school'] },
   { label: 'Health', topics: ['health'] },
+  { label: 'Special needs', topics: ['wonderfully-made', 'seen-and-understood'] },
   { label: 'Character', topics: ['character'] },
   { label: 'Kindness', topics: ['kindness'] },
   { label: 'Self-control', topics: ['self-control'] },

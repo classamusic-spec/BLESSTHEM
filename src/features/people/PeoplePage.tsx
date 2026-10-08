@@ -1,4 +1,4 @@
-import { CaretRight, Plus } from '@phosphor-icons/react';
+import { CaretRight, Plus, UsersThree } from '@phosphor-icons/react';
 import { motion } from 'motion/react';
 import { useMemo } from 'react';
 import { Link, useNavigate } from 'react-router';
@@ -42,7 +42,7 @@ export default function PeoplePage() {
       />
 
       {people.length === 0 ? (
-        <EmptyState pose="nest" title="Who would you like to bless?" body="Add a child, a spouse, a grandchild — anyone God has placed in your life." action={<Button onClick={add}>Add someone</Button>} />
+        <EmptyState icon={UsersThree} title="Who would you like to bless?" body="Add a child, a spouse, a grandchild — anyone God has placed in your life." action={<Button onClick={add}>Add someone</Button>} />
       ) : (
         <motion.ul role="list" className={styles.list} variants={stagger(0.06)} initial="hidden" animate="show">
           {people.map((p) => (

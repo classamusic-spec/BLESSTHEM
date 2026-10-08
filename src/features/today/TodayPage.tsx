@@ -1,4 +1,4 @@
-import { ArrowsClockwise, GearSix } from '@phosphor-icons/react';
+import { ArrowsClockwise, GearSix, UserPlus } from '@phosphor-icons/react';
 import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router';
@@ -86,7 +86,7 @@ export function TodayPage() {
   if (!person) {
     return (
       <Page>
-        <EmptyState pose="wave" title="Who would you like to bless?" body="Add someone you love, and we’ll prepare a blessing for them each day." action={<Button onClick={() => navigate('/people/new')}>Add someone</Button>} />
+        <EmptyState icon={UserPlus} title="Who would you like to bless?" body="Add someone you love, and we’ll prepare a blessing for them each day." action={<Button onClick={() => navigate('/people/new')}>Add someone</Button>} />
       </Page>
     );
   }

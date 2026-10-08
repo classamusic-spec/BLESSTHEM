@@ -8,7 +8,7 @@ import type { Person } from '@/data/models';
 import { ButtonLink } from '@/design/Button';
 import { fadeUp, stagger } from '@/design/motion';
 import { SceneImage } from '@/design/SceneImage';
-import { Pip } from '@/mascot/Pip';
+import { Emblem } from '@/design/Emblem';
 import { BlessingCard } from '@/features/blessing/BlessingCard';
 import styles from './AboutPage.module.css';
 
@@ -74,7 +74,7 @@ export default function AboutPage() {
         </section>
 
         <section className={styles.value}>
-          <Pip pose="sprig" size={120} />
+          <Emblem size={96} glow />
           <h2 className={styles.valueTitle}>
             Sometimes you know who you’re praying for.
             <br />

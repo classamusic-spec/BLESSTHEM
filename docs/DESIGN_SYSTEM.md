@@ -14,7 +14,7 @@ Tender but strong. Faithful but modern. Beautiful but restrained. Christian with
 - [Haptics](#haptics)
 - [Iconography](#iconography)
 - [Components](#components)
-- [Pip the sparrow](#pip-the-sparrow)
+- [Emblems](#emblems)
 - [The mark and app icon](#the-mark-and-app-icon)
 - [Voice and microcopy](#voice-and-microcopy)
 - [Accessibility](#accessibility)
@@ -26,7 +26,7 @@ Tender but strong. Faithful but modern. Beautiful but restrained. Christian with
 3. **One primary action per screen.** Secondary actions are ghost buttons or icons, never a second loud button.
 4. **Real places, not decoration.** Depth comes from real photographs of quiet places, frosted glass and soft shadow, not from illustration, borders or badges. Words always sit on calm tone, never on busy detail.
 5. **Calm by default.** Motion is slow enough to feel and quick enough to never wait on. Nothing flashes, bounces or nags.
-6. **Every state is designed.** Empty, loading, offline, error and locked states each have their own words, and Pip where it helps.
+6. **Every state is designed.** Empty, loading, offline, error and locked states each have their own words, and a quiet emblem where it helps.
 
 ## Color
 
@@ -93,7 +93,7 @@ Every screen sits in a real place. Nineteen landscape photographs, public domain
 - **Person pages.** Each person has a place of their own behind their portrait, like a contact poster. It follows from their id, so it never changes.
 - **Photo cards.** Journeys and the season's collection in the Library: a photograph with a glass caption resting on it.
 - **The reading view.** Today's scene, blurred and dimmed, behind the words.
-- **Welcome, Bless Them+ and share cards.** The daypart's scene behind the welcome; a postcard with Pip on the Plus page; four photographic share-card styles (Dawn, Meadow, Golden, Moonlit) beside Linen and Sage.
+- **Welcome, Bless Them+ and share cards.** The daypart's scene behind the welcome; a photographic postcard on the Plus page; four photographic share-card styles (Dawn, Meadow, Golden, Moonlit) beside Linen and Sage.
 
 **Words on photographs.** A photograph never sits behind words at full strength:
 
@@ -192,14 +192,14 @@ Motion should feel almost invisible. It confirms, guides and settles, and it nev
 **Signature moments:**
 
 - **Choosing a person.** The selection ring glides between avatars with a shared `layoutId`, and the avatars breathe from 92% to 100% scale.
-- **"I prayed this."** A soft double haptic. The button resolves into the *Covered in prayer today* card: a check draws itself, warm light blooms behind it, a few motes of light rise, and Pip appears, happy at first and then holding a small heart. Late at night, Pip settles down to sleep instead.
+- **"I prayed this."** A soft double haptic. The button resolves into the *Covered in prayer today* card: a check draws itself, warm light blooms behind it, and a few motes of light rise. After a prayer about something hard, the motes stay still: only the light blooms.
 - **The blessing moment.** A full-screen reading view shows one part at a time in large type (Scripture, then the blessing, then the prayer), for reading aloud at a bedside. It dims at night. Swipe, tap or use the arrow keys to move on.
 - **Pages.** They enter with an 8 px rise and a fade, and leave with a 4 px lift. Lists stagger by 60 ms.
 - **Scenes.** Photographs fade in over their blurred placeholder (700 ms), breathe slowly (a 2–9% scale over 36–48 s) and crossfade when the daypart changes. The Today scene slides a little slower than the page on scroll.
 - **The tab bar.** Its lens glides between tabs on `spring.soft`.
 - **Titles.** A large title hands over to the slim glass bar as it scrolls away: the bar fades in and its title rises 6 px.
 
-**Reduced motion.** The system setting, or *Settings › Text, motion & haptics › Reduce motion*, turns off every transform, the scenes' drift and parallax, the rising light after a prayer, and Pip's idle animation. Opacity fades remain so state changes stay perceivable.
+**Reduced motion.** The system setting, or *Settings › Text, motion & haptics › Reduce motion*, turns off every transform, the scenes' drift and parallax, and the rising light after a prayer. Opacity fades remain so state changes stay perceivable.
 
 ## Haptics
 
@@ -242,44 +242,33 @@ All components live in [`src/design/`](../src/design). Each one handles its defa
 | `Sheet` | Bottom sheet on phones and centered dialog on wide screens. It traps focus, closes on Escape or a downward drag, and restores focus on close. |
 | `ConfirmationSheet` | For destructive actions. It says exactly what will be removed. |
 | `Toast` | Polite live region with one short sentence and an optional action. |
-| `EmptyState`, `ErrorState` | Pip, a serif title, one sentence and one action. Errors never show raw messages. |
+| `EmptyState`, `ErrorState` | An emblem, a serif title, one sentence and one action. Errors never show raw messages. |
 | `OfflineBanner`, `Skeleton`, `BlessingSkeleton` | Calm offline notice, and skeletons shaped like the content they stand in for. There are no spinners. |
 | `Card`, `Section`, `SettingsGroup`, `SettingsRow` | Layout primitives on glass. Card tones are `plain`, `sand`, `sage`, `blue` and `gold`, each a tinted glass. |
 | `PageHeader` | Title, eyebrow, subtitle, back and actions. With `scene`, the title sits on its photograph. On scroll it condenses into a slim glass bar (`condensedTitle` and `condenseAfter` adjust what it shows and when). |
 | `SceneImage` | A photograph that arrives gracefully: AVIF or WebP at the right width, its blurred placeholder first, then a fade. Always decorative. |
 | `SceneBackdrop` | The app's sky: the daypart's scene as a blurred wash under a veil and grain, crossfading when the hour turns. |
 | `PhotoCard` | A photograph with a glass caption (kicker, title, body and an accessory such as a progress ring). |
+| `Emblem` | A glass medallion with a duotone icon or the mark, for empty states and small moments. |
 | `Ornament` | A small leaf divider between card sections. |
 | `ProgressDots`, `ProgressRing` | Onboarding steps and journey progress. |
 
-## Pip the sparrow
+## Emblems
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="design/pip-poses-dark.webp">
-  <img src="design/pip-poses-light.webp" width="720" alt="Pip the sparrow in eight poses: idle, wave, happy, curious, sprig, heart, nest and sleep">
-</picture>
+Empty states and small moments are crowned by an emblem rather than a character: a glass medallion holding either a duotone icon that fits the moment or the Bless Them mark ([`src/design/Emblem.tsx`](../src/design/Emblem.tsx)).
 
-> Are not two sparrows sold for a penny? Yet not one of them will fall to the ground apart from the will of your Father. (Matthew 10:29)
-
-Pip is a small, round house sparrow. The design comes from Jesus' words about sparrows, and from Psalm 84:3, where even the sparrow finds a home near God's altar. Pip is a reminder that small things are seen and held. Drawn in SVG ([`src/mascot/Pip.tsx`](../src/mascot/Pip.tsx)) in warm browns with a cream breast and rosy cheeks, Pip looks the same in both themes.
-
-| Pose | When |
+| Moment | Emblem |
 | --- | --- |
-| `idle` | Default, resting |
-| `wave` | Welcoming someone who has not added anyone yet |
-| `happy` | Just prayed, plans, a gentle "you're all set" |
-| `curious` | Not found, empty search, nothing here yet |
-| `sprig` | Onboarding, the library and gifts. Pip carries an olive sprig, a sign of peace. |
-| `heart` | Covered in prayer, answered prayer, the journal |
-| `nest` | Empty lists that will fill: people, favorites, the journal |
-| `sleep` | After a late-night prayer, when the day is done |
+| Not found | `Compass` |
+| No people yet, the people limit | `UserPlus`, `UsersThree` |
+| An empty journal, answered prayers, favorites | `NotePencil`, `HandHeart`, `Heart` |
+| No search match | `MagnifyingGlass` |
+| Bless Them+, welcome to Plus | `Sparkle` |
+| The end of the reading view | `HandsPraying`, then `HandHeart` once prayed |
+| An answered prayer, a finished journey | `HandHeart`, with a warm glow |
+| Preparing a blessing, errors, About | The mark |
 
-**Rules for Pip:**
-
-- **Pip is a companion, never a voice.** Pip never speaks, never speaks for God, never gives advice and never nags.
-- **Pip stays out of crisis and tender in hard seasons.** The safety screen has no mascot. After a prayer about grief, illness, fear or another hard season, Pip shows the heart and never the happy pose.
-- **Pip never competes with Scripture.** Sizes run from 64 to 168 px, and the largest appear only in onboarding, where there is no passage on screen.
-- **Pip moves slowly.** Pip breathes and blinks now and then, and all of it stops with reduced motion. Pip is always `aria-hidden`, so meaning never depends on Pip.
+**Rules:** emblems are always `aria-hidden`, so the words carry the meaning. They stay smaller than the title beside them (64–104 px), never sit on a screen with Scripture except at the very end of the reading view, and the crisis screen has none.
 
 ## The mark and app icon
 
@@ -308,7 +297,7 @@ Bless Them speaks like a wise, kind friend at church: warm, plain and never prea
 | "Streak lost! 🔥" | "Faithfulness isn't perfection. Begin again today." |
 | "Task complete" | "Covered in prayer today." |
 | "Error 500" | "We couldn't prepare today's blessing. Your saved prayers are safe." |
-| "Unlock premium content" | "Courage is part of Bless Them+. The full library has 51 topics for every season of life." |
+| "Unlock premium content" | "Courage is part of Bless Them+. The full library has 56 topics for every season of life." |
 | "Enable notifications?" | "Would a gentle reminder help? One quiet note a day when a blessing is ready. Never more, and never guilt." |
 
 Guidelines:

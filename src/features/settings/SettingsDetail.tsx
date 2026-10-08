@@ -1,4 +1,4 @@
-import { AppleLogo, DownloadSimple, EnvelopeSimple, GoogleLogo, PaperPlaneTilt, SignOut, Trash } from '@phosphor-icons/react';
+import { AppleLogo, DownloadSimple, EnvelopeSimple, GoogleLogo, PaperPlaneTilt, SignOut, Sparkle, Trash } from '@phosphor-icons/react';
 import { clear as clearPhotos } from 'idb-keyval';
 import { useState, type ReactNode } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router';
@@ -12,8 +12,8 @@ import { ConfirmationSheet } from '@/design/ConfirmationSheet';
 import { Switch, TextField } from '@/design/Controls';
 import { Page, PageHeader, SettingsGroup, SettingsRow } from '@/design/Layout';
 import { useToast } from '@/design/Toast';
+import { Emblem } from '@/design/Emblem';
 import { cx } from '@/lib/cx';
-import { Pip } from '@/mascot/Pip';
 import { clearEvents, track } from '@/services/analytics';
 import { auth, PROVIDER_LABEL } from '@/services/auth';
 import { haptics } from '@/services/haptics';
@@ -167,8 +167,8 @@ function SubscriptionSection() {
 
   return (
     <div className={styles.stack}>
-      <div className={cx(styles.panel, styles.pipRow)}>
-        <Pip pose="happy" size={72} />
+      <div className={cx(styles.panel, styles.emblemRow)}>
+        <Emblem icon={Sparkle} size={64} />
         <div>
           <p>
             <strong>{plan.name} plan</strong> · {plan.priceLabel}/{plan.period}
@@ -524,18 +524,18 @@ function SupportSection() {
 /* ── About ───────────────────────────────────────────── */
 function AboutSection() {
   const navigate = useNavigate();
-  const sparrows = usePassage('MAT 10:29');
+  const blessing = usePassage('NUM 6:24-26');
   return (
     <div className={styles.stack}>
-      <div className={cx(styles.panel, styles.pipRow)}>
-        <Pip pose="sprig" size={84} />
+      <div className={cx(styles.panel, styles.emblemRow)}>
+        <Emblem size={64} />
         <div>
           <p>
-            <strong>Meet Pip.</strong>
+            <strong>Bless Them</strong>
           </p>
           <p className={styles.small}>
-            A little sparrow who keeps you company.
-            {sparrows && ` “${sparrows.text}” — ${sparrows.display}`}
+            Named for one of the oldest blessings there is.
+            {blessing && ` ${blessing.text} (${blessing.display})`}
           </p>
         </div>
       </div>

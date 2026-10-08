@@ -1,4 +1,4 @@
-import { Check, NotePencil, Plus } from '@phosphor-icons/react';
+import { Check, HandHeart, Heart, NotePencil, Plus } from '@phosphor-icons/react';
 import { motion } from 'motion/react';
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router';
@@ -65,7 +65,7 @@ export default function JournalPage() {
 
       {isEmpty ? (
         <EmptyState
-          pose="nest"
+          icon={NotePencil}
           title="Your prayers will live here."
           body="Each time you bless someone, you can save what was on your heart and look back on what God has carried you through."
           action={
@@ -148,7 +148,7 @@ export default function JournalPage() {
               ) : (
                 <EmptyState
                   compact
-                  pose="heart"
+                  icon={HandHeart}
                   title="Answered prayers will gather here."
                   body={
                     openRequests.length
@@ -172,7 +172,7 @@ export default function JournalPage() {
                     ))}
                 </div>
               ) : (
-                <EmptyState compact pose="sprig" title="Keep the blessings you love." body="Tap the heart on any blessing to save it here." />
+                <EmptyState compact icon={Heart} title="Keep the blessings you love." body="Tap the heart on any blessing to save it here." />
               ))}
           </motion.div>
         </>

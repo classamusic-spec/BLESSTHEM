@@ -105,6 +105,7 @@ Grief, health, anxiety, bullying, rejection, failure and loneliness are where tr
 - **Anxiety:** God cares about worry; worry is not sin. Where natural, the prayer can ask for wisdom to seek help and for people who listen well.
 - **Bullying:** the child is never to blame. Pray for safety, for wise adults who notice and act, for courage to tell someone. Never counsel passivity.
 - **Failure / rejection:** worth is not earned. Grace, not shame.
+- **Disability, autism and special needs** (*Uniquely Made*): the child is whole and loved now, never a problem to fix or a burden. Never link disability to sin, punishment or anyone’s faith (John 9:3). Pray for healing honestly, especially for pain and illness, but never promise it, and never suggest a child must change to be fully loved. A meltdown is distress, not defiance. Avoid pity and clichés (“special kids for special parents”, “angels”). Leave room in **Talk about it** for children who answer without words: “tell me or show me”.
 - The app separately detects crisis language (self-harm, abuse, emergencies) and shows professional help — content should never imply prayer replaces care.
 
 ## 8. Process

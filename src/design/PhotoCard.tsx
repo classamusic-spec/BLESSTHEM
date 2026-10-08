@@ -12,7 +12,7 @@ interface PhotoCardProps {
   /** Small caps line above the title, e.g. “7 days” or “In season”. */
   kicker?: ReactNode;
   body?: ReactNode;
-  /** Something at the caption’s trailing edge: a progress ring, a lock, Pip. */
+  /** Something at the caption’s trailing edge: a progress ring, a lock, an icon. */
   accessory?: ReactNode;
   size?: 'feature' | 'tile';
   /** The `sizes` hint for the photo. */

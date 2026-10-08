@@ -11,12 +11,12 @@
   padding-top: var(--space-2);
 }
 
-/* A postcard of golden evening light, with Pip settled at its edge. */
+/* A postcard of golden evening light. */
 .postcard {
   position: relative;
   width: 100%;
   height: 168px;
-  margin-bottom: var(--space-10);
+  margin-bottom: var(--space-4);
 }
 .postcardImage {
   position: absolute;
@@ -25,13 +25,6 @@
   box-shadow: var(--glass-edge), var(--glass-shadow);
   filter: brightness(var(--scene-brightness));
 }
-.postcardPip {
-  position: absolute;
-  left: 50%;
-  bottom: -46px;
-  transform: translateX(-50%);
-}
-
 .eyebrow {
   margin-top: var(--space-3);
   color: var(--color-gold-text);

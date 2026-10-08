@@ -1,4 +1,4 @@
-import { Trash } from '@phosphor-icons/react';
+import { Compass, Trash, UsersThree } from '@phosphor-icons/react';
 import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { AGE_HINTS, AGE_LABELS, FOCUS_CHOICES } from '@/content/taxonomy';
@@ -60,7 +60,7 @@ export default function PersonEditPage() {
     return (
       <Page>
         <PageHeader title="" back="/people" />
-        <EmptyState pose="curious" title="We couldn’t find this person." action={<ButtonLink to="/people">Back to People</ButtonLink>} />
+        <EmptyState icon={Compass} title="We couldn’t find this person." action={<ButtonLink to="/people">Back to People</ButtonLink>} />
       </Page>
     );
   }
@@ -70,7 +70,7 @@ export default function PersonEditPage() {
       <Page>
         <PageHeader title="" back="/people" />
         <EmptyState
-          pose="nest"
+          icon={UsersThree}
           title="Room for everyone you love"
           body={`The free plan includes ${FREE_LIMITS.people} people. Bless Them+ lets you bless your whole family — children, grandchildren, spouse and friends.`}
           action={<Button onClick={() => paywall.open('people-limit')}>See Bless Them+</Button>}

@@ -1,15 +1,17 @@
 import { ArrowCounterClockwise, CloudSlash } from '@phosphor-icons/react';
 import { AnimatePresence, motion } from 'motion/react';
+import type { Icon } from '@phosphor-icons/react';
 import type { ReactNode } from 'react';
 import { useOnline } from '@/hooks/useOnline';
 import { cx } from '@/lib/cx';
-import { Pip, type PipPose } from '@/mascot/Pip';
 import { Button } from './Button';
+import { Emblem } from './Emblem';
 import { fadeUp, stagger } from './motion';
 import styles from './States.module.css';
 
 interface EmptyStateProps {
-  pose?: PipPose;
+  /** A glyph for the moment; without one, the Bless Them mark. */
+  icon?: Icon;
   title: string;
   body?: ReactNode;
   action?: ReactNode;
@@ -18,11 +20,11 @@ interface EmptyStateProps {
 }
 
 /** Every empty screen is an invitation, never a blank page. */
-export function EmptyState({ pose = 'nest', title, body, action, compact, className }: EmptyStateProps) {
+export function EmptyState({ icon, title, body, action, compact, className }: EmptyStateProps) {
   return (
     <motion.div className={cx(styles.empty, compact && styles.compact, className)} variants={stagger(0.08)} initial="hidden" animate="show">
-      <motion.div variants={fadeUp} className={styles.pip}>
-        <Pip pose={pose} size={compact ? 96 : 132} />
+      <motion.div variants={fadeUp} className={styles.emblem}>
+        <Emblem icon={icon} size={compact ? 72 : 88} glow />
       </motion.div>
       <motion.h2 variants={fadeUp} className={styles.title}>
         {title}
@@ -53,7 +55,7 @@ export function ErrorState({
 }) {
   return (
     <div className={styles.error} role="alert">
-      <Pip pose="curious" size={96} />
+      <Emblem size={72} />
       <h2 className={styles.title}>{title}</h2>
       <p className={styles.body}>{body}</p>
       {onRetry && (

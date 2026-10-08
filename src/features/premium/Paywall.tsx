@@ -1,4 +1,4 @@
-import { BookOpen, Check, HeartStraight, ImageSquare, MapTrifold, SpeakerHigh, UsersThree } from '@phosphor-icons/react';
+import { BookOpen, Check, HeartStraight, ImageSquare, MapTrifold, Sparkle, SpeakerHigh, UsersThree } from '@phosphor-icons/react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 import { TOPICS } from '@/content/taxonomy';
@@ -8,7 +8,7 @@ import { Button } from '@/design/Button';
 import { fadeUp, spring, stagger } from '@/design/motion';
 import { cx } from '@/lib/cx';
 import { SceneImage } from '@/design/SceneImage';
-import { Pip } from '@/mascot/Pip';
+import { Emblem } from '@/design/Emblem';
 import { track } from '@/services/analytics';
 import { haptics } from '@/services/haptics';
 import { PLANS, purchases } from '@/services/purchases';
@@ -74,7 +74,7 @@ export function Paywall({ source, onClose, onUnlocked }: PaywallProps) {
       <AnimatePresence mode="wait" initial={false}>
         {done ? (
           <motion.div key="done" className={styles.done} initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} transition={spring.soft}>
-            <Pip pose="happy" size={140} glow />
+            <Emblem icon={Sparkle} size={104} glow />
             <h2 className={styles.doneTitle}>Welcome to Bless Them+</h2>
             <p className={styles.doneBody}>Everything is open to you. Thank you for building a rhythm of prayer for the people you love.</p>
             <Button onClick={onUnlocked ?? onClose} size="md">
@@ -86,9 +86,6 @@ export function Paywall({ source, onClose, onUnlocked }: PaywallProps) {
             <motion.div variants={fadeUp} className={styles.hero}>
               <div className={styles.postcard} aria-hidden="true">
                 <SceneImage scene="golden-grass" sizes="(min-width: 540px) 480px, 92vw" className={styles.postcardImage} />
-                <span className={styles.postcardPip}>
-                  <Pip pose="nest" size={96} glow />
-                </span>
               </div>
               <p className={cx('overline', styles.eyebrow)}>Bless Them+</p>
               <h2 className={styles.title}>Pray more intentionally for the people you love.</h2>

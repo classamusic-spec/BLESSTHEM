@@ -1,4 +1,4 @@
-import { CaretRight, MagnifyingGlass } from '@phosphor-icons/react';
+import { CaretRight, MagnifyingGlass, Path } from '@phosphor-icons/react';
 import { motion } from 'motion/react';
 import { useEffect } from 'react';
 import { Link } from 'react-router';
@@ -11,7 +11,6 @@ import { PhotoCard } from '@/design/PhotoCard';
 import { fadeUp, stagger } from '@/design/motion';
 import { TopicCard } from '@/design/Topic';
 import { TopicIcon } from '@/design/TopicIcon';
-import { Pip } from '@/mascot/Pip';
 import { track } from '@/services/analytics';
 import styles from './LibraryPage.module.css';
 
@@ -50,7 +49,7 @@ export default function LibraryPage() {
             kicker="Prayer journeys"
             title="Guided blessings, day by day"
             body={`${JOURNEYS.length} journeys — courage, bedtime peace, your teen, your marriage.`}
-            accessory={<Pip pose="sprig" size={60} alive={false} />}
+            accessory={<Path size={28} weight="duotone" />}
           />
         </motion.div>
         {season && (

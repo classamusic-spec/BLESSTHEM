@@ -119,7 +119,7 @@ export default function SearchPage() {
             )}
 
             {results.entries.length === 0 && results.topics.length === 0 ? (
-              !safety && <EmptyState pose="curious" compact title="We couldn’t find a match yet." body="Try a simpler phrase, like “worry,” “new school” or “bedtime.”" />
+              !safety && <EmptyState icon={MagnifyingGlass} compact title="We couldn’t find a match yet." body="Try a simpler phrase, like “worry,” “new school” or “bedtime.”" />
             ) : (
               <>
                 {results.topics.length > 0 && (

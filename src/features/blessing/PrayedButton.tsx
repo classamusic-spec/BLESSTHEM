@@ -1,12 +1,10 @@
-import { Export, NotePencil } from '@phosphor-icons/react';
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { useState } from 'react';
-import { Button } from '@/design/Button';
-import { ease, spring } from '@/design/motion';
-import { daypart } from '@/lib/dates';
-import { Pip } from '@/mascot/Pip';
-import { haptics } from '@/services/haptics';
-import styles from './PrayedButton.module.css';
+import { Export, NotePencil } from "@phosphor-icons/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { useState } from "react";
+import { Button } from "@/design/Button";
+import { ease, spring } from "@/design/motion";
+import { haptics } from "@/services/haptics";
+import styles from "./PrayedButton.module.css";
 
 interface PrayedButtonProps {
   prayed: boolean;
@@ -16,7 +14,7 @@ interface PrayedButtonProps {
   /** e.g. “You blessed Noah today.” */
   confirmation: string;
   label?: string;
-  /** Hard seasons (grief, illness, fear…): Pip stays tender rather than happy. */
+  /** Hard seasons (grief, illness, fear…): a quieter moment, light without the rising motes. */
   gentle?: boolean;
 }
 
@@ -34,7 +32,15 @@ const MOTES = [
  * “I prayed this.” A quiet moment of completion: a soft expanding glow, a check
  * drawn in one stroke, a few motes of light — and a gentle haptic. No confetti.
  */
-export function PrayedButton({ prayed, onPray, onReflect, onShare, confirmation, label = 'I prayed this', gentle }: PrayedButtonProps) {
+export function PrayedButton({
+  prayed,
+  onPray,
+  onReflect,
+  onShare,
+  confirmation,
+  label = "I prayed this",
+  gentle,
+}: PrayedButtonProps) {
   const [celebrating, setCelebrating] = useState(false);
   const reduce = useReducedMotion();
 
@@ -49,7 +55,11 @@ export function PrayedButton({ prayed, onPray, onReflect, onShare, confirmation,
     <div className={styles.wrap}>
       <AnimatePresence initial={false} mode="popLayout">
         {!prayed ? (
-          <motion.div key="cta" className={styles.cta} exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.2 } }}>
+          <motion.div
+            key="cta"
+            className={styles.cta}
+            exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.2 } }}
+          >
             <Button block onClick={pray} className={styles.button}>
               {label}
             </Button>
@@ -70,26 +80,29 @@ export function PrayedButton({ prayed, onPray, onReflect, onShare, confirmation,
                   animate={{ scale: 2.4, opacity: 0 }}
                   transition={{ duration: 1.3, ease: ease.out }}
                 />
-                {MOTES.map((m, i) => (
-                  <motion.span
-                    key={i}
-                    className={styles.mote}
-                    style={{ width: m.s, height: m.s }}
-                    initial={{ x: m.x * 0.3, y: 20, opacity: 0 }}
-                    animate={{ x: m.x, y: -90 - i * 6, opacity: [0, 1, 0] }}
-                    transition={{ duration: 1.7, delay: m.d, ease: ease.out }}
-                  />
-                ))}
+                {!gentle &&
+                  MOTES.map((m, i) => (
+                    <motion.span
+                      key={i}
+                      className={styles.mote}
+                      style={{ width: m.s, height: m.s }}
+                      initial={{ x: m.x * 0.3, y: 20, opacity: 0 }}
+                      animate={{ x: m.x, y: -90 - i * 6, opacity: [0, 1, 0] }}
+                      transition={{ duration: 1.7, delay: m.d, ease: ease.out }}
+                    />
+                  ))}
               </div>
             )}
             <div className={styles.confirmRow}>
-              <span className={styles.pip}>
-                {/* After a late-night prayer, Pip settles down to sleep. */}
-                <Pip pose={celebrating && !gentle ? 'happy' : daypart() === 'night' ? 'sleep' : 'heart'} size={64} alive={!reduce} />
-              </span>
               <div>
                 <p className={styles.title}>
-                  <svg className={styles.check} viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                  <svg
+                    className={styles.check}
+                    viewBox="0 0 24 24"
+                    width="22"
+                    height="22"
+                    aria-hidden="true"
+                  >
                     <circle cx="12" cy="12" r="11" fill="var(--color-brand)" />
                     <motion.path
                       d="M7 12.4l3.2 3.1L17.2 8.6"
@@ -100,7 +113,11 @@ export function PrayedButton({ prayed, onPray, onReflect, onShare, confirmation,
                       strokeLinejoin="round"
                       initial={{ pathLength: celebrating ? 0 : 1 }}
                       animate={{ pathLength: 1 }}
-                      transition={{ duration: 0.5, delay: 0.35, ease: ease.out }}
+                      transition={{
+                        duration: 0.5,
+                        delay: 0.35,
+                        ease: ease.out,
+                      }}
                     />
                   </svg>
                   Covered in prayer today.
@@ -111,12 +128,22 @@ export function PrayedButton({ prayed, onPray, onReflect, onShare, confirmation,
             {(onReflect || onShare) && (
               <div className={styles.next}>
                 {onReflect && (
-                  <Button variant="secondary" size="md" icon={<NotePencil />} onClick={onReflect}>
+                  <Button
+                    variant="secondary"
+                    size="md"
+                    icon={<NotePencil />}
+                    onClick={onReflect}
+                  >
                     Add a reflection
                   </Button>
                 )}
                 {onShare && (
-                  <Button variant="secondary" size="md" icon={<Export />} onClick={onShare}>
+                  <Button
+                    variant="secondary"
+                    size="md"
+                    icon={<Export />}
+                    onClick={onShare}
+                  >
                     Share blessing
                   </Button>
                 )}
@@ -126,7 +153,7 @@ export function PrayedButton({ prayed, onPray, onReflect, onShare, confirmation,
         )}
       </AnimatePresence>
       <p className="visually-hidden" role="status" aria-live="polite">
-        {prayed ? 'Covered in prayer today.' : ''}
+        {prayed ? "Covered in prayer today." : ""}
       </p>
     </div>
   );

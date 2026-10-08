@@ -41,7 +41,7 @@ Bless Them is not a Bible reader, a streak machine or an AI oracle. It never inv
 
 <table>
   <tr>
-    <td align="center"><img src="docs/screenshots/welcome.webp" width="200" alt="Welcome screen with Pip"><br><sub>Welcome</sub></td>
+    <td align="center"><img src="docs/screenshots/welcome.webp" width="200" alt="The welcome screen over a meadow at first light"><br><sub>Welcome</sub></td>
     <td align="center"><img src="docs/screenshots/onboarding-topics.webp" width="200" alt="Choosing what to pray about"><br><sub>A blessing before an account</sub></td>
     <td align="center"><img src="docs/screenshots/reading-view-night.webp" width="200" alt="The blessing moment at night"><br><sub>The blessing moment</sub></td>
     <td align="center"><img src="docs/screenshots/share-card.webp" width="200" alt="A share card with the name switched off: Today I’m praying courage over my son"><br><sub>Share cards</sub></td>
@@ -60,7 +60,7 @@ Bless Them is not a Bible reader, a streak machine or an AI oracle. It never inv
   </tr>
   <tr>
     <td align="center"><img src="docs/screenshots/journeys.webp" width="200" alt="Prayer journeys, from 7 Days of Courage to 7 Days of Peace Before Bed"><br><sub>Prayer journeys</sub></td>
-    <td align="center"><img src="docs/screenshots/pip-asleep.webp" width="200" alt="After a late-night prayer, Pip falls asleep beside Covered in prayer today"><br><sub>Pip, after a night prayer</sub></td>
+    <td align="center"><img src="docs/screenshots/topic.webp" width="200" alt="The Courage topic, opening on a mountain at sunrise"><br><sub>Topics</sub></td>
     <td align="center" colspan="2"><img src="docs/screenshots/desktop.webp" width="420" alt="Today on a desktop browser, with the sidebar navigation"><br><sub>Desktop</sub></td>
   </tr>
 </table>
@@ -70,9 +70,8 @@ Bless Them is not a Bible reader, a streak machine or an AI oracle. It never inv
 - **Meaning before an account.** Onboarding asks who you are praying for and what they need, then delivers a real, personal blessing. Only after that does it offer to save your family with Apple, Google or an email link. Guests can keep going and never lose anything.
 - **Real places, frosted glass.** Every screen sits in a quiet landscape, under warm frosted glass. There are nineteen hand-picked photographs, all public domain, CC0 or CC BY and credited in the app. Today follows the clock, from first light over a meadow to a crescent moon at night. Each journey, collection, topic and person has a place of their own.
 - **Today.** One blessing per person per day. Choices are deterministic for each person and date, suit their age and relationship, follow their focus topics and today’s concern, and do not repeat a passage within a week.
-- **Pip the sparrow.** A small companion drawn from Matthew 10:29. Pip greets you, rests in empty states, celebrates when someone is covered in prayer, and dozes off after a late-night prayer. Pip never speaks for God and never nags.
 - **The blessing card.** Scripture, *Hold onto this*, *Speak this over {name}*, a prayer, and *Talk about it*. Read-aloud and the passage’s wider context are one tap away. The translation, BSB or WEB, is a setting.
-- **The library.** About 50 topics in seven parts of life: *Their Faith*, *Their Heart*, *Their Mind*, *Their Relationships*, *Hard Seasons*, *Their Future* and *Everyday Life*. Seasonal collections and guided journeys sit alongside them, from *7 Days of Courage* to *Blessing Your Marriage*. Search accepts plain language, such as “my son is nervous about tryouts”.
+- **The library.** 56 topics in eight parts of life: *Their Faith*, *Their Heart*, *Their Mind*, *Their Relationships*, *Uniquely Made*, *Hard Seasons*, *Their Future* and *Everyday Life*. *Uniquely Made* is for families raising a child with a disability, autism or other special needs, and it is free for everyone. Seasonal collections and guided journeys sit alongside them, from *7 Days of Courage* to *Blessing Your Marriage*. Search accepts plain language, such as “my son is nervous about tryouts”.
 - **People and special moments.** Profiles hold age, pronouns, focus topics and an optional private note. Birthdays, first days and surgeries get blessings written for the occasion.
 - **Journal.** Reflections, prayer requests, gratitude and notes, with optional photos. Requests can be marked answered, and favorites are kept.
 - **Rhythm, not streaks.** The app shows a gentle record of the days you prayed. Missing a day costs nothing.
@@ -171,7 +170,6 @@ src/
                   journeys, journal, settings, premium, share, safety, …
   hooks/          Small React hooks
   lib/            Dates, ids, seeded randomness, text helpers
-  mascot/         Pip the sparrow
   services/       Auth, purchases, analytics, notifications, haptics,
                   speech, photos, theme, share, service worker registration
   styles/         Design tokens and base styles
@@ -186,7 +184,7 @@ supabase/         Production database schema with row-level security
 ## Documentation
 
 - [Architecture](docs/ARCHITECTURE.md) covers platform decisions, data and sync, auth, billing, notifications, content boundaries, analytics and performance.
-- [Design system](docs/DESIGN_SYSTEM.md) covers tokens, scenery and glass, type, color and contrast, motion, components, Pip and the app icon.
+- [Design system](docs/DESIGN_SYSTEM.md) covers tokens, scenery and glass, type, color and contrast, motion, components, emblems and the app icon.
 - [Content guide](docs/CONTENT_GUIDE.md) covers voice, theology guardrails, templates and how to add a blessing.
 - [QA](docs/QA.md) covers the design QA checklist, flow results and known limitations.
 
@@ -196,6 +194,6 @@ supabase/         Production database schema with row-level security
 - **Fonts:** [Newsreader](https://github.com/productiontype/Newsreader) and [Figtree](https://github.com/erikdkennedy/figtree), under the SIL Open Font License.
 - **Icons:** [Phosphor](https://phosphoricons.com), under the MIT license.
 - **Photography:** nineteen landscapes from Flickr by the US National Park Service, the US Forest Service, the US Fish and Wildlife Service and independent photographers. Twelve carry the Public Domain Mark, six are CC0, and one (“Oak Hill Snow Play 2019”, Kaibab National Forest) is [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/). Every photograph is credited in *Settings › About › Photography*, with sources in [`src/content/scenery/sources.json`](src/content/scenery/sources.json). The photographs are graded and resized; none is generated.
-- **Pip the sparrow and the Bless Them mark** were drawn for this project. The sparrow comes from Matthew 10:29: *not one of them will fall to the ground apart from the will of your Father.*
+- **The Bless Them mark** was drawn for this project.
 
 The application code is proprietary. All rights reserved.

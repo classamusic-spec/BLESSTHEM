@@ -1,3 +1,4 @@
+import { Sparkle } from '@phosphor-icons/react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { isPlus, useStore } from '@/data/store';
@@ -19,7 +20,7 @@ export default function PlusPage() {
       <PageHeader title="" back size="compact" />
       {plus ? (
         <EmptyState
-          pose="happy"
+          icon={Sparkle}
           title="You’re on Bless Them+"
           body="Everything is open to you. Thank you for building a rhythm of prayer for the people you love."
           action={<ButtonLink to="/settings/subscription" variant="secondary" size="md">Manage subscription</ButtonLink>}

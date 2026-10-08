@@ -1,4 +1,4 @@
-import { Check, LockSimple } from '@phosphor-icons/react';
+import { Check, Compass, HandHeart, LockSimple } from '@phosphor-icons/react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useMemo, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router';
@@ -11,11 +11,11 @@ import { ProgressRing } from '@/design/Controls';
 import { Page, PageHeader } from '@/design/Layout';
 import { PersonSelector } from '@/design/PersonSelector';
 import { EmptyState } from '@/design/States';
+import { Emblem } from '@/design/Emblem';
 import { journeyPlan, journeySuits, nextJourneyDay } from '@/engine/journeys';
 import { useToday } from '@/hooks/useToday';
 import { dayKey } from '@/lib/dates';
 import { cx } from '@/lib/cx';
-import { Pip } from '@/mascot/Pip';
 import { BlessingCard } from '@/features/blessing/BlessingCard';
 import { usePaywall } from '@/features/premium/PaywallProvider';
 import styles from './Journeys.module.css';
@@ -45,7 +45,7 @@ export default function JourneyPage() {
     return (
       <Page>
         <PageHeader title="" back="/library/journeys" />
-        <EmptyState pose="curious" title="We couldn’t find that journey." action={<ButtonLink to="/library/journeys">All journeys</ButtonLink>} />
+        <EmptyState icon={Compass} title="We couldn’t find that journey." action={<ButtonLink to="/library/journeys">All journeys</ButtonLink>} />
       </Page>
     );
   }
@@ -71,7 +71,7 @@ export default function JourneyPage() {
       <PageHeader back="/library/journeys" scene={journey.scene} eyebrow={`${journey.days.length}-day journey`} title={journey.title} subtitle={journey.description} />
 
       {eligible.length === 0 ? (
-        <EmptyState compact pose="curious" title="This journey is for someone else in your life." body="It’s written for a different relationship or age. Add someone it fits from People." action={<ButtonLink to="/people/new" variant="secondary" size="md">Add someone</ButtonLink>} />
+        <EmptyState compact icon={Compass} title="This journey is for someone else in your life." body="It’s written for a different relationship or age. Add someone it fits from People." action={<ButtonLink to="/people/new" variant="secondary" size="md">Add someone</ButtonLink>} />
       ) : (
         <>
           {eligible.length > 1 && (
@@ -126,7 +126,7 @@ export default function JourneyPage() {
           <AnimatePresence>
             {finished && (
               <motion.div className={styles.finished} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-                <Pip pose="heart" size={112} glow />
+                <Emblem icon={HandHeart} size={88} glow />
                 <h2 className={styles.todayTitle}>You finished {journey.title}.</h2>
                 <p className={styles.small}>
                   {journey.days.length} days of blessing {person?.name}. Take a moment to thank God for this time.

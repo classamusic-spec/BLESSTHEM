@@ -6,8 +6,8 @@ This page records how Bless Them is checked, what passed in the latest run, and 
 
 | Check | Result |
 | --- | --- |
-| Scripture verification | ✅ BSB: 31,086 verses cross-checked, all identical. WEB: 36,078 verses cross-checked, 26 known formatting-only differences. 1,388 verified verses ship. |
-| Content lint | ✅ 198 entries across 51 topics, with 0 errors and 0 warnings |
+| Scripture verification | ✅ BSB: 31,086 verses cross-checked, all identical. WEB: 36,078 verses cross-checked, 26 known formatting-only differences. 1,433 verified verses ship. |
+| Content lint | ✅ 218 entries across 56 topics, with 0 errors and 0 warnings |
 | Type check | ✅ App, service worker, build config and end-to-end tests |
 | Unit tests | ✅ 46 / 46 |
 | Contrast audit | ✅ Every text and surface pairing meets its target, in light and dark, including glass over the darkest and brightest part of every photograph |
@@ -81,7 +81,7 @@ The brief's checklist was applied to every screen. Notes on how each question is
 | **Motion:** polish, not distraction? | Transitions take 180–300 ms with damped springs. The one celebration is soft light, never confetti, and everything respects reduced motion. |
 | **Copy:** can anything be shortened? | Microcopy was reviewed for length and tone. There is no "just", no guilt, no streaks, and "unlock" language was softened. |
 | **Accessibility:** large text and assistive technology? | At 140% text, no screen scrolls sideways. Controls carry accessible names (axe). Radiogroups, live regions, focus traps in sheets and a skip link are in place. |
-| **Emotional tone:** does it feel peaceful? | Real, quiet places that follow the time of day, under warm frosted glass, with Pip used sparingly. In hard seasons, Pip stays tender rather than cheerful. |
+| **Emotional tone:** does it feel peaceful? | Real, quiet places that follow the time of day, under warm frosted glass. In hard seasons the celebration after a prayer stays quiet. |
 | **Faithfulness:** is Scripture contextual and trustworthy? | Every verse is verified, every card has *Read context* with a note on who is speaking, and the linter blocks promised outcomes and claims of revelation. |
 | **Monetization:** is trust protected? | No countdowns or fake urgency. Prices and renewal terms show before purchase, *Continue free* is always visible, and free use stays meaningful. |
 
@@ -95,8 +95,7 @@ The brief's checklist was applied to every screen. Notes on how each question is
 - Search results spacing
 - Long references wrapping on the person page
 - Share-card verse sizing
-- Pip's pose after praying about something hard
-- The unused sleep pose
+- The celebration after praying about something hard
 
 The scenery and glass pass found and fixed:
 
@@ -120,7 +119,7 @@ The scenery and glass pass found and fixed:
 
 ## Content QA
 
-- **198 curated entries** span all 51 topics. Every topic has at least three entries, and the age-sensitive topics have entries written for little ones.
+- **218 curated entries** span all 56 topics. Every topic has at least three entries, and the age-sensitive topics have entries written for little ones.
 - **Linting:** every entry passes the linter. It checks references, context ranges, word budgets, allowed template tokens, and theological and tonal guardrails.
 - **Editorial review:** every entry was read for theology and tone.
   - Passages that are easily misused have explicit context notes. Philippians 4:13 is never a promise of winning, and Jeremiah 29:11 is addressed to exiles.
