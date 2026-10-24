@@ -6,8 +6,8 @@ This page records how Bless Them is checked, what passed in the latest run, and 
 
 | Check | Result |
 | --- | --- |
-| Scripture verification | ✅ BSB: 31,086 verses cross-checked, all identical. WEB: 36,078 verses cross-checked, 26 known formatting-only differences. 1,433 verified verses ship. |
-| Content lint | ✅ 218 entries across 56 topics, with 0 errors and 0 warnings |
+| Scripture verification | ✅ BSB: 31,086 verses cross-checked, all identical. WEB: 36,078 verses cross-checked, 26 known formatting-only differences. 2,376 verified verses ship. |
+| Content lint | ✅ 392 entries across 56 topics, with 0 errors and 0 warnings |
 | Type check | ✅ App, service worker, build config and end-to-end tests |
 | Unit tests | ✅ 46 / 46 |
 | Contrast audit | ✅ Every text and surface pairing meets its target, in light and dark, including glass over the darkest and brightest part of every photograph |
@@ -119,7 +119,7 @@ The scenery and glass pass found and fixed:
 
 ## Content QA
 
-- **218 curated entries** span all 56 topics. Every topic has at least three entries, and the age-sensitive topics have entries written for little ones.
+- **392 curated entries** span all 56 topics. Every topic has at least seven entries, and the age-sensitive topics have entries written for little ones.
 - **Linting:** every entry passes the linter. It checks references, context ranges, word budgets, allowed template tokens, and theological and tonal guardrails.
 - **Editorial review:** every entry was read for theology and tone.
   - Passages that are easily misused have explicit context notes. Philippians 4:13 is never a promise of winning, and Jeremiah 29:11 is addressed to exiles.
