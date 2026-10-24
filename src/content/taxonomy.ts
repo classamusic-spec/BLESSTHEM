@@ -60,6 +60,8 @@ export const TOPICS: Topic[] = [
     description: 'A growing love for God’s Word.', related: ['wisdom', 'faith', 'learning'] },
   { id: 'faithfulness', title: 'Faithfulness', category: 'faith', icon: 'Tree', free: false, ages: FROM_ELEMENTARY,
     description: 'Steady faith, one ordinary day at a time.', related: ['character', 'trust', 'responsibility'] },
+  { id: 'wandering', title: 'Wandering faith', category: 'faith', icon: 'Compass', free: false, ages: FROM_TEEN,
+    description: 'For the one drifting from God, and the hope that waits for them.', related: ['faith', 'trust', 'prayer'] },
 
   // ── Their Heart ────────────────────────────────────────────────
   { id: 'identity', title: 'Identity', category: 'heart', icon: 'Fingerprint', free: true, ages: ALL,
@@ -74,6 +76,8 @@ export const TOPICS: Topic[] = [
     description: 'Grace received, and grace given.', related: ['conflict', 'siblings', 'failure'] },
   { id: 'gratitude', title: 'Gratitude', category: 'heart', icon: 'FlowerTulip', free: true, ages: ALL,
     description: 'Noticing good gifts, big and small.', related: ['faith', 'birthdays', 'peace'] },
+  { id: 'joy', title: 'Joy', category: 'heart', icon: 'StarFour', free: false, ages: ALL,
+    description: 'Gladness that runs deeper than circumstances.', related: ['gratitude', 'peace', 'faith'] },
   { id: 'humility', title: 'Humility', category: 'heart', icon: 'Leaf', free: false, ages: FROM_ELEMENTARY,
     description: 'Secure enough to serve, and to listen.', related: ['character', 'leadership', 'compassion'] },
   { id: 'honesty', title: 'Honesty', category: 'heart', icon: 'Sun', free: false, ages: FROM_PRESCHOOL,
@@ -115,6 +119,8 @@ export const TOPICS: Topic[] = [
     description: 'Wisdom and worth in matters of the heart.', related: ['identity', 'discernment', 'self-control'] },
   { id: 'conflict', title: 'Conflict', category: 'relationships', icon: 'Handshake', free: false, ages: FROM_PRESCHOOL,
     description: 'Peacemaking when relationships are strained.', related: ['forgiveness', 'self-control', 'family'] },
+  { id: 'adoption', title: 'Adoption and fostering', category: 'relationships', icon: 'Heart', free: false, ages: ALL,
+    description: 'Chosen, wanted, and home.', related: ['family', 'identity', 'wonderfully-made'] },
 
   // ── Uniquely Made ──────────────────────────────────────────────
   // For families raising a child with a disability, autism or other special needs. Free for
@@ -151,6 +157,12 @@ export const TOPICS: Topic[] = [
     description: 'Safety, worth, and wise help when others are unkind.', related: ['identity', 'rejection', 'courage'] },
   { id: 'health', title: 'Health', category: 'hard-seasons', icon: 'Heartbeat', free: false, ages: ALL,
     description: 'Strength and comfort for body and mind.', related: ['peace', 'fear', 'trust'] },
+  { id: 'divorce', title: 'Families changing', category: 'hard-seasons', icon: 'HeartBreak', free: false, ages: FROM_PRESCHOOL,
+    description: 'When a family separates, and love has to find a new shape.', related: ['family', 'change', 'peace'] },
+  { id: 'heaviness', title: 'Heavy hearts', category: 'hard-seasons', icon: 'Waves', free: true, ages: FROM_TWEEN,
+    description: 'Low days, depression, and hope that holds on.', related: ['anxiety', 'peace', 'loneliness'] },
+  { id: 'far-away', title: 'Missing someone', category: 'hard-seasons', icon: 'Star', free: false, ages: ALL,
+    description: 'Deployment, distance, and love across the miles.', related: ['loneliness', 'protection', 'family'] },
 
   // ── Their Future ───────────────────────────────────────────────
   { id: 'purpose', title: 'Purpose', category: 'future', icon: 'MapTrifold', free: false, ages: FROM_ELEMENTARY,
@@ -165,6 +177,8 @@ export const TOPICS: Topic[] = [
     description: 'Trustworthy in little things and big ones.', related: ['character', 'faithfulness', 'work'] },
   { id: 'leadership', title: 'Leadership', category: 'future', icon: 'Flag', free: false, ages: FROM_ELEMENTARY,
     description: 'Leading others by serving them well.', related: ['humility', 'courage', 'character'] },
+  { id: 'leaving-home', title: 'Leaving home', category: 'future', icon: 'DoorOpen', free: false, ages: ['teen', 'young-adult'],
+    description: 'College, a first place, and a family that still prays.', related: ['change', 'calling', 'protection'] },
 
   // ── Everyday Life ──────────────────────────────────────────────
   { id: 'school', title: 'School', category: 'everyday', icon: 'Backpack', free: true,
@@ -185,6 +199,8 @@ export const TOPICS: Topic[] = [
     description: 'Brave first steps into new places.', related: ['courage', 'change', 'fear'] },
   { id: 'birthdays', title: 'Birthdays', category: 'everyday', icon: 'Cake', free: false, ages: ALL,
     description: 'Celebrating another year of God’s goodness.', related: ['gratitude', 'identity', 'purpose'] },
+  { id: 'growing-up', title: 'Growing up', category: 'everyday', icon: 'Tree', free: false, ages: ['tween', 'teen'],
+    description: 'Changing bodies, changing feelings, the same steady love.', related: ['identity', 'confidence', 'self-control'] },
 ];
 
 export const TOPIC_BY_ID = Object.fromEntries(TOPICS.map((t) => [t.id, t])) as Record<TopicId, Topic>;

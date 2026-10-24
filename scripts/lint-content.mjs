@@ -125,6 +125,8 @@ for (const file of files) {
         const c = parseRef(e.contextRef);
         const ckeys = expandRef(e.contextRef, bsb);
         if (!ckeys.length) errs.push(`contextRef "${e.contextRef}" does not resolve`);
+        if (c.startChapter === c.endChapter && ckeys.length !== c.endVerse - c.startVerse + 1)
+          errs.push(`contextRef "${e.contextRef}" includes verses missing from the BSB (${ckeys.length}/${c.endVerse - c.startVerse + 1})`);
         if (!keys.every((k) => ckeys.includes(k))) errs.push(`contextRef "${e.contextRef}" must contain "${e.ref}"`);
         if (ckeys.length > 20) errs.push(`contextRef is ${ckeys.length} verses — keep it under 20`);
         if (ckeys.length < 2) warns.push('contextRef is a single verse — include the surrounding verses');

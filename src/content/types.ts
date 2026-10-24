@@ -16,22 +16,23 @@ export type CategoryId = 'faith' | 'heart' | 'mind' | 'relationships' | 'uniquel
 
 export type TopicId =
   // Their Faith
-  | 'faith' | 'trust' | 'prayer' | 'scripture' | 'faithfulness'
+  | 'faith' | 'trust' | 'prayer' | 'scripture' | 'faithfulness' | 'wandering'
   // Their Heart
-  | 'identity' | 'confidence' | 'kindness' | 'compassion' | 'forgiveness' | 'gratitude'
+  | 'identity' | 'confidence' | 'kindness' | 'compassion' | 'forgiveness' | 'gratitude' | 'joy'
   | 'humility' | 'honesty' | 'self-control' | 'character' | 'temptation'
   // Their Mind
   | 'wisdom' | 'focus' | 'discernment' | 'learning' | 'peace'
   // Their Relationships
-  | 'friendship' | 'siblings' | 'family' | 'teachers' | 'love' | 'dating' | 'conflict'
+  | 'friendship' | 'siblings' | 'family' | 'teachers' | 'love' | 'dating' | 'conflict' | 'adoption'
   // Uniquely Made (disability, autism and special needs)
   | 'wonderfully-made' | 'seen-and-understood' | 'healing' | 'caregiver-strength' | 'worry-and-future'
   // Hard Seasons
   | 'fear' | 'anxiety' | 'grief' | 'loneliness' | 'failure' | 'rejection' | 'change' | 'bullying' | 'health'
+  | 'divorce' | 'heaviness' | 'far-away'
   // Their Future
-  | 'purpose' | 'calling' | 'courage' | 'work' | 'responsibility' | 'leadership'
+  | 'purpose' | 'calling' | 'courage' | 'work' | 'responsibility' | 'leadership' | 'leaving-home'
   // Everyday Life
-  | 'school' | 'exams' | 'sports' | 'sleep' | 'protection' | 'travel' | 'new-experiences' | 'birthdays';
+  | 'school' | 'exams' | 'sports' | 'sleep' | 'protection' | 'travel' | 'new-experiences' | 'birthdays' | 'growing-up';
 
 export type OccasionId =
   | 'birthday' | 'first-day-of-school' | 'new-school' | 'exam' | 'graduation' | 'drivers-test'

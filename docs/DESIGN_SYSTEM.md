@@ -297,7 +297,7 @@ Bless Them speaks like a wise, kind friend at church: warm, plain and never prea
 | "Streak lost! 🔥" | "Faithfulness isn't perfection. Begin again today." |
 | "Task complete" | "Covered in prayer today." |
 | "Error 500" | "We couldn't prepare today's blessing. Your saved prayers are safe." |
-| "Unlock premium content" | "Courage is part of Bless Them+. The full library has 56 topics for every season of life." |
+| "Unlock premium content" | "Courage is part of Bless Them+. The full library has 64 topics for every season of life." |
 | "Enable notifications?" | "Would a gentle reminder help? One quiet note a day when a blessing is ready. Never more, and never guilt." |
 
 Guidelines:
