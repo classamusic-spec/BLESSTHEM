@@ -1,9 +1,12 @@
+import { isNative } from './platform';
+
 /**
  * Registers the service worker in production builds: offline app shell, cached
  * fonts and Scripture, and notification taps that open the exact blessing.
  */
 export function registerServiceWorker() {
-  if (!import.meta.env.PROD || !('serviceWorker' in navigator)) return;
+  // The native app already ships every file on the device, and its reminders are native.
+  if (!import.meta.env.PROD || !('serviceWorker' in navigator) || isNative()) return;
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(() => {
       /* the app works without it; offline support is a progressive enhancement */

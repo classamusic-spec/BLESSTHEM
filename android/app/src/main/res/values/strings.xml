@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Bless Them</string>
+    <string name="title_activity_main">Bless Them</string>
+    <string name="package_name">app.blessthem</string>
+    <string name="custom_url_scheme">app.blessthem</string>
+</resources>

@@ -1,8 +1,12 @@
+import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
+import { isNative } from './platform';
+
 /**
  * Light, selective haptics: blessing completion, selection, saving, journal entries.
  * Android/Chrome use the Vibration API. iOS Safari (18+) has no vibration API, but
  * toggling a native switch control produces the system selection haptic, so we use
- * that as a progressive enhancement. Calls must happen inside a user gesture.
+ * that as a progressive enhancement. Calls must happen inside a user gesture. The native
+ * app uses the system's own Taptic Engine and vibration patterns instead.
  */
 let enabled = true;
 
@@ -41,11 +45,17 @@ function pulse(pattern: number | number[], iosTicks = 1) {
   }
 }
 
+const native = {
+  selection: () => void Haptics.selectionChanged().catch(() => undefined),
+  light: () => void Haptics.impact({ style: ImpactStyle.Light }).catch(() => undefined),
+  success: () => void Haptics.notification({ type: NotificationType.Success }).catch(() => undefined),
+};
+
 export const haptics = {
   /** Choosing a person, a chip, a tab. */
-  selection: () => pulse(6),
+  selection: () => enabled && (isNative() ? native.selection() : pulse(6)),
   /** Saving a favorite or a journal entry. */
-  light: () => pulse(10),
+  light: () => enabled && (isNative() ? native.light() : pulse(10)),
   /** “I prayed this.” A soft double beat — never a buzz. */
-  success: () => pulse([12, 60, 16], 2),
+  success: () => enabled && (isNative() ? native.success() : pulse([12, 60, 16], 2)),
 };

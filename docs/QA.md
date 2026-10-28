@@ -135,11 +135,11 @@ These are deliberate in this build, and each sits behind a seam described in [AR
 
 1. **Accounts are local.** Sign in with Apple, Google and email creates an account on this device only, with no sync. Supabase Auth and sync are designed and the schema is ready and tested, but they are not connected.
 2. **Purchases are a preview.** The paywall flow is complete and **never charges**. RevenueCat and Stripe plug into `PurchaseService`.
-3. **Web reminders need the app open,** or the browser keeping the service worker alive. Native builds and push will deliver reminders reliably when the app is closed.
+3. **Web reminders need the app open** (the native apps schedule them a week ahead with the phone's own scheduler), or the browser keeping the service worker alive. Native builds and push will deliver reminders reliably when the app is closed.
 4. **Read-aloud uses the device's voices** (Web Speech API), so quality varies by platform. Parent-recorded audio is a V2 idea.
 5. **iOS haptics** rely on the native switch-toggle tick in Safari 18 and later. Earlier versions are silent.
 6. **Crisis resources are US-first,** with findahelpline.com for everywhere else. Localized lists should come with localization.
 7. **English only,** with two public-domain translations. Licensed translations need permission before they are added.
-8. **First load is about 415 KB of gzipped JavaScript.** It is split into cacheable chunks and is instant after the first visit. Splitting the library by category is the next optimization.
+8. **First load is about 740 KB of gzipped JavaScript,** most of it the 608-blessing library and its verified Scripture. It is split into cacheable chunks and is instant after the first visit, and in the native apps it ships on the device. Loading the library by category is the next optimization.
 9. **Photographs need a first visit online.** They are cached as they are seen rather than precached, so the install stays at 2.7 MB. Every photograph at every width is another 2.4 MB as AVIF, or 4.3 MB as WebP. Offline, an unseen photograph shows its blurred placeholder.
 10. **Each person's scene is chosen for them,** from their id. Letting a parent pick it, like a contact poster, is a natural next step.

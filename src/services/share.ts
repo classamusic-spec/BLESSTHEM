@@ -1,3 +1,4 @@
+import { isNative } from './platform';
 import { SCENES, sceneUrl, type SceneId } from '@/content/scenery';
 
 /**
@@ -271,7 +272,26 @@ export async function renderShareCard(input: ShareCardInput): Promise<Blob> {
 
 export type ShareOutcome = 'shared' | 'cancelled' | 'unsupported';
 
+/** The native share sheet needs a file on disk: write the card to the app's cache first. */
+async function shareImageNative(blob: Blob, text: string): Promise<ShareOutcome> {
+  const [{ Filesystem, Directory }, { Share }] = await Promise.all([import('@capacitor/filesystem'), import('@capacitor/share')]);
+  const data = await new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result).split(',')[1] ?? '');
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(blob);
+  });
+  try {
+    const { uri } = await Filesystem.writeFile({ path: 'bless-them-blessing.png', data, directory: Directory.Cache });
+    await Share.share({ title: 'A blessing', text, files: [uri] });
+    return 'shared';
+  } catch (err) {
+    return /cancel/i.test(String((err as Error)?.message)) ? 'cancelled' : 'unsupported';
+  }
+}
+
 export async function shareImage(blob: Blob, text: string): Promise<ShareOutcome> {
+  if (isNative()) return shareImageNative(blob, text);
   const file = new File([blob], 'bless-them-blessing.png', { type: 'image/png' });
   const nav = navigator as Navigator & { canShare?: (data: ShareData) => boolean };
   try {

@@ -96,6 +96,15 @@ npm run build        # verifies Scripture, typechecks, bundles, generates the se
 npm run preview      # http://localhost:4173, offline support enabled
 ```
 
+Native iOS and Android apps ([Capacitor](https://capacitorjs.com)) wrap the same build, with native daily reminders, haptics and the share sheet:
+
+```bash
+npm run android      # build, sync, and open in Android Studio
+npm run ios          # build, sync, and open in Xcode (macOS)
+```
+
+Every push to `main` builds both apps on GitHub Actions (`.github/workflows/native.yml`), with an installable Android debug APK attached to each run.
+
 ## Scripts
 
 | Command | What it does |
@@ -111,7 +120,8 @@ npm run preview      # http://localhost:4173, offline support enabled
 | `npm run lint:content` | Lints curated blessings against the full Bible texts. Downloads the sources once. |
 | `npm run scripture` | Rebuilds the verified Scripture subset, or verifies the committed one when sources are absent |
 | `npm run verse -- "PSA 23:1-3"` | Prints a verified passage from either translation |
-| `npm run icons` | Regenerates the app icons from the brand mark |
+| `npm run icons` | Regenerates the web and native app icons, splash images and the Android reminder icon from the brand mark |
+| `npm run native:sync` | Builds the web app and copies it into the iOS and Android projects |
 | `npm run scenery` | Grades and encodes the photographs (AVIF and WebP), and regenerates their typed manifest. Downloads originals once. |
 
 ## How it is built

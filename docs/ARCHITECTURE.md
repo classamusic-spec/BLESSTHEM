@@ -247,7 +247,7 @@ Reminders are pastoral, never manipulative. Copy reads like "A blessing for Gabr
 
 - **Planner.** `src/services/notifications.ts` turns preferences, people and special dates into `PlannedNotice[]`. That covers a morning reminder, an optional evening reminder, and special moments the day before. It is a pure function, so it can be reused by native schedulers.
 - **Web.** While the app is open, notices are scheduled and shown through the service worker. Tapping one deep-links to `/today?person=…&from=notification&kind=…`. If the app is already open, the service worker posts a navigate message instead of opening a new window.
-- **Native.** The same planned notices are handed to the OS scheduler for the next 7 days and refreshed on every open. Special-moment pushes for closed apps go through APNs/FCM from an Edge Function.
+- **Native (built).** In the iOS and Android apps (Capacitor), `@capacitor/local-notifications` receives the same planned notices for the next 7 days, so reminders arrive with the app closed. The week is re-planned on launch, on every return to the foreground, and whenever preferences, people or blessings change. Each notice's tag becomes a stable notification id, and tapping one opens its URL in the app. Android delivers them as inexact alarms: the exact-alarm permission is removed, because Google Play reserves it for alarm and calendar apps. A future server push (APNs/FCM) can add reminders for people who haven't opened the app in a week.
 - **Permission.** Permission is requested after the first completed blessing, when its value is obvious, with a soft pre-prompt first.
 
 ## Analytics and the north-star metric

@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 /**
  * Generates favicon, PWA icons, apple-touch-icon and the web manifest from the
- * Bless Them mark ("the cradle": two leaves holding a small light).
+ * Bless Them mark ("the cradle": two leaves holding a small light), and, when the native
+ * projects exist (`npx cap add ios|android`), their app icons, splash images and the
+ * Android status-bar icon for reminders.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -72,3 +74,59 @@ const manifest = {
 };
 fs.writeFileSync(out('manifest.webmanifest'), JSON.stringify(manifest, null, 2) + '\n');
 console.log('Icons and manifest written to public/.');
+
+/* ── Native apps ─────────────────────────────────────────────────── */
+const IVORY = '#FAF7F1';
+const SAGE = '#3F5D49';
+const at = (...p) => path.join(ROOT, ...p);
+const write = async (svg, file, opts = {}) => {
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  let img = sharp(Buffer.from(svg));
+  if (opts.flatten) img = img.flatten({ background: opts.flatten });
+  await img.png({ compressionLevel: 9 }).toFile(file);
+};
+/** The mark alone on a transparent square, at `scale` of the canvas. */
+const markOnly = ({ size, scale, colors = ON_SAGE }) => {
+  const offset = (64 - 64 * scale) / 2;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="${size}" height="${size}">
+    <g transform="translate(${offset} ${offset - 0.6}) scale(${scale})">${colors}</g></svg>`;
+};
+/** The mark centred on ivory, for launch screens of any shape. */
+const splash = (w, h) => {
+  const m = Math.min(w, h) * 0.22;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
+    <rect width="${w}" height="${h}" fill="${IVORY}"/>
+    <g transform="translate(${(w - m) / 2} ${(h - m) / 2}) scale(${m / 64})">${MARK({ leafA: '#3E5B47', leafB: '#6E8F76', light: '#C99A46' })}</g></svg>`;
+};
+
+if (fs.existsSync(at('ios/App/App/Assets.xcassets'))) {
+  // App Store icons must be opaque; iOS rounds the corners itself.
+  await write(icon({ size: 1024, scale: 0.62 }), at('ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png'), { flatten: SAGE });
+  const splashDir = at('ios/App/App/Assets.xcassets/Splash.imageset');
+  for (const f of fs.existsSync(splashDir) ? fs.readdirSync(splashDir).filter((f) => f.endsWith('.png')) : []) {
+    const { width, height } = await sharp(path.join(splashDir, f)).metadata();
+    await write(splash(width, height), path.join(splashDir, f));
+  }
+  console.log('iOS app icon and launch images written.');
+}
+
+const res = at('android/app/src/main/res');
+if (fs.existsSync(res)) {
+  const densities = { mdpi: 1, hdpi: 1.5, xhdpi: 2, xxhdpi: 3, xxxhdpi: 4 };
+  for (const [d, k] of Object.entries(densities)) {
+    await write(icon({ size: 48 * k, scale: 0.62, rx: 10 }), path.join(res, `mipmap-${d}/ic_launcher.png`));
+    await write(icon({ size: 48 * k, scale: 0.62, rx: 32 }), path.join(res, `mipmap-${d}/ic_launcher_round.png`));
+    // Adaptive foreground: 108dp canvas, the mark inside the 66dp safe zone.
+    await write(markOnly({ size: 108 * k, scale: 0.4 }), path.join(res, `mipmap-${d}/ic_launcher_foreground.png`));
+    // Status-bar icon: a white silhouette (Android tints it with the notification colour).
+    await write(markOnly({ size: 24 * k, scale: 0.84, colors: MARK({ leafA: '#FFF', leafB: '#FFF', light: '#FFF' }) }), path.join(res, `drawable-${d}/ic_stat_blessthem.png`));
+  }
+  fs.writeFileSync(path.join(res, 'values/ic_launcher_background.xml'), `<?xml version="1.0" encoding="utf-8"?>\n<resources>\n    <color name="ic_launcher_background">${SAGE}</color>\n</resources>\n`);
+  for (const dir of fs.readdirSync(res).filter((d) => d.startsWith('drawable'))) {
+    const file = path.join(res, dir, 'splash.png');
+    if (!fs.existsSync(file)) continue;
+    const { width, height } = await sharp(file).metadata();
+    await write(splash(width, height), file);
+  }
+  console.log('Android launcher, status-bar and splash images written.');
+}

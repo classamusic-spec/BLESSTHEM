@@ -1,3 +1,4 @@
+import { App as CapApp } from '@capacitor/app';
 import { MotionConfig } from 'motion/react';
 import { lazy, Suspense, useEffect, type ReactNode } from 'react';
 import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router';
@@ -10,6 +11,8 @@ import { SceneBackdrop } from '@/design/SceneBackdrop';
 import { ToastProvider } from '@/design/Toast';
 import { TodayPage } from '@/features/today/TodayPage';
 import { configureAnalytics, track } from '@/services/analytics';
+import { onReminderTapped } from '@/services/notifications';
+import { isNative } from '@/services/platform';
 import { onServiceWorkerMessage } from '@/services/sw-register';
 import { applySettings } from '@/services/theme';
 import { useNotificationScheduler } from '@/features/notifications/useNotificationScheduler';
@@ -81,10 +84,20 @@ function useAppEffects() {
   }, [recordOpen]);
 }
 
-/** Notification taps while the app is already open arrive as service-worker messages. */
+/**
+ * Reminder taps open the exact blessing: as service-worker messages on the web, or native
+ * notification actions in the app. On Android, the system back button walks back through
+ * the app and only leaves it from the first screen.
+ */
 function ServiceWorkerBridge() {
   const navigate = useNavigate();
   useEffect(() => onServiceWorkerMessage((data) => data.type === 'navigate' && data.url && navigate(data.url)), [navigate]);
+  useEffect(() => onReminderTapped((url) => navigate(url)), [navigate]);
+  useEffect(() => {
+    if (!isNative()) return;
+    const sub = CapApp.addListener('backButton', ({ canGoBack }) => (canGoBack ? window.history.back() : void CapApp.exitApp()));
+    return () => void sub.then((s) => s.remove());
+  }, []);
   return null;
 }
 

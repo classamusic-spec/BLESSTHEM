@@ -1,15 +1,18 @@
+import { LocalNotifications } from '@capacitor/local-notifications';
 import { OCCASION_BY_ID } from '@/content/taxonomy';
 import type { NotificationPrefs, Person, SpecialDate } from '@/data/models';
 import { relationshipKind } from '@/engine/compose';
 import { addDays, dayKey, nextOccurrence } from '@/lib/dates';
+import { isNative } from './platform';
 
 /**
  * Pastoral reminders — supporting the practice, never manipulating engagement.
  * Never: “You’re about to lose your streak!”
  *
  * On the web, reminders are scheduled while the app is open and delivered through the
- * service worker (tapping one opens the exact blessing). Native builds hand the same
- * planned notices to the OS scheduler; a push service can deliver them when closed.
+ * service worker (tapping one opens the exact blessing). In the native app the same planned
+ * notices go to the phone's own scheduler a week ahead, so they arrive with the app closed;
+ * the week rolls forward every time the app opens.
  */
 
 export interface PlannedNotice {
@@ -21,16 +24,42 @@ export interface PlannedNotice {
   tag: string;
 }
 
+/** The native app's last known permission (the OS answers asynchronously). */
+let nativePermission: NotificationPrefs['permission'] = 'default';
+
+const fromNative = (state: string): NotificationPrefs['permission'] => (state === 'granted' ? 'granted' : state === 'denied' ? 'denied' : 'default');
+
 export function notificationsSupported(): boolean {
+  if (isNative()) return true;
   return typeof window !== 'undefined' && 'Notification' in window;
 }
 
 export function currentPermission(): NotificationPrefs['permission'] {
+  if (isNative()) return nativePermission;
   if (!notificationsSupported()) return 'unsupported';
   return Notification.permission;
 }
 
+/** Asks the OS for the current permission. Cheap; call on launch and on return to the app. */
+export async function syncPermission(): Promise<NotificationPrefs['permission']> {
+  if (!isNative()) return currentPermission();
+  try {
+    nativePermission = fromNative((await LocalNotifications.checkPermissions()).display);
+  } catch {
+    nativePermission = 'denied';
+  }
+  return nativePermission;
+}
+
 export async function requestPermission(): Promise<NotificationPrefs['permission']> {
+  if (isNative()) {
+    try {
+      nativePermission = fromNative((await LocalNotifications.requestPermissions()).display);
+    } catch {
+      nativePermission = 'denied';
+    }
+    return nativePermission;
+  }
   if (!notificationsSupported()) return 'unsupported';
   try {
     return await Notification.requestPermission();
@@ -71,19 +100,20 @@ function at(date: Date, time: string): Date {
   return d;
 }
 
-/** Notices for the next 24 hours, rotating the morning reminder across people. */
+/** Notices for the next `days` days (default one), rotating the morning reminder across people. */
 export function planNotices(
   prefs: NotificationPrefs,
   people: Person[],
   specialDates: SpecialDate[],
-  opts: { now?: Date; prayedToday?: Set<string>; specialEnabled?: boolean } = {},
+  opts: { now?: Date; prayedToday?: Set<string>; specialEnabled?: boolean; days?: number } = {},
 ): PlannedNotice[] {
   const now = opts.now ?? new Date();
   if (!people.length) return [];
   const notices: PlannedNotice[] = [];
-  const horizon = now.getTime() + 24 * 3_600_000;
+  const days = Math.max(1, opts.days ?? 1);
+  const horizon = now.getTime() + days * 24 * 3_600_000;
 
-  for (const offset of [0, 1]) {
+  for (let offset = 0; offset <= days; offset++) {
     const day = new Date(now);
     day.setDate(day.getDate() + offset);
     const key = dayKey(day);
@@ -126,6 +156,14 @@ export function planNotices(
 
 export async function showNotice(n: Pick<PlannedNotice, 'title' | 'body' | 'url' | 'tag'>): Promise<boolean> {
   if (currentPermission() !== 'granted') return false;
+  if (isNative()) {
+    try {
+      await LocalNotifications.schedule({ notifications: [toNative({ ...n, at: new Date(Date.now() + 1500) })] });
+      return true;
+    } catch {
+      return false;
+    }
+  }
   const options: NotificationOptions = {
     body: n.body,
     tag: n.tag,
@@ -155,4 +193,47 @@ let timers: number[] = [];
 export function scheduleWhileOpen(notices: PlannedNotice[]) {
   timers.forEach((t) => window.clearTimeout(t));
   timers = notices.map((n) => window.setTimeout(() => void showNotice(n), Math.max(0, n.at.getTime() - Date.now())));
+}
+
+/* ── Native: the phone's own scheduler ─────────────────────────────── */
+
+/** Notification ids must be 32-bit integers; derive a stable one from the tag. */
+function idFor(tag: string): number {
+  let h = 0;
+  for (const ch of tag) h = (Math.imul(h, 31) + ch.charCodeAt(0)) | 0;
+  return Math.abs(h) || 1;
+}
+
+function toNative(n: Pick<PlannedNotice, 'title' | 'body' | 'url' | 'tag' | 'at'>) {
+  return { id: idFor(n.tag), title: n.title, body: n.body, schedule: { at: n.at, allowWhileIdle: true }, extra: { url: n.url } };
+}
+
+/** Replaces every pending reminder with this plan. */
+async function scheduleNative(notices: PlannedNotice[]) {
+  try {
+    const { notifications: pending } = await LocalNotifications.getPending();
+    if (pending.length) await LocalNotifications.cancel({ notifications: pending.map((p) => ({ id: p.id })) });
+    if (notices.length) await LocalNotifications.schedule({ notifications: notices.map(toNative) });
+  } catch {
+    /* reminders are a gentle extra; the app works without them */
+  }
+}
+
+/** How many days ahead to plan: the native scheduler holds a week; the web only while open. */
+export const planningDays = (): number => (isNative() ? 7 : 1);
+
+/** Hands the plan to the right delivery: the OS scheduler, or timers while the page is open. */
+export function scheduleReminders(notices: PlannedNotice[]) {
+  if (isNative()) void scheduleNative(notices);
+  else scheduleWhileOpen(notices);
+}
+
+/** Calls `handler` with the in-app URL when a native reminder is tapped. */
+export function onReminderTapped(handler: (url: string) => void): () => void {
+  if (!isNative()) return () => undefined;
+  const sub = LocalNotifications.addListener('localNotificationActionPerformed', (action) => {
+    const url = action.notification.extra?.url;
+    if (typeof url === 'string') handler(url);
+  });
+  return () => void sub.then((s) => s.remove());
 }
